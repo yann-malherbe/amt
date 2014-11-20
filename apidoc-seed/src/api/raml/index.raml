@@ -1,0 +1,210 @@
+#%RAML 0.8
+---
+title: API Resource Example
+baseUri: https://localhost/api/{version}
+version: v1
+protocols: [HTTPS]
+mediaType: application/json
+
+traits:
+  - private: !include _traits/private.raml
+
+/myResource:
+  description: This is my resource.
+  post:
+    description: Create a resource. More text is only rendered in the details view of the method.
+    body:
+      application/json:
+        example: |
+          { "name" : "myResource" }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              { "id" : 1, "name" : "myResource" }
+    headers:
+      Authorization:
+        description: |
+          A description.
+          <private>
+          Note that you can also add `<private>` blocks in here.
+          </private>
+
+  /{myResourceId}:
+    get:
+      description: Retrieve a resource.
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id" : 1, "name" : "myResource" }
+        404:
+          description: The resource was not found.
+    delete:
+      is: [private]
+      description: Delete a resource.
+
+/adminResource:
+  is: [private]
+  description: This is a private resource.
+  get:
+    description: Get secret message.
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {"secret" : "message"}
+
+
+
+# Organization
+/organizations:
+  description: Organizations who edit facts and listen sensors.
+  get:
+    description: Get all organizations stored in the bd.
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {[{ "id" : 1, "name" : "NameOfOrganization" }]}
+
+  post:
+    description: Create an organization.
+    body:
+      application/json:
+        example: |
+          { "name" : "NameOfOrganization" }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              { "id" : 1, "name" : "NameOfOrganization", [{ "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }] }
+    headers:
+      Authorization:
+        description: |
+          A description.
+
+  /{name}:
+    get:
+      description: Retrieve a resource.
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id" : 1, "name" : "myResource" }
+        404:
+          description: The resource was not found.
+    delete:
+      is: [private]
+      description: Delete a resource.
+
+# User
+/users:
+  description: User work in organization.
+  post:
+    description: Create an user.
+    body:
+      application/json:
+        example: |
+          { "username" : "UsernameOfUser",  }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              { "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }
+    headers:
+      Authorization:
+        description: |
+          A description.
+
+  /{username}:
+    get:
+      description: Retrieve a resource.
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }
+        404:
+          description: The resource was not found.
+    delete:
+      is: [private]
+      description: Delete a resource.
+
+# Sensor
+/sensors:
+  description: sensor get data in organization.
+  post:
+    description: Create a sensor.
+    body:
+      application/json:
+        example: |
+          { "name" : "sensorID" }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              { "id" : 1, "name" : "sensorID" }
+    headers:
+      Authorization:
+        description: |
+          A description.
+
+  /{name}:
+    get:
+      description: Retrieve a resource.
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id" : 1, "name" : "sensorID" }
+        404:
+          description: The resource was not found.
+    delete:
+      is: [private]
+      description: Delete a resource.
+
+# Fact
+/facts:
+  description: fact is generate by organisation to store result of many observation.
+  post:
+    description: Create a sensor.
+    body:
+      application/json:
+        example: |
+          { "name" : "sensorID" }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              { "id" : 1, "name" : "sensorID" }
+    headers:
+      Authorization:
+        description: |
+          A description.
+
+  /{name}:
+    get:
+      description: Retrieve a resource.
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id" : 1, "name" : "sensorID" }
+        404:
+          description: The resource was not found.
+    delete:
+      is: [private]
+      description: Delete a resource.
