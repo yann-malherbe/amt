@@ -9,58 +9,8 @@ mediaType: application/json
 traits:
   - private: !include _traits/private.raml
 
-/myResource:
-  description: This is my resource.
-  post:
-    description: Create a resource. More text is only rendered in the details view of the method.
-    body:
-      application/json:
-        example: |
-          { "name" : "myResource" }
-    responses:
-      201:
-        body:
-          application/json:
-            example: |
-              { "id" : 1, "name" : "myResource" }
-    headers:
-      Authorization:
-        description: |
-          A description.
-          <private>
-          Note that you can also add `<private>` blocks in here.
-          </private>
-
-  /{myResourceId}:
-    get:
-      description: Retrieve a resource.
-      responses:
-        200:
-          body:
-            application/json:
-              example: |
-                { "id" : 1, "name" : "myResource" }
-        404:
-          description: The resource was not found.
-    delete:
-      is: [private]
-      description: Delete a resource.
-
-/adminResource:
-  is: [private]
-  description: This is a private resource.
-  get:
-    description: Get secret message.
-    responses:
-      200:
-        body:
-          application/json:
-            example: |
-              {"secret" : "message"}
-
-
-
-# Organization
+# GET /organizations
+# ====================================
 /organizations:
   description: Organizations who edit facts and listen sensors.
   get:
@@ -70,63 +20,91 @@ traits:
         body:
           application/json:
             example: |
-              {[{ "id" : 1, "name" : "NameOfOrganization" }]}
+              {[{ "id" : 1, "name" : "AMT"}]}
 
+
+  # POST /organizations
+  # ====================================
   post:
     description: Create an organization.
     body:
       application/json:
         example: |
-          { "name" : "NameOfOrganization" }
+          {"name" : "AMT", "contact_id" : "id" }
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "name" : "NameOfOrganization", [{ "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }] }
-    headers:
-      Authorization:
-        description: |
-          A description.
+              { "id" : 1, "name" : "AMT", "contact_id" : "id" }
 
-  /{name}:
+  # GET /organizations/:id
+  # ====================================
+  /{id}:
     get:
-      description: Retrieve a resource.
+      description: Retrieve a organization. A user work to only one organization.
       responses:
         200:
           body:
             application/json:
               example: |
-                { "id" : 1, "name" : "myResource" }
-        404:
-          description: The resource was not found.
-    delete:
-      is: [private]
-      description: Delete a resource.
+                [{ "id" : "1", "name" : "AMT", "users" : [{"id" : "1", "login" : "smith", "name" : "Smith"}], "contact_id" : "id"}]
 
-# User
+    # PUT /organizations/:id
+    # ====================================
+    put:
+      description : Update organization
+      body:
+        application/json:
+          example: |
+            { ["name" : "NameOfOrganization", "users" : [{"id" : "1", "login" : "username", "name" : "Smith"}], "contact_id" : "id"}] }
+
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { [{ "id" : "1", "name" : "NameOfOrganization", "users" : [{"id" : "1", "login" : "username", "name" : "Smith"}], "contact_id" : "id"}] }
+    
+    # DELETE /organizations/:id
+    # ====================================
+    delete:
+      description: Delete an organization if there are just a person of contactg and no users, sensors, or facts.  
+
+# GET /users
+# ====================================
 /users:
-  description: User work in organization.
+  get:
+     description: Get all users
+     responses :
+       200:
+         body:
+           application/json:
+             example: |
+               [{"id" : "1", "login" : "username", "name" : "Smith", "contact" : "true"}]
+  
+  description: A user work in organization.
+  
+  # POST /users
+  # ====================================
   post:
     description: Create an user.
     body:
       application/json:
         example: |
-          { "username" : "UsernameOfUser",  }
+          { [ {"login" : "username", "pass": "aasfkpaoj3joi23j09djdasidas", "name" : "Smith"}] }
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }
-    headers:
-      Authorization:
-        description: |
-          A description.
-
-  /{username}:
+              {"id" : "1", "login" : "username", "pass": "aasfkpaoj3joi23j09djdasidas", "name" : "Smith", "contact" : "false" }
+  
+  # GET /users/:id
+  # ====================================
+  /{id}:
     get:
-      description: Retrieve a resource.
+      description: Get a user.
       responses:
         200:
           body:
@@ -135,31 +113,50 @@ traits:
                 { "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }
         404:
           description: The resource was not found.
+    
+    # PUT /users/:id
+    # ====================================
+    put:
+      description: Update infos of a user.
+      body:
+        application/json:
+          example: |
+            {"login" : "username", "pass": "aasfkpaoj3joi23j09djdasidas", "name" : "Smith", "contact" : "false"}
+    
+    # DELETE /users/:id
+    # ====================================
     delete:
-      is: [private]
       description: Delete a resource.
 
-# Sensor
+# GET /sensors
+# ====================================
 /sensors:
-  description: sensor get data in organization.
+  get:
+    description: Get all sensors.
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+             [{"id":1, "create_date": "2014-08-11"}]
+    
+  # POST /sensors
+  # ====================================
   post:
     description: Create a sensor.
     body:
       application/json:
         example: |
-          { "name" : "sensorID" }
+          {"create_date": "2014-08-11"}
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "name" : "sensorID" }
-    headers:
-      Authorization:
-        description: |
-          A description.
-
-  /{name}:
+              { "id" : 1, "create_date": "2014-08-11"}
+  /{id}:
+  # GET /sensors/:id
+  # ====================================
     get:
       description: Retrieve a resource.
       responses:
@@ -167,34 +164,65 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : 1, "name" : "sensorID" }
+                {"id":1, "create_date": "2014-08-11"}
         404:
           description: The resource was not found.
+
+    # GET /sensors/:id
+    # ====================================
     delete:
-      is: [private]
       description: Delete a resource.
 
-# Fact
+# GET /observations
+# ====================================
+/observations:
+  description: Observations by sensors
+  get:
+    description: Get all observations
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [{"id":1, "date": "2014-15-14 00:02:52", "value":54, "unit":"degree"}]
+  post:
+    description: Add an observation
+    body:
+      application/json:
+        example: |
+          {"date": "2014-15-14 00:02:52", "value":54, "unit":"degree"}
+  
+# GET /facts 
+# ====================================
 /facts:
-  description: fact is generate by organisation to store result of many observation.
+  description: Fact is generate by organisation to store  observations result. 
+  get:
+    description: Get all facts 
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+               [{ "id" : 1, "date" : "2014-11-09 00:02:01", "value" : "23", "type" : "max/average/min" }]
+            
+  # POST /facts 
+  # ====================================
   post:
-    description: Create a sensor.
+    description: Create a fact.
     body:
       application/json:
         example: |
-          { "name" : "sensorID" }
+          { "date" : "2014-11-09", "value" : "23", "type" : "max/average/min", "organisation_id" : 1 }
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "name" : "sensorID" }
-    headers:
-      Authorization:
-        description: |
-          A description.
-
-  /{name}:
+              { "id": 1, "date" : "2014-11-09", "value" : "23", "type" : "max/average/min"}
+  
+  # GET /facts/:id 
+  # ====================================
+  /{id}:
     get:
       description: Retrieve a resource.
       responses:
@@ -202,9 +230,47 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : 1, "name" : "sensorID" }
+                { "id": 1, "date" : "2014-11-09", "value" : "23", "type" : "max/average/min"}
         404:
           description: The resource was not found.
+    
+    # DELETE /facts/:id 
+    # ====================================
     delete:
-      is: [private]
       description: Delete a resource.
+  
+  # GET /facts/:id/min 
+  # ====================================
+  /{id}/min:
+    get:
+      description: Get all facts min
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id": 1, "date" : "2014-11-09", "value" : "23"}
+
+  # GET /facts/:id/max
+  # ====================================
+  /{id}/max:
+    get:
+      description: Get all facts min
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id": 1, "date" : "2014-11-09", "value" : "23"}
+
+  # GET /facts/:id/average
+  # ====================================
+  /{id}/average:
+    get:
+      description: Get all facts min
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                { "id": 1, "date" : "2014-11-09", "value" : "23"}
