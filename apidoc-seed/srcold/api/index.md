@@ -5,7 +5,8 @@ template: api.jade
 menuIndex: 4
 ---
 
-This pages contains general documentation about the v1 API.
+This pages contains general documentation about the API. Use the links on the
+right to navigate to specific resources.
 
 
 ### Content-type
@@ -25,8 +26,10 @@ Find below a quick summary of how HTTP verbs are used in the API:
 | Verb     | Description |
 |----------|--------
 | `GET`    | Used for retrieving a resource or a collection of resources.
+| `HEAD`   | Has the same behaviour as the `GET` verb but does not return the response body (only the headers). Notice that this verb is only available for some resources.
 | `POST`   | Used for creating a new resource or performing a non-CRUD operation on a resource.
 | `PUT`    | Used to perform a full update of a resource (replacing the resource by the JSON data provided in the request).
+| `PATCH`  | Used to perform a partial update of a resource (only updating the fields of the resource specified in the JSON data provided in the request).
 | `DELETE` | Used for deleting resources.
 
 
