@@ -5,7 +5,11 @@
  */
 package ch.heigvd.amt.project1.services;
 
+import ch.heigvd.amt.project1.model.Observation;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,6 +18,33 @@ import javax.ejb.Stateless;
 @Stateless
 public class ObservationsManager implements ObservationsManagerLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @PersistenceContext
+    public EntityManager em;
+
+    @Override
+    public Observation findOrganizationById(long id) {
+        return em.find(Observation.class, id);
+    }
+
+    @Override
+    public List<Observation> findAllObservations() {
+        return em.createNamedQuery("findAllObservations").getResultList();
+    }
+
+    @Override
+    public Observation createObservation(Observation observation) {
+        em.persist(observation);
+        em.flush();
+        return observation;
+    }
+
+    @Override
+    public void updateObservation(Observation observation) {
+        em.merge(observation);
+    }
+
+    @Override
+    public void deleteObservation(Observation observation) {
+        em.remove(observation);
+    }
 }

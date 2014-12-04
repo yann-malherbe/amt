@@ -6,7 +6,6 @@
 package ch.heigvd.amt.project1.services;
 
 import ch.heigvd.amt.project1.model.User;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -33,9 +32,10 @@ public class UsersManager implements UsersManagerLocal {
     }
 
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
         em.persist(user);
         em.flush();
+        return user;
     }
 
     @Override
@@ -46,11 +46,6 @@ public class UsersManager implements UsersManagerLocal {
     @Override
     public void deleteUser(User user) {
         em.remove(user);
-    }
-
-    @Override
-    public void businessMethod() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

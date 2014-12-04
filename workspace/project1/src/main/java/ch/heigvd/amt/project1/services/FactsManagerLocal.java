@@ -5,6 +5,8 @@
  */
 package ch.heigvd.amt.project1.services;
 
+import ch.heigvd.amt.project1.model.Fact;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +15,13 @@ import javax.ejb.Local;
  */
 @Local
 public interface FactsManagerLocal {
-    
+    public Fact findFactById(long id);
+
+    public List<Fact> findAllFacts();
+
+    public Fact createFact(Fact fact);
+
+    public void updateFact(Fact fact);
+
+    public void deleteFact(Fact fact);
 }

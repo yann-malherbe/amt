@@ -20,12 +20,10 @@ public interface UsersManagerLocal {
 
     public List<User> findAllUsers();
 
-    public void createUser(User user);
+    public User createUser(User user);
 
     public void updateUser(User user);
 
     public void deleteUser(User user);
-
-    void businessMethod();
     
 }

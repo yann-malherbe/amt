@@ -5,7 +5,11 @@
  */
 package ch.heigvd.amt.project1.services;
 
+import ch.heigvd.amt.project1.model.Fact;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,6 +18,33 @@ import javax.ejb.Stateless;
 @Stateless
 public class FactsManager implements FactsManagerLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+@PersistenceContext
+    public EntityManager em;
+
+    @Override
+    public Fact findFactById(long id) {
+        return em.find(Fact.class, id);
+    }
+
+    @Override
+    public List<Fact> findAllFacts() {
+        return em.createNamedQuery("findAllFacts").getResultList();
+    }
+
+    @Override
+    public Fact createFact(Fact fact) {
+        em.persist(fact);
+        em.flush();
+        return fact;
+    }
+
+    @Override
+    public void updateFact(Fact fact) {
+        em.merge(fact);
+    }
+
+    @Override
+    public void deleteFact(Fact fact) {
+        em.remove(fact);
+    }
 }

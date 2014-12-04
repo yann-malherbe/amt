@@ -5,6 +5,8 @@
  */
 package ch.heigvd.amt.project1.services;
 
+import ch.heigvd.amt.project1.model.Observation;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,4 +16,13 @@ import javax.ejb.Local;
 @Local
 public interface ObservationsManagerLocal {
     
+    public Observation findOrganizationById(long id);
+
+    public List<Observation> findAllObservations();
+
+    public Observation createObservation(Observation observation);
+
+    public void updateObservation(Observation observation);
+
+    public void deleteObservation(Observation observation);
 }

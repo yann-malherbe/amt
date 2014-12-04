@@ -5,7 +5,12 @@
  */
 package ch.heigvd.amt.project1.services;
 
+import ch.heigvd.amt.project1.model.Sensor;
+import ch.heigvd.amt.project1.model.User;
+import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -14,6 +19,33 @@ import javax.ejb.Stateless;
 @Stateless
 public class SensorsManager implements SensorsManagerLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+@PersistenceContext
+    public EntityManager em;
+
+    @Override
+    public Sensor findSensorById(long id) {
+        return em.find(Sensor.class, id);
+    }
+
+    @Override
+    public List<Sensor> findAllSensors() {
+        return em.createNamedQuery("findAllUsers").getResultList();
+    }
+
+    @Override
+    public Sensor createSensor(Sensor sensor) {
+        em.persist(sensor);
+        em.flush();
+        return sensor;
+    }
+
+    @Override
+    public void updateSensor(Sensor sensor) {
+        em.merge(sensor);
+    }
+
+    @Override
+    public void deleteSensor(Sensor sensor) {
+        em.remove(sensor);
+    }
 }
