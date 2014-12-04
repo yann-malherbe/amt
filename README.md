@@ -1,27 +1,28 @@
-Overview
+HEIG-VD project1
 =============
-
-Description of project.....
 
 Install
-=============
+-------------
 The platform is designed with Java EE.
 We work with Netbeans IDE 8.0.2 and java jdk1.8.0_25.
 We assume that you have netbeans and java.
 
-Install Wamp Server
---------------
-We work with wamp to manage the Mysql database.
+###Install Wamp Server###
 
-http://www.wampserver.com/
+We work with wamp to manage the Mysql database. 
 
-Step create database and start domain to Glassfish
---------------
-For windows you need Cygwin shell. Cygwin is a large collection of GNU and Open Source tools which provide functionality similar to a Linux distribution on Windows.
+Apache : 2.4.9 MySQL : 5.6.17 PHP : 5.5.12 PHPMyAdmin : 4.1.14 SqlBuddy : 1.3.3 XDebug : 2.2.5
 
-https://www.cygwin.com/
+Download : http://www.wampserver.com/
 
-Lauch Cygwin in Adminstrator
+###Create database and start domain###
+For windows you need Cygwin shell. 
+
+Cygwin is a large collection of GNU and Open Source tools which provide functionality similar to a Linux distribution on Windows.
+
+Download : https://www.cygwin.com/
+
+You have to lauch Cygwin as Admin.
 
 With cygwin go to in the directory /install
 
@@ -37,10 +38,9 @@ Example : for me it is : C:\wamp\bin\mysql\mysql5.6.17\bin
 Line 16 :
 Line 17 :
 If you have the error : Connexion could not be allocated because : Accès refusé pour l'utilisateur : AMTUser@localhost
-
 you have to comment this lines.
 
-For the first use you have to comment this lines.
+**For the first use you have to comment this lines.**
 
 If you have others errors : you can check you domain.
 
@@ -58,14 +58,10 @@ If not you can stop the domains with this command  :
 
 Reload your scrpit.
 
-
-Open the project in netbeans
---------------
+###Open the project in netbeans###
 Launch Netbeans in Administrator
 
-Open the /workspace/project1 in netbeans.
-
-If you have many errors, build the project. The project need library from maven.
+Open the /workspace/project1 in netbeans. If you have many errors, build the project. The project need library from maven.
 
 Now, we need to add a server glassFish.
 
