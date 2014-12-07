@@ -12,16 +12,15 @@ traits:
 # GET /organizations
 # ====================================
 /organizations:
-  description: Organizations who edit facts and listen sensors.
+  description: An organization add and listen sensors. The users belong to the organization.
   get:
-    description: Get all organizations stored in the bd.
+    description: Get all organizations. The value contact can be null if the organization is new.
     responses:
       200:
         body:
           application/json:
             example: |
-              {[{ "id" : 1, "name" : "AMT"}]}
-
+              [{ "id" : 1, "name" : "AMT", "contact" : 1}]
 
   # POST /organizations
   # ====================================
@@ -30,75 +29,91 @@ traits:
     body:
       application/json:
         example: |
-          {"name" : "AMT", "contact_id" : "id" }
+          {"name" : "AMT"}
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "name" : "AMT", "contact_id" : "id" }
+              { "id" : 1, "name" : "AMT" }
 
   # GET /organizations/:id
   # ====================================
   /{id}:
     get:
-      description: Retrieve a organization. A user work to only one organization.
+      description: Retrieve an organization (id, name, list of user, contact person). A user work to only one organization.
       responses:
         200:
           body:
             application/json:
               example: |
-                [{ "id" : "1", "name" : "AMT", "users" : [{"id" : "1", "login" : "smith", "name" : "Smith"}], "contact_id" : "id"}]
+                { "id" : "1", "name" : "AMT", "users" : [{"id" : "1", "login" : "smith", "name" : "Smith"}], "contact_id" : "id"}
+        404:
+          description: The id was not found.
 
     # PUT /organizations/:id
     # ====================================
     put:
-      description : Update organization
+      description : Update an organization. You can update the name or the person of contact. If you change the person of contact, the user always belong to the organization.
       body:
         application/json:
           example: |
-            { ["name" : "NameOfOrganization", "users" : [{"id" : "1", "login" : "username", "name" : "Smith"}], "contact_id" : "id"}] }
+            { "name" : "AMT", "contact_id" : "id" }
 
       responses:
         200:
           body:
             application/json:
               example: |
-                { [{ "id" : "1", "name" : "NameOfOrganization", "users" : [{"id" : "1", "login" : "username", "name" : "Smith"}], "contact_id" : "id"}] }
+                { "id" : "1", "name" : "AMT", "users" : [{"id" : "1", "login" : "smith", "name" : "Smith"}], "contact_id" : "id" }
+        404:
+          description : The id was not found.
+          
+        520:
+          description: The contact_id do not exist.
     
     # DELETE /organizations/:id
     # ====================================
     delete:
-      description: Delete an organization if there are just a person of contactg and no users, sensors, or facts.  
+      description: Delete an organization. This action delete all users, sensors, observations and facts of the organization.
+      responses:
+        404:
+          description: The id was not found.
 
 # GET /users
 # ====================================
 /users:
+  description: A user work in an organization.
   get:
-     description: Get all users
+     description: Get all users.
+     queryParameters:
+       byOrganizationID:
+        description: Filter users of an organization.
+        example: 1
+        type: number
      responses :
        200:
          body:
            application/json:
              example: |
-               [{"id" : "1", "login" : "username", "name" : "Smith", "contact" : "true"}]
-  
-  description: A user work in organization.
+               [{"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}]
   
   # POST /users
   # ====================================
   post:
-    description: Create an user.
+    description: Create an user. The user is added to the organization.
     body:
       application/json:
         example: |
-          {"login" : "username", "pass": "aasfkpaoj3joi23j09djdasidas", "name" : "Smith"}
+          {"login" : "doe", "name" : "John Doe", "organization_id" : 1}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : "1", "login" : "username", "pass": "aasfkpaoj3joi23j09djdasidas", "name" : "Smith", "contact" : "false" }
+              {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
+      520:
+        description: The organization_id was not found.
   
   # GET /users/:id
   # ====================================
@@ -110,23 +125,39 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : 1, "username" : "usernameofuser", "isContactPerson" : "true/false" }
+                {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
         404:
-          description: The resource was not found.
+          description: The id was not found.
     
     # PUT /users/:id
     # ====================================
     put:
-      description: Update infos of a user.
+      description: Update infos of a user. 
       body:
         application/json:
           example: |
-            {"login" : "username", "pass": "aasfkpaoj3joi23j09djdasidas", "name" : "Smith", "contact" : "false"}
-    
+            {"login" : "doe", "name" : "John Doe", "organization_id" : 1}
+      responses:
+        201:
+          body:
+            application/json:
+              example: |
+                {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
+        404:
+          description: The id was not found.
+        
+        520:
+          description: You can't change the organization_id if the user is an person of contact.
+          
     # DELETE /users/:id
     # ====================================
     delete:
       description: Delete a resource.
+      responses:
+        404:
+          description: The id was not found.
+        520:
+          description: The user is a person of contact.
 
 # GET /sensors
 # ====================================
@@ -138,7 +169,7 @@ traits:
         body:
           application/json:
             example: |
-             [{"id":1, "create_date": "2014-08-11"}]
+             [{"id":1, "name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}]
     
   # POST /sensors
   # ====================================
@@ -147,16 +178,19 @@ traits:
     body:
       application/json:
         example: |
-          {"create_date": "2014-08-11", "organization_id": "1"}
+          {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}
     responses:
       201:
         body:
           application/json:
             example: |
-              { "id" : 1, "create_date": "2014-08-11"}
-  /{id}:
+              {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}
+      520:
+        description: The organization_id was not found.
+  
   # GET /sensors/:id
-  # ====================================
+  # ====================================  
+  /{id}:
     get:
       description: Retrieve a resource.
       responses:
@@ -164,15 +198,39 @@ traits:
           body:
             application/json:
               example: |
-                {"id":1, "create_date": "2014-08-11"}
+                {"id" : 1, "create_date": "2014-08-11", open : "true/false", "organization_id" : 1}
         404:
-          description: The resource was not found.
+          description: The id was not found.
 
+    # PUT /sensors/:id
+    # ====================================
+    put:
+      description: Open/Close a sensor
+      body:
+        application/json:
+          example: |
+            {open : "true/false"}
+      
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"id" : 1, "create_date": "2014-08-11", open : "true/false", "organization_id" : 1}
+        404:
+          description: The id was not found.
+        
+        520:
+          description: The organization_id was not found.
+                
     # GET /sensors/:id
     # ====================================
     delete:
-      description: Delete a resource.
-
+      description: Delete a sensor, all facts and all observations.
+      responses:
+        404:
+          description: The id was not found.
+          
 # GET /observations
 # ====================================
 /observations:
@@ -184,18 +242,26 @@ traits:
         body:
           application/json:
             example: |
-              [{"id":1, "date": "2014-15-14 00:02:52", "value":54, "unit":"degree"}]
+              [{"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "type":"degree", "sensor_id" : 1}]
   post:
     description: Add an observation
     body:
       application/json:
         example: |
-          {"date": "2014-15-14 00:02:52", "value":54, "unit":"degree"}
+          {"date": "2014-15-14 00:02:52", "value" : 54, "type":"degree", "sensor_id" : 1}
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "type":"degree", "sensor_id" : 1}
+      520:
+        description: The sensor_id was not found.
   
-# GET /facts 
+# GET /facts/summaries
 # ====================================
-/facts:
-  description: Fact is generate by organisation to store  observations result. 
+/facts/summaries:
+  description: .... 
   get:
     description: Get all facts 
     responses:
@@ -203,24 +269,9 @@ traits:
         body:
           application/json:
             example: |
-               [{ "id" : 1, "date" : "2014-11-09 00:02:01", "value" : "23", "type" : "max/average/min" }]
+               [{ "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor_id": 1, "organization_id": 1 }]
             
-  # POST /facts 
-  # ====================================
-  post:
-    description: Create a fact.
-    body:
-      application/json:
-        example: |
-          { "date" : "2014-11-09", "value" : "23", "type" : "max/average/min", "organisation_id" : 1 }
-    responses:
-      201:
-        body:
-          application/json:
-            example: |
-              { "id": 1, "date" : "2014-11-09", "value" : "23", "type" : "max/average/min"}
-  
-  # GET /facts/:id 
+  # GET /facts/summaries/:id 
   # ====================================
   /{id}:
     get:
@@ -230,47 +281,45 @@ traits:
           body:
             application/json:
               example: |
-                { "id": 1, "date" : "2014-11-09", "value" : "23", "type" : "max/average/min"}
+                { "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor_id": 1, "organization_id": 1 }
         404:
           description: The resource was not found.
     
-    # DELETE /facts/:id 
+    # DELETE /facts/summaries/:id 
     # ====================================
     delete:
       description: Delete a resource.
-  
-  # GET /facts/:id/min 
-  # ====================================
-  /{id}/min:
-    get:
-      description: Get all facts min
-      responses:
-        200:
-          body:
-            application/json:
-              example: |
-                { "id": 1, "date" : "2014-11-09", "value" : "23"}
 
-  # GET /facts/:id/max
-  # ====================================
-  /{id}/max:
-    get:
-      description: Get all facts min
-      responses:
-        200:
-          body:
-            application/json:
-              example: |
-                { "id": 1, "date" : "2014-11-09", "value" : "23"}
 
-  # GET /facts/:id/average
+# GET /facts/numbers
+# ====================================
+/facts/numbers:
+  description: ....
+  get:
+    description: Get all facts 
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+               [{ "id" : 1, "number": 3, "sensor_id": 1, "organization_id": 1 }]
+            
+  # GET /facts/numbers/:id 
   # ====================================
-  /{id}/average:
+  /{id}:
     get:
-      description: Get all facts min
+      description: Retrieve a resource.
       responses:
         200:
           body:
             application/json:
               example: |
-                { "id": 1, "date" : "2014-11-09", "value" : "23"}
+                { "id" : 1, "number": 3, "sensor_id": 1, "organization_id": 1 }
+        404:
+          description: The resource was not found.
+    
+    # DELETE /facts/numbers/:id 
+    # ====================================
+    delete:
+      description: Delete a resource.
+      
