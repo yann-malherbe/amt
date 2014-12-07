@@ -261,9 +261,9 @@ traits:
 # GET /facts/summaries
 # ====================================
 /facts/summaries:
-  description: .... 
+  description: Every days the platform delete the observations and produce a summary. 
   get:
-    description: Get all facts 
+    description: Get all summaries.
     responses:
       200:
         body:
@@ -289,14 +289,16 @@ traits:
     # ====================================
     delete:
       description: Delete a resource.
-
+      responses:
+        404:
+          description: The id was not found.
 
 # GET /facts/numbers
 # ====================================
 /facts/numbers:
-  description: ....
+  description: The platform count all observations per sensors.
   get:
-    description: Get all facts 
+    description: Get all numbers.
     responses:
       200:
         body:
@@ -322,4 +324,7 @@ traits:
     # ====================================
     delete:
       description: Delete a resource.
+      responses:
+        404:
+          description: The id was not found.
       
