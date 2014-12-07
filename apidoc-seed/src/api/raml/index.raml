@@ -69,7 +69,7 @@ traits:
         404:
           description : The id was not found.
           
-        520:
+        400:
           description: The contact_id do not exist.
     
     # DELETE /organizations/:id
@@ -112,7 +112,7 @@ traits:
           application/json:
             example: |
               {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
-      520:
+      400:
         description: The organization_id was not found.
   
   # GET /users/:id
@@ -146,7 +146,7 @@ traits:
         404:
           description: The id was not found.
         
-        520:
+        400:
           description: You can't change the organization_id if the user is an person of contact.
           
     # DELETE /users/:id
@@ -156,7 +156,7 @@ traits:
       responses:
         404:
           description: The id was not found.
-        520:
+        400:
           description: The user is a person of contact.
 
 # GET /sensors
@@ -193,7 +193,7 @@ traits:
           application/json:
             example: |
               {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}
-      520:
+      400:
         description: The organization_id was not found.
   
   # GET /sensors/:id
@@ -228,7 +228,7 @@ traits:
         404:
           description: The id was not found.
         
-        520:
+        400:
           description: The organization_id was not found.
                 
     # GET /sensors/:id
@@ -268,7 +268,7 @@ traits:
           application/json:
             example: |
               {"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "sensor_id" : 1}
-      520:
+      400:
         description: The sensor_id was not found.
   
 # GET /facts/summaries
