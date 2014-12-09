@@ -32,6 +32,7 @@ public class User implements Serializable {
     private String login;
     private String name;
     private String pass;
+    private Organization organization;
 
     public String getLogin() {
         return login;
@@ -63,6 +64,14 @@ public class User implements Serializable {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     @Override

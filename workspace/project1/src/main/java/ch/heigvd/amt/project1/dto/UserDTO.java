@@ -5,6 +5,8 @@
  */
 package ch.heigvd.amt.project1.dto;
 
+import ch.heigvd.amt.project1.model.Organization;
+
 /**
  *
  * @author Yann
@@ -13,6 +15,7 @@ public class UserDTO {
     private long id;
     private String login;
     private String name;
+    private Organization organization;
     
    
     public long getId() {
@@ -37,6 +40,14 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
     
 }

@@ -15,12 +15,7 @@ public class ObservationDTO {
     private Long id;
     private Timestamp date;
     private float data;
-
-    public ObservationDTO(Long id, Timestamp date, float data) {
-        this.id = id;
-        this.date = date;
-        this.data = data;
-    }
+    private String type;
 
     public Long getId() {
         return id;
@@ -45,6 +40,13 @@ public class ObservationDTO {
     public void setData(float data) {
         this.data = data;
     }
-    
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
     
 }

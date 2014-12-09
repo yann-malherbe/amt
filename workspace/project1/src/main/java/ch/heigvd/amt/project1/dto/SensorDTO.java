@@ -6,6 +6,7 @@
 package ch.heigvd.amt.project1.dto;
 
 import ch.heigvd.amt.project1.model.Observation;
+import ch.heigvd.amt.project1.model.Organization;
 import java.util.LinkedList;
 
 /**
@@ -15,13 +16,7 @@ import java.util.LinkedList;
 public class SensorDTO {
     private Long id;
     private boolean open;
-    private LinkedList<Observation> observations;
-
-    public SensorDTO(Long id, boolean open, LinkedList<Observation> observations) {
-        this.id = id;
-        this.open = open;
-        this.observations = observations;
-    }
+    private Organization organization;
 
     public Long getId() {
         return id;
@@ -39,13 +34,11 @@ public class SensorDTO {
         this.open = open;
     }
 
-    public LinkedList<Observation> getObservations() {
-        return observations;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setObservations(LinkedList<Observation> observations) {
-        this.observations = observations;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
-    
-    
 }

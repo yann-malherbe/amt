@@ -6,7 +6,6 @@
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +22,7 @@ public class Sensor implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private boolean open;
-    private LinkedList<Observation> observations;
+    private Organization organization;
 
     public Long getId() {
         return id;
@@ -41,14 +40,14 @@ public class Sensor implements Serializable {
         this.open = open;
     }
 
-    public LinkedList<Observation> getObservations() {
-        return observations;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setObservations(LinkedList<Observation> observations) {
-        this.observations = observations;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
-  
+
     @Override
     public int hashCode() {
         int hash = 0;

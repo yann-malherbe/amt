@@ -5,6 +5,7 @@
  */
 package ch.heigvd.amt.project1.dto;
 
+import ch.heigvd.amt.project1.model.Organization;
 import java.sql.Timestamp;
 
 /**
@@ -15,6 +16,7 @@ public class FactDTO {
     private Long id;
     private float value;
     private Timestamp date;
+    private Organization organization;
 
     public FactDTO(Long id, float value, Timestamp date) {
         this.id = id;
@@ -45,6 +47,12 @@ public class FactDTO {
     public void setDate(Timestamp date) {
         this.date = date;
     }
-    
-    
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
 }

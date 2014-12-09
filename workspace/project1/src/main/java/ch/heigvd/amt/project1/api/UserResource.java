@@ -74,12 +74,14 @@ public class UserResource {
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
         user.setPass(dto.getPass());
+        user.setOrganization(dto.getOrganization());
         return user;
     }
 
     private User toUser(UserDTO dto, User user) {
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
+        user.setOrganization(dto.getOrganization());
         return user;
     }
 
@@ -88,6 +90,7 @@ public class UserResource {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setLogin(user.getLogin());
+        dto.setOrganization(user.getOrganization());
         return dto;
     }
 

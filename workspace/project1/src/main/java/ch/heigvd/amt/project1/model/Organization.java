@@ -23,9 +23,6 @@ public class Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private LinkedList<User> users;
-    private LinkedList<Sensor> sensors;
-    private LinkedList<Fact> facts;
 
     public Long getId() {
         return id;
@@ -42,32 +39,6 @@ public class Organization implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public LinkedList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(LinkedList<User> users) {
-        this.users = users;
-    }
-
-    public LinkedList<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public void setSensors(LinkedList<Sensor> sensors) {
-        this.sensors = sensors;
-    }
-
-    public LinkedList<Fact> getFacts() {
-        return facts;
-    }
-
-    public void setFacts(LinkedList<Fact> facts) {
-        this.facts = facts;
-    }
-
-    
     
     @Override
     public int hashCode() {
