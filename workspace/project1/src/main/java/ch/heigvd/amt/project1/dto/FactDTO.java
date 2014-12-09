@@ -6,53 +6,40 @@
 package ch.heigvd.amt.project1.dto;
 
 import ch.heigvd.amt.project1.model.Organization;
-import java.sql.Timestamp;
+
 
 /**
  *
  * @author Yann
  */
-public class FactDTO {
+public abstract class FactDTO {
+    
     private Long id;
-    private float value;
-    private Timestamp date;
+    private Boolean open;
     private Organization organization;
-
-    public FactDTO(Long id, float value, Timestamp date) {
-        this.id = id;
-        this.value = value;
-        this.date = date;
-    }
 
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
-    public float getValue() {
-        return value;
+  
+    public Boolean isOpen() {
+        return open;
     }
-
-    public void setValue(float value) {
-        this.value = value;
+    
+    public void setOpen(Boolean open) {
+        this.open = open;
     }
-
-    public Timestamp getDate() {
-        return date;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
-    }
-
+    
     public Organization getOrganization() {
-        return organization;
+        return this.organization;
     }
-
+    
     public void setOrganization(Organization organization) {
         this.organization = organization;
     }
+
 }

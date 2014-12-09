@@ -24,8 +24,6 @@ public class Observation implements Serializable {
     private Long id;
     private Timestamp date;
     private float data;
-    private String type;
-
     
     public Long getId() {
         return id;
@@ -49,14 +47,6 @@ public class Observation implements Serializable {
 
     public void setData(float data) {
         this.data = data;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
      
     @Override

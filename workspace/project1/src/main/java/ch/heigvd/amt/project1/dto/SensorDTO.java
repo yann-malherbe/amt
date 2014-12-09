@@ -15,6 +15,9 @@ import java.util.LinkedList;
  */
 public class SensorDTO {
     private Long id;
+    private String name;
+    private String description;
+    private String type;
     private boolean open;
     private Organization organization;
 
@@ -25,11 +28,34 @@ public class SensorDTO {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public boolean isOpen() {
-        return open;
+  
+    public String getName() {
+        return this.name;
     }
-
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getDescription() {
+        return this.description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public String getType() {
+        return this.type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
+    }
+    public boolean isOpen() {
+        return this.open;
+    }  
+    
     public void setOpen(boolean open) {
         this.open = open;
     }
@@ -41,4 +67,5 @@ public class SensorDTO {
     public void setOrganization(Organization organization) {
         this.organization = organization;
     }
+
 }

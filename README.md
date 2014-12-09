@@ -16,15 +16,7 @@ Apache : 2.4.9 MySQL : 5.6.17 PHP : 5.5.12 PHPMyAdmin : 4.1.14 SqlBuddy : 1.3.3 
 Download : http://www.wampserver.com/
 
 ###Create database and start domain###
-For windows you need Cygwin shell. 
-
-Cygwin is a large collection of GNU and Open Source tools which provide functionality similar to a Linux distribution on Windows.
-
-Download : https://www.cygwin.com/
-
-You have to lauch Cygwin as Admin.
-
-With cygwin go to in the directory /install
+Open a terminal as Admin and go to in the directory /install
 
 The goal of this part is executed the script : script.sh
 

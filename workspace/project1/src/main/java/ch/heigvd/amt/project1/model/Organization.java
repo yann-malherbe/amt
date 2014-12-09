@@ -6,7 +6,7 @@
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +23,8 @@ public class Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private List sensors;
+    private List users;
 
     public Long getId() {
         return id;
@@ -38,6 +40,22 @@ public class Organization implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public List getSensors() {
+        return this.sensors;
+    }
+    
+    public void setSensors(List sensors) {
+        this.sensors = sensors;
+    }
+    
+    public List getUsers() {
+        return this.users;
+    }
+    
+    public void setUsers(List users) {
+        this.users = users;
     }
     
     @Override
