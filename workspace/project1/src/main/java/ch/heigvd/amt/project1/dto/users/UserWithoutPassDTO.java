@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.heigvd.amt.project1.dto;
+package ch.heigvd.amt.project1.dto.users;
 
+import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.model.Organization;
 
 /**
  *
  * @author Yann
  */
-public class UserWithPassDTO {
+public class UserWithoutPassDTO {
 
-    private Long id;
+    private long id;
     private String login;
     private String name;
-    private String pass;
-    private Organization organization;
+    private OrganizationDTO organization;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -34,7 +34,7 @@ public class UserWithPassDTO {
     public void setLogin(String login) {
         this.login = login;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -43,21 +43,12 @@ public class UserWithPassDTO {
         this.name = name;
     }
 
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public Organization getOrganization() {
+    public OrganizationDTO getOrganization() {
         return organization;
     }
 
-    public void setOrganization(Organization organization) {
+    public void setOrganization(OrganizationDTO organization) {
         this.organization = organization;
     }
-    
-    
+
 }

@@ -29,7 +29,7 @@ cd 'C:/Program Files/glassfish-4.1/bin'
 ./asadmin delete-domain $DOMAIN_NAME
 ./asadmin create-domain --nopassword=true $DOMAIN_NAME
 
-cp 'C:/Users/Magali/GithubProject/amt/install/mysql-connector-java-5.1.33.jar' ../glassfish/domains/$DOMAIN_NAME/lib
+cp 'C:/Users/Yann/ownCloud/HEIG-VD/SEM5/AMT/git/amt/install/mysql-connector-java-5.1.33.jar' ../glassfish/domains/$DOMAIN_NAME/lib
 
 ./asadmin start-domain $DOMAIN_NAME
 

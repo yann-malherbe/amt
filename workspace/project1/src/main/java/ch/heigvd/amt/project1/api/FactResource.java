@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Yann
  */
-@WebServlet(name = "OrganizationRessource", urlPatterns = {"/OrganizationRessource"})
-public class OrganizationRessource extends HttpServlet {
+@WebServlet(name = "FactRessource", urlPatterns = {"/FactRessource"})
+public class FactResource extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +38,10 @@ public class OrganizationRessource extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrganizationRessource</title>");            
+            out.println("<title>Servlet FactRessource</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OrganizationRessource at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FactRessource at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

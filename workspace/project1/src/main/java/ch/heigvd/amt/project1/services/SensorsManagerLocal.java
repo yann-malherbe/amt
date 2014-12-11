@@ -18,12 +18,12 @@ public interface SensorsManagerLocal {
 
     public Sensor findSensorById(long id);
 
-    public List<Sensor> findAllSensors();
+    public List<Sensor> findAllPublicSensors();
 
     public Sensor createSensor(Sensor sensor);
 
     public void updateSensor(Sensor sensor);
 
     public void deleteSensor(Sensor sensor);
-    
+
 }

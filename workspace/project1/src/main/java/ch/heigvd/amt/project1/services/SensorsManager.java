@@ -26,10 +26,9 @@ public class SensorsManager implements SensorsManagerLocal {
     public Sensor findSensorById(long id) {
         return em.find(Sensor.class, id);
     }
-
-    @Override
-    public List<Sensor> findAllSensors() {
-        return em.createNamedQuery("findAllUsers").getResultList();
+    
+    public List<Sensor> findAllPublicSensors(){
+        return em.createNamedQuery("findAllPublicSensors").getResultList();
     }
 
     @Override

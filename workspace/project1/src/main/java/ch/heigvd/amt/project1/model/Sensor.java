@@ -10,13 +10,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Yann
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "findAllPublicSensors", query = "SELECT s FROM Sensor s WHERE s.open = true")
+})
+
 public class Sensor implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +34,7 @@ public class Sensor implements Serializable {
     private String description;
     private String type;
     private boolean open;
+    @ManyToOne
     private Organization organization;
 
     public Long getId() {
@@ -34,34 +44,35 @@ public class Sensor implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-  
+
     public String getName() {
         return this.name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getDescription() {
         return this.description;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public String getType() {
         return this.type;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }
+
     public boolean isOpen() {
         return this.open;
-    }  
-    
+    }
+
     public void setOpen(boolean open) {
         this.open = open;
     }
@@ -98,5 +109,5 @@ public class Sensor implements Serializable {
     public String toString() {
         return "ch.heigvd.amt.project1.model.Sensor[ id=" + id + " ]";
     }
-    
+
 }
