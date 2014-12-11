@@ -20,7 +20,7 @@ traits:
         body:
           application/json:
             example: |
-              [{ "id" : 1, "name" : "AMT", "contact" : 1}]
+              [{ "id" : 1, "name" : "AMT", "contact" : {"id": 1}}]
 
   # POST /organizations
   # ====================================
@@ -47,7 +47,7 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : "1", "name" : "AMT", "users" : [{"id" : "1", "login" : "smith", "name" : "Smith"}], "contact_id" : "id"}
+                { "id" : 1, "name" : "AMT", "contact" {"id" : 1}}
         404:
           description: The id was not found.
 
@@ -58,14 +58,14 @@ traits:
       body:
         application/json:
           example: |
-            { "name" : "AMT", "contact_id" : "id" }
+            { "name" : "AMT", "contact" : {"id" : 1} }
 
       responses:
         200:
           body:
             application/json:
               example: |
-                { "id" : "1", "name" : "AMT", "users" : [{"id" : "1", "login" : "smith", "name" : "Smith"}], "contact_id" : "id" }
+                { "id" : "1", "name" : "AMT", "contact" : {"id": 1}}
         404:
           description : The id was not found.
           
@@ -96,7 +96,7 @@ traits:
          body:
            application/json:
              example: |
-               [{"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}]
+               [{"id" : 1, "login" : "doe", "name" : "John Doe", "organization" :{"id": 1}}]
   
   # POST /users
   # ====================================
@@ -105,13 +105,13 @@ traits:
     body:
       application/json:
         example: |
-          {"login" : "doe", "name" : "John Doe", "pass" : "8234seh348129jbjhiefbiasd", "organization_id" : 1}
+          {"login" : "doe", "name" : "John Doe", "pass" : "8234seh348129jbjhiefbiasd", "organization" : {"id" : 1}}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
+              {"id" : 1, "login" : "doe", "name" : "John Doe", "organization" : { "id" : 1}}
       400:
         description: The organization_id was not found.
   
@@ -125,7 +125,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
+                {"id" : 1, "login" : "doe", "name" : "John Doe", "organization" : {"id" : 1}}
         404:
           description: The id was not found.
     
@@ -136,13 +136,13 @@ traits:
       body:
         application/json:
           example: |
-            {"login" : "doe", "name" : "John Doe", "organization_id" : 1}
+            {"login" : "doe", "name" : "John Doe", "organization" : {"id": 1}}
       responses:
         201:
           body:
             application/json:
               example: |
-                {"id" : 1, "login" : "doe", "pass" : "8234seh348129jbjhiefbiasd", "name" : "John Doe", "organization_id" : 1}
+                {"id" : 1, "login" : "doe", "pass" : "8234seh348129jbjhiefbiasd", "name" : "John Doe", "organization" : {"id" : 1}}
         404:
           description: The id was not found.
         
@@ -177,7 +177,7 @@ traits:
         body:
           application/json:
             example: |
-             [{"id":1, "name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}]
+             [{"id":1, "name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization" : {"id" : 1}}]
     
   # POST /sensors
   # ====================================
@@ -186,13 +186,13 @@ traits:
     body:
       application/json:
         example: |
-          {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}
+          {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization" : {"id" : 1}}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization_id" : 1}
+              {"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization" : {"id" : 1}}
       400:
         description: The organization_id was not found.
   
@@ -206,7 +206,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "create_date": "2014-08-11", open : "true/false", "organization_id" : 1}
+                {"id" : 1, "create_date": "2014-08-11", open : "true/false", "organization" : {"id" : 1}}
         404:
           description: The id was not found.
 
@@ -224,7 +224,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "create_date": "2014-08-11", open : "true/false", "organization_id" : 1}
+                {"id" : 1, "create_date": "2014-08-11", open : "true/false", "organization" : {"id" : 1}}
         404:
           description: The id was not found.
         
@@ -255,19 +255,19 @@ traits:
         body:
           application/json:
             example: |
-              [{"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "sensor_id" : 1}]
+              [{"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "sensor" : {"id" : 1}}]
   post:
     description: Add an observation
     body:
       application/json:
         example: |
-          {"date": "2014-15-14 00:02:52", "value" : 54, "sensor_id" : 1}
+          {"date": "2014-15-14 00:02:52", "value" : 54, "sensor" : {"id" : 1}}
     responses:
       201:
         body:
           application/json:
             example: |
-              {"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "sensor_id" : 1}
+              {"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "sensor" : {"id" : 1}}
       400:
         description: The sensor_id was not found.
   
@@ -291,7 +291,7 @@ traits:
         body:
           application/json:
             example: |
-               [{ "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor_id": 1, "organization_id": 1 }]
+               [{ "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor": {"id" : 1}, "organization": {"id" : 1} }]
             
   # GET /facts/summaries/:id 
   # ====================================
@@ -303,7 +303,7 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor_id": 1, "organization_id": 1 }
+                { "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor": {"id" : 1}, "organization": {"id" : 1} }
         404:
           description: The resource was not found.
     
@@ -336,7 +336,7 @@ traits:
         body:
           application/json:
             example: |
-               [{ "id" : 1, "number": 3, "sensor_id": 1, "organization_id": 1 }]
+               [{ "id" : 1, "number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }]
             
   # GET /facts/numbers/:id 
   # ====================================
@@ -348,7 +348,7 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : 1, "number": 3, "sensor_id": 1, "organization_id": 1 }
+                { "id" : 1, "number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }
         404:
           description: The resource was not found.
     
