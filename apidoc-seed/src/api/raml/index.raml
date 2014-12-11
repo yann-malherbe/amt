@@ -105,7 +105,7 @@ traits:
     body:
       application/json:
         example: |
-          {"login" : "doe", "name" : "John Doe", "organization_id" : 1}
+          {"login" : "doe", "name" : "John Doe", "pass" : "8234seh348129jbjhiefbiasd", "organization_id" : 1}
     responses:
       201:
         body:
@@ -142,7 +142,7 @@ traits:
           body:
             application/json:
               example: |
-                {"id" : 1, "login" : "doe", "name" : "John Doe", "organization_id" : 1}
+                {"id" : 1, "login" : "doe", "pass" : "8234seh348129jbjhiefbiasd", "name" : "John Doe", "organization_id" : 1}
         404:
           description: The id was not found.
         
