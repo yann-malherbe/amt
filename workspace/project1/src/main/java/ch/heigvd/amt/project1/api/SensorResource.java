@@ -7,6 +7,7 @@ package ch.heigvd.amt.project1.api;
 
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorSimpleDTO;
+import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.services.SensorsManagerLocal;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class SensorResource {
         List<Sensor> sensors = sensorsManager.findAllPublicSensors();
         List<SensorDTO> result = new ArrayList<>();
         for (Sensor sensor : sensors) {
-            result.add(toDTO(sensor));
+            result.add(toDTO(sensor, true));
         }
         return result;
     }
@@ -61,14 +62,14 @@ public class SensorResource {
     @Produces("application/json")
     public SensorDTO createSensor(SensorDTO dto) {
         Sensor newSensor = new Sensor();
-        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor)));
+        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor)), true);
     }
 
     @Path("/{id}")
     @GET
     @Produces("application/json")
     public SensorDTO getSensor(@PathParam("id") long id) {
-        return toDTO(sensorsManager.findSensorById(id));
+        return toDTO(sensorsManager.findSensorById(id), true);
     }
 
     @Path("/{id}")
@@ -78,7 +79,7 @@ public class SensorResource {
     public SensorDTO updateSensor(@PathParam("id") long id, SensorSimpleDTO dto) {
         Sensor existing = sensorsManager.findSensorById(id);
         sensorsManager.updateSensor(toSensor(dto, existing));
-        return toDTO(existing);
+        return toDTO(existing, true);
     }
 
     @Path("/{id}")
@@ -89,29 +90,32 @@ public class SensorResource {
     }
 
     private Sensor toSensor(SensorSimpleDTO dto, Sensor sensor) {
-        sensor.setId(dto.getId());
         sensor.setOpen(dto.isOpen());
         return sensor;
     }
 
     private Sensor toSensor(SensorDTO dto, Sensor sensor) {
-        sensor.setId(dto.getId());
         sensor.setName(dto.getName());
         sensor.setDescription(dto.getDescription());
         sensor.setType(dto.getType());
         sensor.setOpen(dto.isOpen());
-        //sensor.setOrganization(dto.getOrganization());
+        if (dto.getOrganization() != null) {
+            sensor.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), new Organization()));
+        }
+
         return sensor;
     }
 
-    protected static SensorDTO toDTO(Sensor sensor) {
+    protected static SensorDTO toDTO(Sensor sensor, boolean doChild) {
         SensorDTO dto = new SensorDTO();
         dto.setId(sensor.getId());
         dto.setName(sensor.getName());
         dto.setDescription(sensor.getDescription());
         dto.setType(sensor.getType());
         dto.setOpen(sensor.isOpen());
-        //dto.setOrganization(sensor.getOrganization());
+        if (sensor.getOrganization() != null && doChild == true) {
+            dto.setOrganization(OrganizationResource.toDTO(sensor.getOrganization(), false));
+        }
 
         return dto;
     }

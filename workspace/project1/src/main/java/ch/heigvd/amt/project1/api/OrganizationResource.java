@@ -8,6 +8,7 @@ package ch.heigvd.amt.project1.api;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
+import ch.heigvd.amt.project1.dto.users.UserDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.model.User;
@@ -67,7 +68,7 @@ public class OrganizationResource {
     @GET
     @Produces("application/json")
     public OrganizationDTO getOrganization(@PathParam("id") long id) {
-        return toDTO(organizationsManager.findOrganizationById(id));
+        return toDTO(organizationsManager.findOrganizationById(id), true);
     }
 
     @Path("/{id}")
@@ -77,7 +78,7 @@ public class OrganizationResource {
     public OrganizationDTO updateOrganization(@PathParam("id") long id, OrganizationSimpleDTO dto) {
         Organization existing = organizationsManager.findOrganizationById(id);
         organizationsManager.updateOrganization(toOrganization(dto, existing));
-        return toDTO(existing);
+        return toDTO(existing, true);
     }
 
     @Path("/{id}")
@@ -88,16 +89,18 @@ public class OrganizationResource {
     }
 
     protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization) {
-        organization.setId(dto.getId());
         organization.setName(dto.getName());
-        //organization.setContact(dto.getContact());
+        if (dto.getContact() != null) {
+            organization.setContact(UserResource.toUser(dto.getContact(), new User()));
+        }
         return organization;
     }
-    
+
     protected static Organization toOrganization(OrganizationDTO dto, Organization organization) {
-        organization.setId(dto.getId());
         organization.setName(dto.getName());
-        //organization.setContact(dto.getContact());
+        if (dto.getContact() != null) {
+            organization.setContact(UserResource.toUser(dto.getContact(), new User()));
+        }
         organization.setSensors(dto.getSensors());
         organization.setUsers(dto.getUsers());
         return organization;
@@ -107,25 +110,37 @@ public class OrganizationResource {
         OrganizationSimpleDTO dto = new OrganizationSimpleDTO();
         dto.setId(organization.getId());
         dto.setName(organization.getName());
-        //dto.setContact(organization.getContact());
+        if (organization.getContact() != null) {
+            dto.setContact(UserResource.toDTO(organization.getContact(), false));
+        }
         return dto;
     }
 
-    protected static OrganizationDTO toDTO(Organization organization) {
+    protected static OrganizationDTO toDTO(Organization organization, boolean doChild) {
         OrganizationDTO dto = new OrganizationDTO();
         dto.setId(organization.getId());
         dto.setName(organization.getName());
-        //dto.setContact(organization.getContact());
-        /*
-        ArrayList<SensorDTO> sensorsDTO = new ArrayList<>();
-        for (Sensor sensor : (List<Sensor>)organization.getSensors()) {
-            sensorsDTO.add(SensorResource.toDTO(sensor, false));
+
+        if (organization.getContact() != null && doChild == true) {
+            dto.setContact(UserResource.toDTO(organization.getContact(), false));
         }
-        dto.setSensors(sensorsDTO);
-        */
-        dto.setSensors(organization.getSensors());
-        
-        dto.setUsers(organization.getUsers());
+
+        if (organization.getSensors() != null && doChild == true) {
+            ArrayList<SensorDTO> sensorsDTO = new ArrayList<>();
+            for (Sensor sensor : (List<Sensor>) organization.getSensors()) {
+                sensorsDTO.add(SensorResource.toDTO(sensor, false));
+            }
+            dto.setSensors(sensorsDTO);
+        }
+
+        if (organization.getUsers() != null && doChild == true) {
+            List<UserDTO> usersDTO = new ArrayList<>();
+            for (User user : (List<User>) organization.getUsers()) {
+                usersDTO.add(UserResource.toDTO(user, false));
+            }
+            dto.setUsers(usersDTO);
+        }
+
         return dto;
     }
 

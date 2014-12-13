@@ -52,7 +52,7 @@ public class UserResource {
         List<User> users = usersManager.findAllUsers();
         List<UserDTO> result = new ArrayList<>();
         for (User user : users) {
-            result.add(toDTO(user));
+            result.add(toDTO(user, true));
         }
         return result;
     }
@@ -62,14 +62,14 @@ public class UserResource {
     @Produces("application/json")
     public UserDTO createUser(UserDTO dto) {
         User newUser = new User();
-        return toDTO(usersManager.createUser(toUser(dto, newUser)));
+        return toDTO(usersManager.createUser(toUser(dto, newUser)), true);
     }
 
     @Path("/{id}")
     @GET
     @Produces("application/json")
     public UserDTO getUser(@PathParam("id") long id) {
-        return toDTO(usersManager.findUserById(id));
+        return toDTO(usersManager.findUserById(id), true);
     }
 
     @Path("/{id}")
@@ -79,7 +79,7 @@ public class UserResource {
     public UserDTO updateUser(@PathParam("id") long id, UserDTO dto) {
         User existing = usersManager.findUserById(id);
         usersManager.updateUser(toUser(dto, existing));
-        return toDTO(existing);
+        return toDTO(existing, true);
     }
 
     @Path("/{id}")
@@ -90,28 +90,32 @@ public class UserResource {
     }
 
     protected static User toUser(UserWithoutPassDTO dto, User user) {
-        user.setId(dto.getId());
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
-        //user.setOrganization(dto.getOrganization());
+        if (dto.getOrganization() != null) {
+            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), new Organization()));
+        }
         return user;
     }
 
     protected static User toUser(UserDTO dto, User user) {
-        user.setId(dto.getId());
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
         user.setPass(dto.getPass());
-        //user.setOrganization(dto.getOrganization());
+        if (dto.getOrganization() != null) {
+            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), new Organization()));
+        }
         return user;
     }
 
-    protected static UserDTO toDTO(User user) {
+    protected static UserDTO toDTO(User user, boolean doChild) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setLogin(user.getLogin());
-        //dto.setOrganization(user.getOrganization());
+        if (user.getOrganization() != null && doChild == true) {
+            dto.setOrganization(OrganizationResource.toDTO(user.getOrganization(), false));
+        }
         return dto;
     }
 }
