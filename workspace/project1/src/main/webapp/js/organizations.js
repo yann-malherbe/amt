@@ -1,6 +1,6 @@
 $(document).ready(function () {
     
-    Handlebars.registerHelper('table', function (items, options) {
+    /*Handlebars.registerHelper('table', function (items, options) {
         out = out + "<div class=\"table-responsive\">" + "\n";
         out = out + "<table class=\"table table-hover table-striped\">" + "\n";
         out = out + "<thead>" + "\n";
@@ -24,12 +24,12 @@ $(document).ready(function () {
 
         return out;
     });
-    
+    */
     var src = document.getElementById("organizations_template").innerHTML;
-
+    console.log(src);
     var tmp = Handlebars.compile(src);
     var ctx = {
-        organizations:[{name:"AMT", contact:"John"},{name:"STI", contact:"Steve"}]
+        organizations:["blbla"]//{name:"AMT", contact:"John"},{name:"STI", contact:"Steve"}]
     };
 
     var out = tmp(ctx);

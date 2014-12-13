@@ -115,8 +115,29 @@
                     <div class="col-lg-8">
                         <h3>Organizations</h3>
                         
-                        <div id="organizations_template">
-                            {{#table organizations}}{{/table}}
+                          <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Organization's name</th>
+                                        <th>Contact</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="organizations_template">
+                                    {{#each organizations}}
+                                    <tr>
+                                        <td>{{this}}</td>
+                                        <td>{{this}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        
+                        <div>
+                            <!--{{#table organizations}}{{/table}}-->
+                            
                         </div>
                     </div>
                 </div>
