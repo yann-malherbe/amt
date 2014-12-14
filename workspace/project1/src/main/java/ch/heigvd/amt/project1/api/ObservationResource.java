@@ -5,7 +5,7 @@
  */
 package ch.heigvd.amt.project1.api;
 
-import ch.heigvd.amt.project1.dto.observation.ObservationDTO;
+import ch.heigvd.amt.project1.dto.observations.ObservationDTO;
 import ch.heigvd.amt.project1.model.Observation;
 import ch.heigvd.amt.project1.services.ObservationsManagerLocal;
 import java.util.ArrayList;

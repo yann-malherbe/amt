@@ -9,6 +9,7 @@ import ch.heigvd.amt.project1.dto.users.UserDTO;
 import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.User;
+import ch.heigvd.amt.project1.services.OrganizationsManagerLocal;
 import ch.heigvd.amt.project1.services.UsersManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class UserResource {
     @EJB
     UsersManagerLocal usersManager;
 
+    @EJB
+    OrganizationsManagerLocal organizationsManager;
+
     @Context
     private UriInfo context;
 
@@ -62,7 +66,8 @@ public class UserResource {
     @Produces("application/json")
     public UserDTO createUser(UserDTO dto) {
         User newUser = new User();
-        return toDTO(usersManager.createUser(toUser(dto, newUser)), true);
+        Organization organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
+        return toDTO(usersManager.createUser(toUser(dto, newUser, organization)), true);
     }
 
     @Path("/{id}")
@@ -78,7 +83,8 @@ public class UserResource {
     @Produces("application/json")
     public UserDTO updateUser(@PathParam("id") long id, UserDTO dto) {
         User existing = usersManager.findUserById(id);
-        usersManager.updateUser(toUser(dto, existing));
+        Organization organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
+        usersManager.updateUser(toUser(dto, existing, organization));
         return toDTO(existing, true);
     }
 
@@ -89,21 +95,21 @@ public class UserResource {
         usersManager.deleteUser(existing);
     }
 
-    protected static User toUser(UserWithoutPassDTO dto, User user) {
+    protected static User toUser(UserWithoutPassDTO dto, User user, Organization organization) {
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
         if (dto.getOrganization() != null) {
-            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), new Organization()));
+            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), organization, user));
         }
         return user;
     }
 
-    protected static User toUser(UserDTO dto, User user) {
+    protected static User toUser(UserDTO dto, User user, Organization organization) {
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
         user.setPass(dto.getPass());
         if (dto.getOrganization() != null) {
-            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), new Organization()));
+            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), organization, user));
         }
         return user;
     }
@@ -114,7 +120,7 @@ public class UserResource {
         dto.setName(user.getName());
         dto.setLogin(user.getLogin());
         if (user.getOrganization() != null && doChild == true) {
-            dto.setOrganization(OrganizationResource.toDTO(user.getOrganization(), false));
+            dto.setOrganization(OrganizationResource.toSimpleDTO(user.getOrganization(), false));
         }
         return dto;
     }

@@ -9,7 +9,10 @@ import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorSimpleDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
+import ch.heigvd.amt.project1.model.User;
+import ch.heigvd.amt.project1.services.OrganizationsManagerLocal;
 import ch.heigvd.amt.project1.services.SensorsManagerLocal;
+import ch.heigvd.amt.project1.services.UsersManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -35,6 +38,12 @@ public class SensorResource {
 
     @EJB
     SensorsManagerLocal sensorsManager;
+
+    @EJB
+    OrganizationsManagerLocal organizationsManager;
+
+    @EJB
+    UsersManagerLocal usersManager;
 
     @Context
     private UriInfo context;
@@ -62,7 +71,18 @@ public class SensorResource {
     @Produces("application/json")
     public SensorDTO createSensor(SensorDTO dto) {
         Sensor newSensor = new Sensor();
-        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor)), true);
+        User user = null;
+        Organization organization = null;
+
+        if (dto.getOrganization() != null) {
+            organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
+            
+            if (organization != null || organization.getContact() != null){
+                user = usersManager.findUserById(organization.getContact().getId());
+            }
+        }
+
+        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor, organization, user)), true);
     }
 
     @Path("/{id}")
@@ -89,18 +109,18 @@ public class SensorResource {
         sensorsManager.deleteSensor(existing);
     }
 
-    private Sensor toSensor(SensorSimpleDTO dto, Sensor sensor) {
+    protected static Sensor toSensor(SensorSimpleDTO dto, Sensor sensor) {
         sensor.setOpen(dto.isOpen());
         return sensor;
     }
 
-    private Sensor toSensor(SensorDTO dto, Sensor sensor) {
+    protected static Sensor toSensor(SensorDTO dto, Sensor sensor, Organization organization, User user) {
         sensor.setName(dto.getName());
         sensor.setDescription(dto.getDescription());
         sensor.setType(dto.getType());
         sensor.setOpen(dto.isOpen());
         if (dto.getOrganization() != null) {
-            sensor.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), new Organization()));
+            sensor.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), organization, user));
         }
 
         return sensor;
@@ -114,7 +134,7 @@ public class SensorResource {
         dto.setType(sensor.getType());
         dto.setOpen(sensor.isOpen());
         if (sensor.getOrganization() != null && doChild == true) {
-            dto.setOrganization(OrganizationResource.toDTO(sensor.getOrganization(), false));
+            dto.setOrganization(OrganizationResource.toSimpleDTO(sensor.getOrganization(), false));
         }
 
         return dto;

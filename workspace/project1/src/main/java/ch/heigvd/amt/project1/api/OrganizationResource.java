@@ -13,6 +13,7 @@ import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.model.User;
 import ch.heigvd.amt.project1.services.OrganizationsManagerLocal;
+import ch.heigvd.amt.project1.services.UsersManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -38,6 +39,9 @@ public class OrganizationResource {
 
     @EJB
     OrganizationsManagerLocal organizationsManager;
+    
+    @EJB
+    UsersManagerLocal usersManager;
 
     @Context
     private UriInfo context;
@@ -51,7 +55,7 @@ public class OrganizationResource {
         List<Organization> organizations = organizationsManager.findAllOrganizations();
         List<OrganizationSimpleDTO> result = new ArrayList<>();
         for (Organization organization : organizations) {
-            result.add(toSimpleDTO(organization));
+            result.add(toSimpleDTO(organization, true));
         }
         return result;
     }
@@ -61,7 +65,12 @@ public class OrganizationResource {
     @Produces("application/json")
     public OrganizationSimpleDTO createOrganization(OrganizationSimpleDTO dto) {
         Organization newOrganization = new Organization();
-        return toSimpleDTO(organizationsManager.createOrganization(toOrganization(dto, newOrganization)));
+        User existing = null;
+        
+        if (dto.getContact() != null){
+            existing = usersManager.findUserById(dto.getContact().getId());
+        }
+        return toSimpleDTO(organizationsManager.createOrganization(toOrganization(dto, newOrganization, existing)), true);
     }
 
     @Path("/{id}")
@@ -77,7 +86,8 @@ public class OrganizationResource {
     @Produces("application/json")
     public OrganizationDTO updateOrganization(@PathParam("id") long id, OrganizationSimpleDTO dto) {
         Organization existing = organizationsManager.findOrganizationById(id);
-        organizationsManager.updateOrganization(toOrganization(dto, existing));
+        User user = usersManager.findUserById(dto.getContact().getId());
+        organizationsManager.updateOrganization(toOrganization(dto, existing, user));
         return toDTO(existing, true);
     }
 
@@ -88,29 +98,33 @@ public class OrganizationResource {
         organizationsManager.deleteOrganization(existing);
     }
 
-    protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization) {
+    protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization, User user) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
-            organization.setContact(UserResource.toUser(dto.getContact(), new User()));
+            organization.setContact(UserResource.toUser(dto.getContact(), user, organization));
         }
         return organization;
     }
 
-    protected static Organization toOrganization(OrganizationDTO dto, Organization organization) {
+    protected static Organization ltoOrganization(OrganizationDTO dto, Organization organization, User contact, List<Sensor> sensors, List<User> users) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
-            organization.setContact(UserResource.toUser(dto.getContact(), new User()));
+            organization.setContact(UserResource.toUser(dto.getContact(), contact, organization));
         }
-        organization.setSensors(dto.getSensors());
-        organization.setUsers(dto.getUsers());
+        if (dto.getSensors() != null){
+            organization.setSensors(sensors);
+        }
+        if (dto.getUsers() != null){
+            organization.setUsers(users);
+        }
         return organization;
     }
 
-    protected static OrganizationSimpleDTO toSimpleDTO(Organization organization) {
+    protected static OrganizationSimpleDTO toSimpleDTO(Organization organization, boolean doChild) {
         OrganizationSimpleDTO dto = new OrganizationSimpleDTO();
         dto.setId(organization.getId());
         dto.setName(organization.getName());
-        if (organization.getContact() != null) {
+        if (organization.getContact() != null && doChild == true) {
             dto.setContact(UserResource.toDTO(organization.getContact(), false));
         }
         return dto;
@@ -140,7 +154,6 @@ public class OrganizationResource {
             }
             dto.setUsers(usersDTO);
         }
-
         return dto;
     }
 
