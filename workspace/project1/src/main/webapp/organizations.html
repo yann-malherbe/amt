@@ -33,7 +33,7 @@
 </head>
 
 <body>
-
+    <div id="organizations_template">
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -115,30 +115,27 @@
                     <div class="col-lg-8">
                         <h3>Organizations</h3>
                         
-                          <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
+                          <div id="organizations_table" class="table-responsive">
+                              
+                              <script id="some-template" type="text/x-handlebars-template"> 
+                                  <table class="table table-hover table-striped">
+                                    <thead> 
                                         <th>Organization's name</th>
-                                        <th>Contact</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="organizations_template">
-                                    {{#each organizations}}
-                                    <tr>
-                                        <td>{{this}}</td>
-                                        <td>{{this}}</td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
+                                        <th>Contact</th> 
+                                    </thead> 
+                                    <tbody> 
+                                        {{#organizations}} 
+                                        <tr> 
+                                            <td>{{name}}</td> 
+                                            <td>{{contact}}</td> 
+                                        </tr> 
+                                        {{/organizations}} 
 
-                        
-                        <div>
-                            <!--{{#table organizations}}{{/table}}-->
-                            
+                                      </tbody> 
+                                    </table> 
+                              </script>
                         </div>
+                        
                     </div>
                 </div>
                 <!-- /.row -->
@@ -160,6 +157,7 @@
     <script src="js/handlebars.js"></script>
     <script src="js/organizations.js"></script>
 
+</div>
 </body>
 
 </html>
