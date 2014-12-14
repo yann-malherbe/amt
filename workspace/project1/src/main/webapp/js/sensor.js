@@ -1,7 +1,59 @@
 $(document).ready(function () {
+    
+    var organizations = {
+        organizations:[{id: 1, name:"AMT"},{id:2, name:"STI"}]
+    };
+    draw_organization_list(organizations);
+    
+    var sensors = {
+        sensors:[
+            {id:"1", name:"sensors#2334", description:"Sensor of temperature"},
+            {id:"2", name:"sensors#1125", description:"Photometric"}]
+    };
+    draw_sensor_list(sensors);
+    draw_area_graph();
+    draw_line_graph();    
+});
 
-    // Area Chart
-    Morris.Area({
+function draw_organization_list(data) {
+    var source = $("#organization-template").html(); 
+    var template = Handlebars.compile(source);     
+    var result = template(data);    
+    $("#organization-list").append(result);
+}
+
+function draw_sensor_list(data) {
+    var source = $("#sensor-template").html(); 
+    var template = Handlebars.compile(source); 
+    var result = template(data);
+    $("#sensors-list").empty();
+    $("#sensors-list").append(result);
+}
+
+
+/* Onchange Event */
+function select_organization() {
+    
+    var sensors = {
+        sensors:[
+            {id:"1", name:"sensors#2334", description:"Sensor of temperature"},
+            {id:"2", name:"sensors#1125", description:"Photometric"}]
+    };
+    draw_sensor_list(sensors);
+}
+
+/* Onchange Event */
+function select_sensor() {
+    draw_area_graph();
+    draw_line_graph();
+}
+
+
+function draw_area_graph() {
+    
+    $("#allobservations").empty();
+    
+    var data_graph = {
         element: 'allobservations',
         data: [{
             period: '2010 Q1',
@@ -60,11 +112,18 @@ $(document).ready(function () {
         pointSize: 2,
         hideHover: 'auto',
         resize: true
-    });
+    };
     
+    // Area Chart
+    var graph = Morris.Area(data_graph);
+
+}
+
+function draw_line_graph() {
     
-    // Line Chart
-    Morris.Line({
+    $("#today").empty();
+    
+    var data_graph = {
         // ID of the element in which to draw the chart.
         element: 'today',
         // Chart data records -- each entry in this array corresponds to a point on
@@ -173,6 +232,7 @@ $(document).ready(function () {
         // Disables line smoothing
         smooth: false,
         resize: true
-    });
-
-});
+    };
+    
+    var graph = Morris.Line(data_graph);
+}
