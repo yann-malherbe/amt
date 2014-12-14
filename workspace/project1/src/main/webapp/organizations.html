@@ -33,7 +33,7 @@
 </head>
 
 <body>
-
+    <div id="organizations_template">
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -113,11 +113,28 @@
 
                 <div class="row">
                     <div class="col-lg-8">
-                        <h3>Organizations</h3>
+                        <h3>List of organizations</h3>
                         
-                        <div id="organizations_template">
-                            {{#table organizations}}{{/table}}
-                        </div>
+                        <div id="organizations_table" class="table-responsive"></div>
+                        
+                        <script id="organizations-template" type="text/x-handlebars-template"> 
+                          <table class="table table-hover table-striped">
+                            <thead> 
+                                <th>Name</th>
+                                <th>Contact</th> 
+                            </thead> 
+                            <tbody> 
+                                {{#organizations}} 
+                                <tr> 
+                                    <td>{{name}}</td> 
+                                    <td>{{contact}}</td> 
+                                </tr> 
+                                {{/organizations}} 
+
+                              </tbody> 
+                            </table> 
+                        </script>
+                        
                     </div>
                 </div>
                 <!-- /.row -->
@@ -139,6 +156,7 @@
     <script src="js/handlebars.js"></script>
     <script src="js/organizations.js"></script>
 
+</div>
 </body>
 
 </html>

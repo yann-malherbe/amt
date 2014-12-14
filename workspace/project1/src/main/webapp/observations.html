@@ -107,70 +107,106 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                
+                <div class="row"> 
+                    
+                    <div class="col-lg-4">
+                        
+                        <div id="organization-list" class="form-group"></div>
+                            
+                        <script id="organization-template" type="text/x-handlebars-template"> 
 
+                            <label for="objSelect">Select organization:</label>
+                            <select class="form-control" id="objSelect" onchange="select_organization()">
+                                {{#organizations}}
+                                <option value="{{id}}">{{name}}</option>
+                                {{/organizations}}
+                            </select>
+
+                        </script>
+                        
+                        <div id="sensors-list" class="form-group"></div>
+                            
+                        <script id="sensor-template" type="text/x-handlebars-template"> 
+
+                            <label for="objSelect">Select sensor:</label>
+                            <select class="form-control" id="objSelect" onchange="select_sensor()">
+                                {{#sensors}}
+                                <option value="{{id}}">{{name}} - {{description}}</option>
+                                {{/sensors}}
+                            </select>
+
+                        </script>
+                        
+                    </div>
+                    
+                </div>
+                
                 <div class="row">
                     <div class="col-lg-8">
-                        <h3>Today's observations</h3>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
+                        <h4>Today's observations</h4>
+                        <div id="observations-table" class="table-responsive"></div>
+                        
+                        <script id="observation-template" type="text/x-handlebars-template"> 
+                            
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Page</th>
-                                        <th>Visits</th>
-                                        <th>% New Visits</th>
-                                        <th>Revenue</th>
+                                        <th>Date</th>
+                                        <th>data</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{#observations}}
                                     <tr>
-                                        <td>/index.html</td>
-                                        <td>1265</td>
-                                        <td>32.3%</td>
-                                        <td>$321.33</td>
+                                        <td>{{date}}</td>
+                                        <td>{{data}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>/about.html</td>
-                                        <td>261</td>
-                                        <td>33.3%</td>
-                                        <td>$234.12</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/sales.html</td>
-                                        <td>665</td>
-                                        <td>21.3%</td>
-                                        <td>$16.34</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/blog.html</td>
-                                        <td>9516</td>
-                                        <td>89.3%</td>
-                                        <td>$1644.43</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/404.html</td>
-                                        <td>23</td>
-                                        <td>34.3%</td>
-                                        <td>$23.52</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/services.html</td>
-                                        <td>421</td>
-                                        <td>60.3%</td>
-                                        <td>$724.32</td>
-                                    </tr>
-                                    <tr>
-                                        <td>/blog/post.html</td>
-                                        <td>1233</td>
-                                        <td>93.2%</td>
-                                        <td>$126.34</td>
-                                    </tr>
+                                    {{/observations}}
                                 </tbody>
                             </table>
-                        </div>
+                        
+                        </script>
+                        
                     </div>
                 </div>
                 <!-- /.row -->
 
+
+                 <div class="row">
+                    <div class="col-lg-8">
+                        <h4>All facts</h4>
+                        <div id="facts-table" class="table-responsive"></div>
+                        
+                        <script id="fact-template" type="text/x-handlebars-template"> 
+                            
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>date</th>
+                                        <th>min</th>
+                                        <th>average</th>
+                                        <th>max</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#facts}}
+                                    <tr>
+                                        <td>{{date}}</td>
+                                        <td>{{min}}</td>
+                                        <td>{{average}}</td>
+                                        <td>{{max}}</td>
+                                    </tr>
+                                    {{/facts}}
+                                </tbody>
+                            </table>
+                        
+                        </script>
+                        
+                    </div>
+                </div>
+                <!-- /.row -->
+                
             </div>
             <!-- /.container-fluid -->
 
@@ -184,6 +220,9 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+
+
+    <script src="js/handlebars.js"></script>
     <script src="js/observations.js"></script>
 
 </body>
