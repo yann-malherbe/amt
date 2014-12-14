@@ -98,10 +98,10 @@ public class OrganizationResource {
         organizationsManager.deleteOrganization(existing);
     }
 
-    protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization, User user) {
+    protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization, User contact) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
-            organization.setContact(UserResource.toUser(dto.getContact(), user, organization));
+            organization.setContact(contact);
         }
         return organization;
     }
@@ -109,7 +109,7 @@ public class OrganizationResource {
     protected static Organization ltoOrganization(OrganizationDTO dto, Organization organization, User contact, List<Sensor> sensors, List<User> users) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
-            organization.setContact(UserResource.toUser(dto.getContact(), contact, organization));
+            organization.setContact(contact);
         }
         if (dto.getSensors() != null){
             organization.setSensors(sensors);
@@ -140,7 +140,7 @@ public class OrganizationResource {
         }
 
         if (organization.getSensors() != null && doChild == true) {
-            ArrayList<SensorDTO> sensorsDTO = new ArrayList<>();
+            List<SensorDTO> sensorsDTO = new ArrayList<>();
             for (Sensor sensor : (List<Sensor>) organization.getSensors()) {
                 sensorsDTO.add(SensorResource.toDTO(sensor, false));
             }
