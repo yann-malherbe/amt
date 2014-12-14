@@ -53,7 +53,7 @@ var sendRequest = function(options, onResult, post_data)
 
 var createUsers = function(orgId, isContact, orgName)
 {
-	var post_data = '{"login" : "login-'+Math.random().toString(36).substr(2, 4)+'", "pass": "'+Math.random().toString(36).substr(10, 15)+'", "name" : "Name-'+Math.random().toString(36).substr(2, 4)+'", organisation: {"id":'+orgId+'}}';
+	var post_data = '{"login" : "login-'+Math.random().toString(36).substr(2, 4)+'", "pass": "'+Math.random().toString(36).substr(10, 15)+'", "name" : "Name-'+Math.random().toString(36).substr(2, 4)+'", "organization" : {"id":'+orgId+'}}';
 			console.log(post_data);
 			
 	var options = {
@@ -118,14 +118,14 @@ var createOrganisations = function(orgName)
 	
 	createSensors(orgId, "true");
 	createSensors(orgId, "true");
-	createSensors(orgId, "true");
+	createSensors(orgId, "false");
 	createSensors(orgId, "false");
 	}, post_data);
 };
 
 var createSensors = function(orgId, open)
 {
-	for(var i = 0; i < 2; i++)
+	for(var i = 0; i < 4; i++)
 	{
 		var post_data = '{"name":"sensor-'+Math.random().toString(36).substr(2, 4)+'", "description": "Sensors in room '+Math.random().toString(36).substr(1, 3)+'", "type" : "Temperature", "open" : "'+open+'", "organization" : {"id":'+orgId+'}}';
 			console.log(post_data);
