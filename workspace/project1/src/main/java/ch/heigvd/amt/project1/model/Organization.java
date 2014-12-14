@@ -11,20 +11,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Yann
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "findAllOrganizations", query =  "SELECT o FROM Organization o")
+}) 
+
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private List sensors;
-    private List users;
+    @OneToOne
+    private User contact;
+    @OneToMany(mappedBy="organization")
+    private List<Sensor> sensors;
+    @OneToMany(mappedBy="organization")
+    private List<User> users;
 
     public Long getId() {
         return id;
@@ -41,7 +53,15 @@ public class Organization implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public User getContact() {
+        return contact;
+    }
+
+    public void setContact(User contact) {
+        this.contact = contact;
+    }
+       
     public List getSensors() {
         return this.sensors;
     }

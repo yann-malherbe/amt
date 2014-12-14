@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.heigvd.amt.project1.dto;
+package ch.heigvd.amt.project1.dto.observations;
 
 import java.sql.Timestamp;
 

@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.heigvd.amt.project1.dto;
+package ch.heigvd.amt.project1.dto.sensors;
 
-import ch.heigvd.amt.project1.model.Observation;
-import ch.heigvd.amt.project1.model.Organization;
-import java.util.LinkedList;
+import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
+import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 
 /**
  *
@@ -19,7 +18,7 @@ public class SensorDTO {
     private String description;
     private String type;
     private boolean open;
-    private Organization organization;
+    private OrganizationSimpleDTO organization;
 
     public Long getId() {
         return id;
@@ -60,11 +59,11 @@ public class SensorDTO {
         this.open = open;
     }
 
-    public Organization getOrganization() {
+    public OrganizationSimpleDTO getOrganization() {
         return organization;
     }
 
-    public void setOrganization(Organization organization) {
+    public void setOrganization(OrganizationSimpleDTO organization) {
         this.organization = organization;
     }
 

@@ -1,4 +1,3 @@
-
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
@@ -7,63 +6,89 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Yann
  */
 @Entity
-public class ObservationSummary extends Fact implements Serializable {
+@NamedQueries({
+    @NamedQuery(name = "findFactSummariesByOrganizationId", query = "SELECT f FROM FactSummary f WHERE f.organization = :id"),
+    @NamedQuery(name = "findFactSummariesBySensorId", query = "SELECT f FROM FactSummary f WHERE f.organization = :id")
+})
+public class FactSummary implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private float min;
-    private float max;
-    private float average;
-    private Timestamp day;
-    
+    private Boolean fOpen;
+    @ManyToOne
+    private Organization organization;
+    private float fMin;
+    private float fMax;
+    private float fAverage;
+    private Timestamp fDay;
+
     public Long getId() {
         return this.id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
+    public Boolean getOpen() {
+        return fOpen;
+    }
+
+    public void setOpen(Boolean open) {
+        this.fOpen = open;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
     public float getMin() {
-        return this.min;
+        return this.fMin;
     }
-    
+
     public void setMin(float min) {
-        this.min = min;
+        this.fMin = min;
     }
-    
+
     public float getMax() {
-        return this.max;
+        return this.fMax;
     }
-    
+
     public void setMax(float max) {
-        this.max = max;
+        this.fMax = max;
     }
-    
+
     public float getAverage() {
-        return this.average;
+        return this.fAverage;
     }
-    
+
     public void setAverage(float average) {
-        this.average = average;
+        this.fAverage = average;
     }
-    
-    private Timestamp getDay() {
-        return this.day;
+
+    public Timestamp getDay() {
+        return this.fDay;
     }
-    
-    private void setDay(Timestamp day) {
-        this.day = day;
+
+    public void setDay(Timestamp day) {
+        this.fDay = day;
     }
-            
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -74,10 +99,10 @@ public class ObservationSummary extends Fact implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ObservationSummary)) {
+        if (!(object instanceof FactSummary)) {
             return false;
         }
-        ObservationSummary other = (ObservationSummary) object;
+        FactSummary other = (FactSummary) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -19,9 +20,8 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllUsers", query =  "SELECT u FROM User u")
-}) 
-
+    @NamedQuery(name = "findAllUsers", query = "SELECT u FROM User u")
+})
 
 public class User implements Serializable {
 
@@ -32,6 +32,7 @@ public class User implements Serializable {
     private String login;
     private String name;
     private String pass;
+    @ManyToOne
     private Organization organization;
 
     public String getLogin() {
@@ -45,7 +46,7 @@ public class User implements Serializable {
     public Long getId() {
         return id;
     }
- 
+
     public void setId(Long id) {
         this.id = id;
     }

@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.heigvd.amt.project1.dto;
+package ch.heigvd.amt.project1.dto.organizations;
 
-import java.util.List;
+import ch.heigvd.amt.project1.dto.users.UserDTO;
 
 /**
  *
  * @author Yann
  */
-public class OrganizationDTO {
+public class OrganizationSimpleDTO {
+
     private Long id;
     private String name;
-    private List sensors;
-    private List users;
+    private UserDTO contact;
 
     public Long getId() {
         return id;
@@ -32,20 +32,13 @@ public class OrganizationDTO {
     public void setName(String name) {
         this.name = name;
     }
-    
-        public List getSensors() {
-        return this.sensors;
+
+    public UserDTO getContact() {
+        return contact;
     }
-    
-    public void setSensors(List sensors) {
-        this.sensors = sensors;
+
+    public void setContact(UserDTO contact) {
+        this.contact = contact;
     }
-    
-    public List getUsers() {
-        return this.users;
-    }
-    
-    public void setUsers(List users) {
-        this.users = users;
-    }
+
 }
