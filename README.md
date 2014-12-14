@@ -62,3 +62,16 @@ Go to service tab and click to Add a Server.
 Give a name.
 
 Choose the directory glassfish-4.1
+
+Demo
+-------------------
+
+Use node js
+
+
+npm install express
+npm install -d
+
+npm start
+
+http://localhost:3000/
