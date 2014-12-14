@@ -5,6 +5,7 @@
  */
 package ch.heigvd.amt.project1.dto.observations;
 
+import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import java.sql.Timestamp;
 
 /**
@@ -15,6 +16,7 @@ public class ObservationDTO {
     private Long id;
     private Timestamp date;
     private float data;
+    private SensorDTO sensor;
 
     public Long getId() {
         return id;
@@ -39,5 +41,13 @@ public class ObservationDTO {
     public void setData(float data) {
         this.data = data;
     }
-    
+
+    public SensorDTO getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(SensorDTO sensor) {
+        this.sensor = sensor;
+    }
+
 }

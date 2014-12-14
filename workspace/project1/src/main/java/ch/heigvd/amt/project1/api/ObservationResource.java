@@ -7,7 +7,9 @@ package ch.heigvd.amt.project1.api;
 
 import ch.heigvd.amt.project1.dto.observations.ObservationDTO;
 import ch.heigvd.amt.project1.model.Observation;
+import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.services.ObservationsManagerLocal;
+import ch.heigvd.amt.project1.services.SensorsManagerLocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -30,6 +32,9 @@ public class ObservationResource {
 
     @EJB
     ObservationsManagerLocal observationsManager;
+    
+    @EJB
+    SensorsManagerLocal sensorsManager;
 
     @Context
     private UriInfo context;
@@ -57,21 +62,32 @@ public class ObservationResource {
     @Produces("application/json")
     public ObservationDTO createObservation(ObservationDTO dto) {
         Observation newObservation = new Observation();
-        return toDTO(observationsManager.createObservation(toObservation(dto, newObservation)));
+        Sensor sensor = null;
+        if (dto.getSensor() != null){
+            sensor = sensorsManager.findSensorById(dto.getSensor().getId());
+        }
+        return toDTO(observationsManager.createObservation(toObservation(dto, newObservation, sensor)));
     }
 
-    private Observation toObservation(ObservationDTO dto, Observation observation) {
+    private Observation toObservation(ObservationDTO dto, Observation observation, Sensor sensor) {
         observation.setId(dto.getId());
-        observation.setDate(dto.getDate());
-        observation.setData(dto.getData());
+        observation.setfDate(dto.getDate());
+        observation.setfData(dto.getData());
+        if (observation.getSensor() != null){
+            observation.setSensor(sensor);
+        }
         return observation;
     }
 
     protected static ObservationDTO toDTO(Observation observation) {
         ObservationDTO dto = new ObservationDTO();
         dto.setId(observation.getId());
-        dto.setDate(observation.getDate());
-        dto.setData(observation.getData());
+        dto.setDate(observation.getfDate());
+        dto.setData(observation.getfData());
+        
+        if (observation.getSensor() != null){
+            dto.setSensor(SensorResource.toDTO(observation.getSensor(), false));
+        }
         return dto;
     }
 }

@@ -5,7 +5,6 @@
  */
 package ch.heigvd.amt.project1.dto.sensors;
 
-import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 
 /**

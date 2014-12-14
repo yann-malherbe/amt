@@ -99,7 +99,7 @@ public class UserResource {
         user.setLogin(dto.getLogin());
         user.setName(dto.getName());
         if (dto.getOrganization() != null) {
-            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), organization, user));
+            user.setOrganization(organization);
         }
         return user;
     }
@@ -109,7 +109,7 @@ public class UserResource {
         user.setName(dto.getName());
         user.setPass(dto.getPass());
         if (dto.getOrganization() != null) {
-            user.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), organization, user));
+            user.setOrganization(organization);
         }
         return user;
     }

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -28,8 +29,10 @@ public class Observation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp date;
-    private float data;
+    private Timestamp fDate;
+    private float fData;
+    @ManyToOne
+    private Sensor sensor;
     
     public Long getId() {
         return id;
@@ -39,22 +42,30 @@ public class Observation implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getfDate() {
+        return fDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setfDate(Timestamp date) {
+        this.fDate = date;
     }
 
-    public float getData() {
-        return data;
+    public float getfData() {
+        return fData;
     }
 
-    public void setData(float data) {
-        this.data = data;
+    public void setfData(float data) {
+        this.fData = data;
     }
-     
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

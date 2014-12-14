@@ -71,18 +71,13 @@ public class SensorResource {
     @Produces("application/json")
     public SensorDTO createSensor(SensorDTO dto) {
         Sensor newSensor = new Sensor();
-        User user = null;
         Organization organization = null;
 
         if (dto.getOrganization() != null) {
             organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
-            
-            if (organization != null || organization.getContact() != null){
-                user = usersManager.findUserById(organization.getContact().getId());
-            }
         }
 
-        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor, organization, user)), true);
+        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor, organization, null)), true);
     }
 
     @Path("/{id}")
@@ -120,7 +115,7 @@ public class SensorResource {
         sensor.setType(dto.getType());
         sensor.setOpen(dto.isOpen());
         if (dto.getOrganization() != null) {
-            sensor.setOrganization(OrganizationResource.toOrganization(dto.getOrganization(), organization, user));
+            sensor.setOrganization(organization);
         }
 
         return sensor;
