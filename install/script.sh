@@ -1,4 +1,5 @@
 #!/bin/bash
+MY_PATH=$(pwd)
 DB_NAME=AMTDatabase
 DB_TECHNICAL_USER=AMTUser
 DB_TECHNICAL_USER_PASSWORD=dUke!1400$
@@ -29,8 +30,10 @@ cd 'C:/Program Files/glassfish-4.1/bin'
 ./asadmin delete-domain $DOMAIN_NAME
 ./asadmin create-domain --nopassword=true $DOMAIN_NAME
 
-cp 'C:/Users/Yann/ownCloud/HEIG-VD/SEM5/AMT/git/amt/install/mysql-connector-java-5.1.33.jar' ../glassfish/domains/$DOMAIN_NAME/lib
+cd $MY_PATH
+cp 'mysql-connector-java-5.1.33.jar' "C:/Program Files/glassfish-4.1/glassfish/domains/$DOMAIN_NAME/lib"
 
+cd 'C:/Program Files/glassfish-4.1/bin'
 ./asadmin start-domain $DOMAIN_NAME
 
 ./asadmin create-jdbc-connection-pool \
