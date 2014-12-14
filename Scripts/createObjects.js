@@ -3,12 +3,13 @@ var https = require("https");
 //var sleep = require('sleep');
 
 //Math.random().toString(36).substr(5, 10)
+//application/x-www-form-urlencoded;charset=utf-8
 
-var port = 80;
-var hostname				= 'home.eof.li';
-var pathPostusers			= '/get/post.php';
-var pathPostOrganisation	= '/get/post.php';
-var pathPostSensors			= '/get/post.php';
+var port = 8080;
+var hostname				= 'localhost';
+var pathPostusers			= '/project1/api/users';
+var pathPostOrganisation	= '/project1/api/organizations';
+var pathPostSensors			= '/project1/api/sensors';
 
 
 
@@ -33,6 +34,7 @@ var sendRequest = function(options, onResult, post_data)
         });
 
         res.on('end', function() {
+			console.log(output);
             var obj = JSON.parse(output);
 			console.log("onResult: (" + res.statusCode + ")\n\nData:\n" + JSON.stringify(obj));
             //var obj = output;
@@ -51,7 +53,7 @@ var sendRequest = function(options, onResult, post_data)
 
 var createUsers = function(orgId, isContact, orgName)
 {
-	var post_data = '{"login" : "login-'+Math.random().toString(36).substr(2, 4)+'", "pass": "'+Math.random().toString(36).substr(10, 15)+'", "name" : "Name-'+Math.random().toString(36).substr(2, 4)+'", organisation: {"id":'+orgId+'}}';
+	var post_data = '{"login" : "login-'+Math.random().toString(36).substr(2, 4)+'", "pass": "'+Math.random().toString(36).substr(10, 15)+'", "name" : "Name-'+Math.random().toString(36).substr(2, 4)+'", "organization" : {"id":'+orgId+'}}';
 			console.log(post_data);
 			
 	var options = {
@@ -60,7 +62,7 @@ var createUsers = function(orgId, isContact, orgName)
 		path: pathPostusers,
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+			'Content-Type': 'application/json',
 			'Content-length': post_data.length
 		}
 	};
@@ -76,10 +78,10 @@ var createUsers = function(orgId, isContact, orgName)
 			var options = {
 				host: hostname,
 				port: port,
-				path: pathPostOrganisation+'?'+orgId,
+				path: pathPostOrganisation+'/'+orgId,
 				method: 'PUT',
 				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+					'Content-Type': 'application/json',
 					'Content-length': post_data.length
 				}
 			};
@@ -101,7 +103,7 @@ var createOrganisations = function(orgName)
 		path: pathPostOrganisation,
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+			'Content-Type': 'application/json',
 			'Content-length': post_data.length
 		}
 	};
@@ -116,14 +118,14 @@ var createOrganisations = function(orgName)
 	
 	createSensors(orgId, "true");
 	createSensors(orgId, "true");
-	createSensors(orgId, "true");
+	createSensors(orgId, "false");
 	createSensors(orgId, "false");
 	}, post_data);
 };
 
 var createSensors = function(orgId, open)
 {
-	for(var i = 0; i < 2; i++)
+	for(var i = 0; i < 4; i++)
 	{
 		var post_data = '{"name":"sensor-'+Math.random().toString(36).substr(2, 4)+'", "description": "Sensors in room '+Math.random().toString(36).substr(1, 3)+'", "type" : "Temperature", "open" : "'+open+'", "organization" : {"id":'+orgId+'}}';
 			console.log(post_data);
@@ -134,7 +136,7 @@ var createSensors = function(orgId, open)
 			path: pathPostSensors,
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+				'Content-Type': 'application/json',
 				'Content-length': post_data.length
 			}
 		};
