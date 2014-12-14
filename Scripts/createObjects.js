@@ -3,12 +3,13 @@ var https = require("https");
 //var sleep = require('sleep');
 
 //Math.random().toString(36).substr(5, 10)
+//application/x-www-form-urlencoded;charset=utf-8
 
-var port = 80;
-var hostname				= 'home.eof.li';
-var pathPostusers			= '/get/post.php';
-var pathPostOrganisation	= '/get/post.php';
-var pathPostSensors			= '/get/post.php';
+var port = 8080;
+var hostname				= 'localhost';
+var pathPostusers			= '/project1/api/users';
+var pathPostOrganisation	= '/project1/api/organizations';
+var pathPostSensors			= '/project1/api/sensors';
 
 
 
@@ -33,6 +34,7 @@ var sendRequest = function(options, onResult, post_data)
         });
 
         res.on('end', function() {
+			console.log(output);
             var obj = JSON.parse(output);
 			console.log("onResult: (" + res.statusCode + ")\n\nData:\n" + JSON.stringify(obj));
             //var obj = output;
@@ -60,7 +62,7 @@ var createUsers = function(orgId, isContact, orgName)
 		path: pathPostusers,
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+			'Content-Type': 'application/json',
 			'Content-length': post_data.length
 		}
 	};
@@ -76,10 +78,10 @@ var createUsers = function(orgId, isContact, orgName)
 			var options = {
 				host: hostname,
 				port: port,
-				path: pathPostOrganisation+'?'+orgId,
+				path: pathPostOrganisation+'/'+orgId,
 				method: 'PUT',
 				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+					'Content-Type': 'application/json',
 					'Content-length': post_data.length
 				}
 			};
@@ -101,7 +103,7 @@ var createOrganisations = function(orgName)
 		path: pathPostOrganisation,
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+			'Content-Type': 'application/json',
 			'Content-length': post_data.length
 		}
 	};
@@ -134,7 +136,7 @@ var createSensors = function(orgId, open)
 			path: pathPostSensors,
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+				'Content-Type': 'application/json',
 				'Content-length': post_data.length
 			}
 		};

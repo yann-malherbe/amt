@@ -4,10 +4,10 @@ var https = require("https");
 
 
 
-var port = 80;
-var hostname = 'home.eof.li';
-var pathGetSensors = '/get/id.php';
-var pathPostValues = '/get/post.php';
+var port = 8080;
+var hostname = 'localhost';
+var pathGetSensors = '/project1/api/sensors';
+var pathPostValues = '/project1/api/observations';
 
 
 /**
@@ -61,7 +61,7 @@ var sendValues = function(ids)
 				path: pathPostValues,
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+					'Content-Type': 'application/json',
 					'Content-length': post_data.length
 				}
 			};
