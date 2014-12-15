@@ -1,6 +1,10 @@
 HEIG-VD project1
 =============
 
+This project design an api to manage sensors on web platofrom.
+
+More informations : http://amt.eof.li/
+
 Installation procedure
 -------------
 The platform is designed with Java EE.
@@ -22,7 +26,7 @@ Execute the script : script.sh
 
 If you want relaod the script, execute first : clean_install.sh
 
-If you have erros : 
+If you have errors : 
 Check the mysql path. 
 
 Example : for me it is : C:\wamp\bin\mysql\mysql5.6.17\bin
