@@ -1,7 +1,7 @@
 HEIG-VD project1
 =============
 
-Install
+Installation procedure
 -------------
 The platform is designed with Java EE.
 We work with Netbeans IDE 8.0.2 and java jdk1.8.0_25.
@@ -18,37 +18,24 @@ Download : http://www.wampserver.com/
 ###Create database and start domain###
 Open a terminal as Admin and go to in the directory /install
 
-The goal of this part is executed the script : script.sh
+Execute the script : script.sh
 
-BUT !!!! you should edit the script to fix errors.
+If you want relaod the script, execute first : clean_install.sh
 
-Line 6 : 
-If you use the same wampserver version, it should be all right. But if you do not or if use an other support you have to locate your mysql path.
+If you have erros : 
+Check the mysql path. 
 
 Example : for me it is : C:\wamp\bin\mysql\mysql5.6.17\bin
 
-Line 16 :
-Line 17 :
-If you have the error : Connexion could not be allocated because : Accès refusé pour l'utilisateur : AMTUser@localhost
-you have to comment this lines.
+Check all domains should be stopped. 
 
-**For the first use you have to comment this lines.**
+With a terminal, go to :  C:\Program Files\glassfish-4.1\bin
 
-If you have others errors : you can check you domain.
-
-With an another cygwin terminal, go to :  C:\Program Files\glassfish-4.1\bin
-
-The command asadmin can list, stop your domains.
-
-Begin with this command : 
-./asadmin list-domains
-
-All domains should be stopped !
-
-If not you can stop the domains with this command  :
+Begin with this command :  ./asadmin list-domdains
+You can stop the domains with this command  :
 ./asadmin stop-domain name_domain
 
-Reload your scrpit.
+Reload the scrpit.sh.
 
 ###Open the project in netbeans###
 Launch Netbeans in Administrator
@@ -59,19 +46,24 @@ Now, we need to add a server glassFish.
 
 Go to service tab and click to Add a Server.
 
-Give a name.
+Give a name and click on next.
 
-Choose the directory glassfish-4.1
+Choose the directory glassfish-4.1 a click on next.
 
-Demo
+Choose the domain AMT and click on finish.
+
+Demontration
 -------------------
 
-Use node js
+You can use node js to generate data.
+
+With node js prompt go to Scripts directory.
+
+Execute createObjects.sh
+
+Execute sendValue.js
 
 
-npm install express
-npm install -d
+Warning !!! You have to run the server glassfish before the launch the script.
 
-npm start
-
-http://localhost:3000/
+You can see the result on http://localhost:8080/project1/index.html
