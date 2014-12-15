@@ -1,5 +1,14 @@
 $(document).ready(function () {
+	
+	var request = new Http.Get("http://localhost", false);
 
+	request.start().then(function(response) {
+		console.log(response);
+	}).fail(function(error, errorCode) {
+
+	});
+	
+	
     var data = {
         organizations:[{id: 1, name:"AMT"},{id:2, name:"STI"}]
     };
