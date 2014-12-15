@@ -72,5 +72,30 @@ Warning !!! You have to run the server glassfish before the launch the script.
 
 You can see the result on http://localhost:8080/project1/index.html
 
-Bug 
+Following the implementation 
 -------------------
+**Done :** 
+
+We tested methods GET and POST on the url :
+
+* GET /organizations 
+* GET /organizations/:id 
+* GET /sensors
+* GET /sensors/:id
+* GET /observations
+* GET /observations/:id
+
+* POST /organizations 
+* POST /sensors
+* POST /observations
+ 
+You can test POST methods with the sripts /Scripts/CreateObjects and /Scripts/SendValue.
+
+You can test GET methods with the web app on the url : http://localhost:8080/project1/index.html.
+
+The url /users is not used but still present in api.
+
+**Not implemented :**
+
+/facts/summaries
+/facts/numbers
