@@ -24,7 +24,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "findFactCountersBySensorId", query = "SELECT f FROM FactCounter f WHERE f.organization = :id")
 })
 public class FactCounter implements Serializable {
-
+    //DOTO: ajouter sensor
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

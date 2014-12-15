@@ -5,7 +5,7 @@
  */
 package ch.heigvd.amt.project1.dto.organizations;
 
-import ch.heigvd.amt.project1.dto.users.UserDTO;
+import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
 
 /**
  *
@@ -15,7 +15,7 @@ public class OrganizationSimpleDTO {
 
     private Long id;
     private String name;
-    private UserDTO contact;
+    private UserWithoutPassDTO contact;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class OrganizationSimpleDTO {
         this.name = name;
     }
 
-    public UserDTO getContact() {
+    public UserWithoutPassDTO getContact() {
         return contact;
     }
 
-    public void setContact(UserDTO contact) {
+    public void setContact(UserWithoutPassDTO contact) {
         this.contact = contact;
     }
 
