@@ -8,7 +8,9 @@ package ch.heigvd.amt.project1.api;
 import ch.heigvd.amt.project1.dto.facts.summaries.FactSummaryDTO;
 import ch.heigvd.amt.project1.model.FactSummary;
 import ch.heigvd.amt.project1.model.Organization;
+import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.services.FactSummariesManagerLocal;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -17,6 +19,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -40,20 +43,24 @@ public class FactSummaryResource {
 
     @GET
     @Produces("application/json")
-    public List<FactSummary> getFactCounters() {
-        MultivaluedMap<String, String> queryParameters = context.getQueryParameters();
-        String parameter = queryParameters.getFirst("byOrganizationId");
+    public List<FactSummaryDTO> getFactCounters(@QueryParam("order") String order, 
+            @QueryParam("id") long id) {
         List<FactSummary> result = null;
+        List<FactSummaryDTO> resultDTO = new LinkedList<>();
 
-        if (parameter != null) {
-            result = factSummariesManager.findFactSummariesByOrganizationId(Long.parseLong(parameter));
-        } else {
-            parameter = queryParameters.getFirst("bySensorId");
-            if (parameter != null) {
-                result = factSummariesManager.findFactSummariesBySensorId(Long.parseLong(parameter));
-            }
+        switch (order){
+            case "byOrganizationId":
+                result = factSummariesManager.findFactSummariesByOrganizationId(id);
+                break;
+                    
+            case "bySensorId":        
+                result = factSummariesManager.findFactSummariesBySensorId(id);
+                break;
         }
-        return result;
+        for (FactSummary factSummary : result){
+            resultDTO.add(toDTO(factSummary, true));
+        }
+        return resultDTO;
     }
 
     @Path("/{id}")
@@ -70,30 +77,35 @@ public class FactSummaryResource {
         factSummariesManager.deleteFactSummary(existing);
     }
 
-    protected static FactSummary toFactSummary(FactSummaryDTO dto, FactSummary factSummary, Organization organization) {
-        factSummary.setOpen(dto.isOpen());
-        factSummary.setMin(dto.getMin());
-        factSummary.setMax(dto.getMax());
-        factSummary.setAverage(dto.getAverage());
-        factSummary.setDay(dto.getDay());
-        if (organization != null){
+    protected static FactSummary toFactSummary(FactSummaryDTO dto, FactSummary factSummary, Organization organization, Sensor sensor) {
+        factSummary.setfOpen(dto.isOpen());
+        factSummary.setfMin(dto.getMin());
+        factSummary.setfMax(dto.getMax());
+        factSummary.setfAverage(dto.getAverage());
+        factSummary.setfDay(dto.getDay());
+        if (organization != null) {
             factSummary.setOrganization(organization);
+        }
+        if (sensor != null) {
+            factSummary.setSensor(sensor);
         }
         return factSummary;
     }
 
-
     protected static FactSummaryDTO toDTO(FactSummary factSummary, boolean doChild) {
         FactSummaryDTO dto = new FactSummaryDTO();
         dto.setId(factSummary.getId());
-        dto.setOpen(factSummary.getOpen());
-        dto.setMin(factSummary.getMin());
-        dto.setMax(factSummary.getMax());
-        dto.setAverage(factSummary.getAverage());
-        dto.setDay(factSummary.getDay());
-        
-        if (factSummary.getOrganization() != null && doChild == true){
+        dto.setOpen(factSummary.getfOpen());
+        dto.setMin(factSummary.getfMin());
+        dto.setMax(factSummary.getfMax());
+        dto.setAverage(factSummary.getfAverage());
+        dto.setDay(factSummary.getfDay());
+
+        if (factSummary.getOrganization() != null && doChild == true) {
             dto.setOrganization(OrganizationResource.toDTO(factSummary.getOrganization(), false));
+        }
+        if (factSummary.getSensor() != null && doChild == true) {
+            dto.setSensor(SensorResource.toDTO(factSummary.getSensor(), false));
         }
         return dto;
     }

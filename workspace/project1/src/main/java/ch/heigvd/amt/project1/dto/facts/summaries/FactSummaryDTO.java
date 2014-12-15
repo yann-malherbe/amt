@@ -6,6 +6,7 @@
 package ch.heigvd.amt.project1.dto.facts.summaries;
 
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
+import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import java.sql.Timestamp;
 
 /**
@@ -17,6 +18,7 @@ public class FactSummaryDTO {
     private Long id;
     private Boolean open;
     private OrganizationDTO organization;
+    private SensorDTO sensor;
     private float min;
     private float max;
     private float average;
@@ -46,6 +48,14 @@ public class FactSummaryDTO {
         this.organization = organization;
     }
 
+    public SensorDTO getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(SensorDTO sensor) {
+        this.sensor = sensor;
+    }
+    
     public float getMin() {
         return this.min;
     }
