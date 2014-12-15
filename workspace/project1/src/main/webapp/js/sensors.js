@@ -1,13 +1,45 @@
 $(document).ready(function () {
 	
-	var request = new Http.Get("http://localhost", false);
+	/*
+	if (window.XMLHttpRequest)
+	{
+		xmlhttp = new XMLHttpRequest();
+	}
+	else if (window.ActiveXObject)
+	{
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xmlhttp.onreadystatechange = function(){
+	
+	if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200))
+	{
+		//<![CDATA[
+		//alert('caca');
+		console.log(xmlhttp.responseText);
+		//]]>
+	}
+
+	};
+
+	xmlhttp.open("GET", "http://localhost:8080/project1/api/sensors", true);
+	xmlhttp.send(null);
+	*/
+	
+	$.getJSON("http://localhost:8080/project1/api/sensors", function(data,status,xhr){    
+        console.log(data);            
+    });
+	
+	
+	/*
+	var request = new Http.Get("http://localhost:8080/project1/api/sensors", false);
 
 	request.start().then(function(response) {
 		console.log(response);
 	}).fail(function(error, errorCode) {
 
 	});
-	
+	*/
 	
     var data = {
         organizations:[{id: 1, name:"AMT"},{id:2, name:"STI"}]
