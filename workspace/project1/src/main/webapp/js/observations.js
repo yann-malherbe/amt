@@ -15,7 +15,7 @@ $(document).ready(function () {
             var first = temp.sensors[0].id;
             
             //Get observations of the first organization
-            $.getJSON("http://localhost:8080/project1/api/observations","bySensorId=" + first,function(data,status,xhr){
+            $.getJSON("http://localhost:8080/project1/api/observations","order=bySensorId&id=" + first,function(data,status,xhr){
                 
                 //Filter : only sensors of organization
                 data = $.grep(data, function(n){
@@ -36,7 +36,7 @@ $(document).ready(function () {
             });
             
             $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + first, function(data,status,xhr){
-                draw_area_graph(data);
+                draw_facts_table(data);
             });
         });
     }); 
@@ -60,15 +60,11 @@ function draw_sensor_list(data) {
 function draw_facts_table(data) {
     
     console.log(data);
-    var facts = {
-        facts:[            
-                {date: "10.12.2014", min:"1", average:"12", max:"14"},
-                {date: "10.12.2014", min:"1", average:"12", max:"14"}]
-    };
-    
+    var table = {};
+    table.observations = data;
     var source = $("#fact-template").html(); 
     var template = Handlebars.compile(source); 
-    var result = template(facts);
+    var result = template(table);
     $("#facts-table").empty();
     $("#facts-table").append(result);
 }
@@ -94,7 +90,7 @@ function select_organization() {
         var first = temp.sensors[0].id;
 
         //Get observations of the first organization
-        $.getJSON("http://localhost:8080/project1/api/observations","bySensorId=" + first,function(data,status,xhr){
+        $.getJSON("http://localhost:8080/project1/api/observations","order=bySensorId&id=" + first,function(data,status,xhr){
 
             //Filter : only sensors of organization
             data = $.grep(data, function(n){
@@ -114,8 +110,8 @@ function select_organization() {
             draw_observations_table(temp);
         });
         
-        $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + first, function(data,status,xhr){
-            draw_area_graph(data);
+        $.getJSON("http://localhost:8080/project1/api/facts/summaries","order=bySensorId&id=" + first, function(data,status,xhr){
+            draw_facts_table(data);
         });
 
     });
@@ -127,7 +123,7 @@ function select_sensor() {
     var id_sensor = $("#sensorSelect").val();
     
     //Get observations of the first organization
-    $.getJSON("http://localhost:8080/project1/api/observations","bySensorId=" + id_sensor,function(data,status,xhr){
+    $.getJSON("http://localhost:8080/project1/api/observations","order=bySensorId&id=" + id_sensor,function(data,status,xhr){
 
         //Filter : only sensors of organization
         data = $.grep(data, function(n){
@@ -147,10 +143,7 @@ function select_sensor() {
         draw_observations_table(temp);
     });
     
-    $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + firid_sensorst, function(data,status,xhr){
-        draw_area_graph(data);
+    $.getJSON("http://localhost:8080/project1/api/facts/summaries","order=bySensorId&id=" + id_sensor, function(data,status,xhr){
+        draw_facts_table(data);
     });
-
 }
-
-
