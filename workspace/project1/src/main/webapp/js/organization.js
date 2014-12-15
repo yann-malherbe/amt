@@ -1,15 +1,16 @@
 $(document).ready(function () {
 
-    var organizations = {
-        organizations:[{id: 1, name:"AMT"},{id:2, name:"STI"}]
-    };
-    
-    var users = {
-        users:[{name:"John Doe", isContact:true}, {name:"Eric Stan", isContact:false}]
-    };
+    $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){	
+        var temp = {};
+        temp.organizations = data;
+        draw_organization_list(temp);
         
-    draw_organization_list(organizations);
-    draw_user_table(users);
+        $.getJSON("http://localhost:8080/project1/api/organizations/" + temp.organizations[0].id, function(data,status,xhr){	
+            var temp = {};
+            temp.users = data.users;
+            draw_user_table(temp);
+        });
+    });    
 });
 
 function draw_organization_list(data) { 
@@ -31,12 +32,10 @@ function draw_user_table(data) {
 
 /* Onchange Event */
 function select_organization() {
-    console.log($("#objSelect").value);
     
-    //get ....
-    var users = {
-        users:[{name:"John Doe", isContact:true}, {name:"Eric Stan", isContact:false}]
-    };
-    
-    draw_organization_table(users);
+    $.getJSON("http://localhost:8080/project1/api/organizations/" + $("#objSelect").val(), function(data,status,xhr){	
+        var temp = {};
+        temp.users = data.users;
+        draw_user_table(temp);
+    }); 
 }
