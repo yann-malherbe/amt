@@ -1,14 +1,11 @@
 $(document).ready(function () {
 	
-	var request = new Http.Get("http://localhost", false);
-
-	request.start().then(function(response) {
-		console.log(response);
-	}).fail(function(error, errorCode) {
-
-	});
-	
-	
+    $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){	
+        console.log(data);
+        
+        draw_organization_list(data);
+    });
+    
     var data = {
         organizations:[{id: 1, name:"AMT"},{id:2, name:"STI"}]
     };
