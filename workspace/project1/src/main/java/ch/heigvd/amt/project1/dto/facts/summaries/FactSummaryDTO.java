@@ -22,7 +22,7 @@ public class FactSummaryDTO {
     private float min;
     private float max;
     private float average;
-    private Timestamp day;
+    private long date;
 
     public Long getId() {
         return this.id;
@@ -80,11 +80,11 @@ public class FactSummaryDTO {
         this.average = average;
     }
 
-    public Timestamp getDay() {
-        return this.day;
+    public long getDate() {
+        return this.date;
     }
 
-    public void setDay(Timestamp day) {
-        this.day = day;
+    public void setDate(long day) {
+        this.date = day;
     }
 }

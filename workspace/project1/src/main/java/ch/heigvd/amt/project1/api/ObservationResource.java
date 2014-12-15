@@ -14,7 +14,9 @@ import ch.heigvd.amt.project1.services.FactCountersManagerLocal;
 import ch.heigvd.amt.project1.services.FactSummariesManagerLocal;
 import ch.heigvd.amt.project1.services.ObservationsManagerLocal;
 import ch.heigvd.amt.project1.services.SensorsManagerLocal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -82,25 +84,60 @@ public class ObservationResource {
             List<FactCounter> factCounters = factCounterManager.findFactCounterBySensorId(newObservation.getSensor().getId());
 
             if (factCounters.isEmpty()) {
-                FactCounter factCounter = new FactCounter();
-                factCounter.setCount(1);
-                factCounter.setSensor(sensor);
-                factCounter.setfOpen(sensor.isfOpen());
-                if (sensor.getOrganization() != null) {
-                    factCounter.setOrganization(sensor.getOrganization());
+                // First time we create the global counter
+                newFactCounter(newObservation, sensor, true);
+
+                // We create a daily counter too
+                newFactCounter(newObservation, sensor, false);
+            } // Counters already exist
+            else {
+                // We take the global counter
+                FactCounter factCounterGlobal = null;
+                for (FactCounter factCounter : factCounters) {
+                    if (factCounter.getfGlobal()) {
+                        factCounterGlobal = factCounter;
+                        break;
+                    }
                 }
-                factCounterManager.createFactCounter(factCounter);
-            } else {
-                FactCounter factCounter = factCounters.get(0);
-                factCounter.setCount(factCounter.getCount() + 1);
-                factCounterManager.updateFactCounter(factCounter);
+                if (factCounterGlobal != null) {
+                    factCounterGlobal.setCount(factCounterGlobal.getCount() + 1);
+                    factCounterGlobal.setfDay(newObservation.getfDate());
+                    factCounterManager.updateFactCounter(factCounterGlobal);
+                }
+
+                // We take the daily counter
+                FactCounter factCounterDaily = factCounters.get(0);
+                long dayMax = factCounters.get(0).getfDay();
+
+                for (FactCounter factCounter : factCounters) {
+                    if (dayMax < factCounter.getfDay()) {
+                        dayMax = factCounter.getfDay();
+                        factCounterDaily = factCounter;
+                    }
+                }
+
+                Calendar cal1 = Calendar.getInstance();
+                Calendar cal2 = Calendar.getInstance();
+                cal1.setTime(new Timestamp(newObservation.getfDate()));
+                cal2.setTime(new Timestamp(factCounterDaily.getfDay()));
+
+                // It's the current day
+                if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                        && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
+                    factCounterDaily.setCount(factCounterDaily.getCount() + 1);
+                    factCounterDaily.setfDay(newObservation.getfDate());
+                    factCounterManager.updateFactCounter(factCounterDaily);
+                } // It's a new day
+                else {
+                    newFactCounter(newObservation, sensor, false);
+                }
             }
 
             List<FactSummary> factsummaries = factSummaryManager.findFactSummariesBySensorId(newObservation.getSensor().getId());
 
             if (factsummaries.isEmpty()) {
                 FactSummary factsummary = new FactSummary();
-                factsummary.setfDay(null);
+                factsummary.setfDay(newObservation.getfDate());
                 factsummary.setfAverage(newObservation.getfValue());
                 factsummary.setfMin(newObservation.getfValue());
                 factsummary.setfMax(newObservation.getfValue());
@@ -121,7 +158,7 @@ public class ObservationResource {
                     factsummary.setfMax(newObservation.getfValue());
                 }
 
-                factsummary.setfAverage(((factCounters.get(0).getCount()-1)*factsummary.getfAverage()+newObservation.getfValue())/factCounters.get(0).getCount());
+                factsummary.setfAverage(((factCounters.get(0).getCount() - 1) * factsummary.getfAverage() + newObservation.getfValue()) / factCounters.get(0).getCount());
 
                 factSummaryManager.updateFactSummary(factsummary);
             }
@@ -129,9 +166,23 @@ public class ObservationResource {
         return toDTO(newObservation, true);
     }
 
+    private void newFactCounter(Observation observation, Sensor sensor, boolean global) {
+        FactCounter factCounter = new FactCounter();
+        factCounter.setCount(1);
+        factCounter.setfGlobal(global);
+        factCounter.setfDay(observation.getfDate());
+        factCounter.setSensor(sensor);
+        factCounter.setfOpen(sensor.isfOpen());
+        if (sensor.getOrganization() != null) {
+            factCounter.setOrganization(sensor.getOrganization());
+        }
+        factCounterManager.createFactCounter(factCounter);
+    }
+
     private Observation toObservation(ObservationDTO dto, Observation observation, Sensor sensor) {
         observation.setfDate(dto.getDate());
         observation.setfValue(dto.getValue());
+        observation.setfDate(dto.getDate());
         if (dto.getSensor() != null) {
             observation.setSensor(sensor);
         }
