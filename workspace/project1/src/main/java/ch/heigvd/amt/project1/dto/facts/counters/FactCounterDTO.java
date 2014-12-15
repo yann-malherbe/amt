@@ -16,6 +16,7 @@ public class FactCounterDTO {
 
     private Long id;
     private Boolean open;
+    private Boolean global;
     private OrganizationDTO organization;
     private SensorDTO sensor;
     private int count;
@@ -34,6 +35,14 @@ public class FactCounterDTO {
 
     public void setOpen(Boolean open) {
         this.open = open;
+    }
+
+    public Boolean getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(Boolean global) {
+        this.global = global;
     }
 
     public OrganizationDTO getOrganization() {

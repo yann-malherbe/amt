@@ -30,6 +30,7 @@ public class FactCounter implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Boolean fOpen;
+    private Boolean fGlobal;
     @ManyToOne
     private Organization organization;
     @OneToOne
@@ -50,6 +51,14 @@ public class FactCounter implements Serializable {
 
     public void setfOpen(Boolean open) {
         this.fOpen = open;
+    }
+
+    public Boolean getfGlobal() {
+        return fGlobal;
+    }
+
+    public void setfGlobal(Boolean fGlobal) {
+        this.fGlobal = fGlobal;
     }
 
     public Organization getOrganization() {
