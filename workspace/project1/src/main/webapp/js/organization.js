@@ -3,7 +3,7 @@ $(document).ready(function () {
     $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){	
         draw_organization_list(data);
         
-        $.getJSON("http://localhost:8080/project1/api/organizations/" + temp.organizations[0].id, function(data,status,xhr){	
+        $.getJSON("http://localhost:8080/project1/api/organizations/" + data[0].id, function(data,status,xhr){	
             draw_user_table(data);
         });
     });    
