@@ -28,12 +28,12 @@ public class FactCountersManager implements FactCountersManagerLocal {
 
     @Override
     public List<FactCounter> findFactCountersByOrganizationId(long id) {
-        return em.createNamedQuery("findFactCountersByOrganizationId").setParameter("id", id).getResultList();
+        return em.createNamedQuery("findFactCountersByOrganizationId").setParameter("organizationId", id).getResultList();
     }
 
     @Override
-    public List<FactCounter> findFactCountersBySensorId(long id) {
-        return em.createNamedQuery("findFactCountersBySensorId").setParameter("id", id).getResultList();
+    public List<FactCounter> findFactCounterBySensorId(long id) {
+        return em.createNamedQuery("findFactCountersBySensorId").setParameter("sensorId", id).getResultList();
     }
 
     @Override
@@ -46,10 +46,12 @@ public class FactCountersManager implements FactCountersManagerLocal {
     @Override
     public void updateFactCounter(FactCounter factCounter) {
         em.merge(factCounter);
+        em.flush();
     }
 
     @Override
     public void deleteFactCounter(FactCounter factCounter) {
         em.remove(factCounter);
+        em.flush();
     }
 }

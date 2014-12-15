@@ -46,10 +46,12 @@ public class FactSummariesManager implements FactSummariesManagerLocal {
     @Override
     public void updateFactSummary(FactSummary factSummary) {
         em.merge(factSummary);
+        em.flush();
     }
 
     @Override
     public void deleteFactSummary(FactSummary factSummary) {
         em.remove(factSummary);
+        em.flush();
     }
 }

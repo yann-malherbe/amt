@@ -6,6 +6,7 @@
 package ch.heigvd.amt.project1.dto.facts.counters;
 
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
+import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 
 /**
  *
@@ -15,7 +16,9 @@ public class FactCounterDTO {
 
     private Long id;
     private Boolean open;
+    private Boolean global;
     private OrganizationDTO organization;
+    private SensorDTO sensor;
     private int count;
 
     public Long getId() {
@@ -34,12 +37,28 @@ public class FactCounterDTO {
         this.open = open;
     }
 
+    public Boolean getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(Boolean global) {
+        this.global = global;
+    }
+
     public OrganizationDTO getOrganization() {
         return this.organization;
     }
 
     public void setOrganization(OrganizationDTO organization) {
         this.organization = organization;
+    }
+
+    public SensorDTO getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(SensorDTO sensor) {
+        this.sensor = sensor;
     }
 
     public int getCount() {

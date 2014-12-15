@@ -20,7 +20,7 @@ public interface FactCountersManagerLocal {
 
     public List<FactCounter> findFactCountersByOrganizationId(long id);
 
-    public List<FactCounter> findFactCountersBySensorId(long id);
+    public List<FactCounter> findFactCounterBySensorId(long id);
 
     public FactCounter createFactCounter(FactCounter fact);
 

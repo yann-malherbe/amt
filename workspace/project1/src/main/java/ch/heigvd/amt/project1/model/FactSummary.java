@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -16,8 +17,8 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findFactSummariesByOrganizationId", query = "SELECT f FROM FactSummary f WHERE f.organization = :id"),
-    @NamedQuery(name = "findFactSummariesBySensorId", query = "SELECT f FROM FactSummary f WHERE f.organization = :id")
+    @NamedQuery(name = "findFactSummariesByOrganizationId", query = "SELECT f FROM FactSummary f WHERE f.organization.id = :id"),
+    @NamedQuery(name = "findFactSummariesBySensorId", query = "SELECT f FROM FactSummary f WHERE f.sensor.id = :id")
 })
 public class FactSummary implements Serializable {
 
@@ -28,6 +29,8 @@ public class FactSummary implements Serializable {
     private Boolean fOpen;
     @ManyToOne
     private Organization organization;
+    @OneToOne
+    private Sensor sensor;
     private float fMin;
     private float fMax;
     private float fAverage;
@@ -41,11 +44,11 @@ public class FactSummary implements Serializable {
         this.id = id;
     }
 
-    public Boolean getOpen() {
+    public Boolean getfOpen() {
         return fOpen;
     }
 
-    public void setOpen(Boolean open) {
+    public void setfOpen(Boolean open) {
         this.fOpen = open;
     }
 
@@ -57,35 +60,43 @@ public class FactSummary implements Serializable {
         this.organization = organization;
     }
 
-    public float getMin() {
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public float getfMin() {
         return this.fMin;
     }
 
-    public void setMin(float min) {
+    public void setfMin(float min) {
         this.fMin = min;
     }
 
-    public float getMax() {
+    public float getfMax() {
         return this.fMax;
     }
 
-    public void setMax(float max) {
+    public void setfMax(float max) {
         this.fMax = max;
     }
 
-    public float getAverage() {
+    public float getfAverage() {
         return this.fAverage;
     }
 
-    public void setAverage(float average) {
+    public void setfAverage(float average) {
         this.fAverage = average;
     }
 
-    public Timestamp getDay() {
+    public Timestamp getfDay() {
         return this.fDay;
     }
 
-    public void setDay(Timestamp day) {
+    public void setfDay(Timestamp day) {
         this.fDay = day;
     }
 

@@ -62,7 +62,7 @@ public class Organization implements Serializable {
         this.contact = contact;
     }
        
-    public List getSensors() {
+    public List<Sensor> getSensors() {
         return this.sensors;
     }
     
@@ -70,7 +70,7 @@ public class Organization implements Serializable {
         this.sensors = sensors;
     }
     
-    public List getUsers() {
+    public List<User> getUsers() {
         return this.users;
     }
     

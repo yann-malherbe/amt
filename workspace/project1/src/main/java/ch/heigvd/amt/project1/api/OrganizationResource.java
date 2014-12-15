@@ -8,13 +8,14 @@ package ch.heigvd.amt.project1.api;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
-import ch.heigvd.amt.project1.dto.users.UserDTO;
+import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.model.User;
 import ch.heigvd.amt.project1.services.OrganizationsManagerLocal;
 import ch.heigvd.amt.project1.services.UsersManagerLocal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -87,6 +88,8 @@ public class OrganizationResource {
     public OrganizationDTO updateOrganization(@PathParam("id") long id, OrganizationSimpleDTO dto) {
         Organization existing = organizationsManager.findOrganizationById(id);
         User user = usersManager.findUserById(dto.getContact().getId());
+        user.setOrganization(existing);
+        usersManager.updateUser(user);
         organizationsManager.updateOrganization(toOrganization(dto, existing, user));
         return toDTO(existing, true);
     }
@@ -140,16 +143,16 @@ public class OrganizationResource {
         }
 
         if (organization.getSensors() != null && doChild == true) {
-            List<SensorDTO> sensorsDTO = new ArrayList<>();
-            for (Sensor sensor : (List<Sensor>) organization.getSensors()) {
+            List<SensorDTO> sensorsDTO = new LinkedList<>();
+            for (Sensor sensor : organization.getSensors()) {
                 sensorsDTO.add(SensorResource.toDTO(sensor, false));
             }
             dto.setSensors(sensorsDTO);
         }
 
         if (organization.getUsers() != null && doChild == true) {
-            List<UserDTO> usersDTO = new ArrayList<>();
-            for (User user : (List<User>) organization.getUsers()) {
+            List<UserWithoutPassDTO> usersDTO = new LinkedList<>();
+            for (User user : organization.getUsers()) {
                 usersDTO.add(UserResource.toDTO(user, false));
             }
             dto.setUsers(usersDTO);
