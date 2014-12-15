@@ -9,6 +9,7 @@ package ch.heigvd.amt.project1.api;
 import ch.heigvd.amt.project1.dto.facts.counters.FactCounterDTO;
 import ch.heigvd.amt.project1.model.FactCounter;
 import ch.heigvd.amt.project1.model.Organization;
+import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.services.FactCountersManagerLocal;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,21 +43,21 @@ public class FactCounterResource {
 
     @GET
     @Produces("application/json")
-    public List<FactCounterDTO> getFactCounters(@QueryParam("order") String order, 
+    public List<FactCounterDTO> getFactCounters(@QueryParam("order") String order,
             @QueryParam("id") long id) {
         List<FactCounter> result = null;
         List<FactCounterDTO> resultDTO = new LinkedList<>();
 
-        switch (order){
+        switch (order) {
             case "byOrganizationId":
                 result = factCountersManager.findFactCountersByOrganizationId(id);
                 break;
-                    
-            case "bySensorId":        
+
+            case "bySensorId":
                 result = factCountersManager.findFactCounterBySensorId(id);
                 break;
         }
-        for (FactCounter factCounter : result){
+        for (FactCounter factCounter : result) {
             resultDTO.add(toDTO(factCounter, true));
         }
         return resultDTO;
@@ -76,11 +77,15 @@ public class FactCounterResource {
         factCountersManager.deleteFactCounter(existing);
     }
 
-    protected static FactCounter toFactCounter(FactCounterDTO dto, FactCounter factCounter, Organization organization) {
+    protected static FactCounter toFactCounter(FactCounterDTO dto, FactCounter factCounter, Organization organization, Sensor sensor) {
         factCounter.setfOpen(dto.isOpen());
         factCounter.setCount(dto.getCount());
+        factCounter.setfGlobal(dto.getGlobal());
         if (organization != null) {
             factCounter.setOrganization(organization);
+        }
+        if (sensor != null) {
+            factCounter.setSensor(sensor);
         }
         return factCounter;
     }
@@ -89,9 +94,13 @@ public class FactCounterResource {
         FactCounterDTO dto = new FactCounterDTO();
         dto.setId(factCounter.getId());
         dto.setOpen(factCounter.getfOpen());
+        dto.setGlobal(factCounter.getfGlobal());
         dto.setCount(factCounter.getCount());
         if (factCounter.getOrganization() != null && doChild == true) {
             dto.setOrganization(OrganizationResource.toDTO(factCounter.getOrganization(), false));
+        }
+        if (factCounter.getSensor() != null && doChild == true) {
+            dto.setSensor(SensorResource.toDTO(factCounter.getSensor(), false));
         }
         return dto;
     }
