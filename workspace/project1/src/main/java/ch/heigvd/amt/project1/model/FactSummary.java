@@ -1,7 +1,6 @@
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +16,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
+    @NamedQuery(name = "findAllFactSummaries", query = "SELECT f FROM FactSummary f"),
     @NamedQuery(name = "findFactSummariesByOrganizationId", query = "SELECT f FROM FactSummary f WHERE f.organization.id = :id"),
     @NamedQuery(name = "findFactSummariesBySensorId", query = "SELECT f FROM FactSummary f WHERE f.sensor.id = :id")
 })

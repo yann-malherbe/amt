@@ -17,6 +17,8 @@ import javax.ejb.Local;
 public interface FactSummariesManagerLocal {
     public FactSummary findFactSummaryById(long id);
 
+    public List<FactSummary> findAllFactSummaries();
+    
     public List<FactSummary> findFactSummariesByOrganizationId(long id);
 
     public List<FactSummary> findFactSummariesBySensorId(long id);

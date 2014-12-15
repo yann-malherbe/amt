@@ -18,6 +18,8 @@ public interface FactCountersManagerLocal {
 
     public FactCounter findFactCounterById(long id);
 
+    public List<FactCounter> findAllFactCounters();
+    
     public List<FactCounter> findFactCountersByOrganizationId(long id);
 
     public List<FactCounter> findFactCounterBySensorId(long id);

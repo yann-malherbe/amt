@@ -19,6 +19,8 @@ public interface ObservationsManagerLocal {
     public Observation findOrganizationById(long id);
 
     public List<Observation> findAllObservations();
+    
+    public List<Observation> findObservationsBySensorId(long id);
 
     public Observation createObservation(Observation observation);
 

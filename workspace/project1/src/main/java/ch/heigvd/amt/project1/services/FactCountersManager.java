@@ -27,6 +27,11 @@ public class FactCountersManager implements FactCountersManagerLocal {
     }
 
     @Override
+    public List<FactCounter> findAllFactCounters() {
+        return em.createNamedQuery("findAllFactCounters").getResultList();
+    }
+
+    @Override
     public List<FactCounter> findFactCountersByOrganizationId(long id) {
         return em.createNamedQuery("findFactCountersByOrganizationId").setParameter("organizationId", id).getResultList();
     }

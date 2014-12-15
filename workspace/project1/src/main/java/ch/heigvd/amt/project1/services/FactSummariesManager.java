@@ -27,6 +27,11 @@ public class FactSummariesManager implements FactSummariesManagerLocal {
     }
 
     @Override
+    public List<FactSummary> findAllFactSummaries() {
+        return em.createNamedQuery("findAllFactSummaries").getResultList();
+    }
+
+    @Override
     public List<FactSummary> findFactSummariesByOrganizationId(long id) {
         return em.createNamedQuery("findFactSummariesByOrganizationId").setParameter("id", id).getResultList();
     }

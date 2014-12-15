@@ -30,6 +30,11 @@ public class ObservationsManager implements ObservationsManagerLocal {
     public List<Observation> findAllObservations() {
         return em.createNamedQuery("findAllObservations").getResultList();
     }
+    
+    @Override
+    public List<Observation> findObservationsBySensorId(long id) {
+        return em.createNamedQuery("findObservationsBySensorId").setParameter("sensorId", id).getResultList();
+    }
 
     @Override
     public Observation createObservation(Observation observation) {

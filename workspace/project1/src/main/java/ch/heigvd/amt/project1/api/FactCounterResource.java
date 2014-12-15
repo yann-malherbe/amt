@@ -16,6 +16,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,12 +44,16 @@ public class FactCounterResource {
 
     @GET
     @Produces("application/json")
-    public List<FactCounterDTO> getFactCounters(@QueryParam("order") String order,
-            @QueryParam("id") long id) {
+    public List<FactCounterDTO> getFactCounters(@DefaultValue("none") @QueryParam("order") String order,
+            @DefaultValue("0") @QueryParam("id") long id) {
         List<FactCounter> result = null;
         List<FactCounterDTO> resultDTO = new LinkedList<>();
 
         switch (order) {
+            case "none":
+                result = factCountersManager.findAllFactCounters();
+                break;
+                
             case "byOrganizationId":
                 result = factCountersManager.findFactCountersByOrganizationId(id);
                 break;
