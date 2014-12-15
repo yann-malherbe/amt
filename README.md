@@ -67,3 +67,6 @@ Execute sendValue.js
 Warning !!! You have to run the server glassfish before the launch the script.
 
 You can see the result on http://localhost:8080/project1/index.html
+
+Bug 
+-------------------
