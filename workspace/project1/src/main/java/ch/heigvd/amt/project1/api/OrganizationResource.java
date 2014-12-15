@@ -9,6 +9,7 @@ import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.users.UserDTO;
+import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.model.User;
@@ -149,7 +150,7 @@ public class OrganizationResource {
         }
 
         if (organization.getUsers() != null && doChild == true) {
-            List<UserDTO> usersDTO = new LinkedList<>();
+            List<UserWithoutPassDTO> usersDTO = new LinkedList<>();
             for (User user : organization.getUsers()) {
                 usersDTO.add(UserResource.toDTO(user, false));
             }

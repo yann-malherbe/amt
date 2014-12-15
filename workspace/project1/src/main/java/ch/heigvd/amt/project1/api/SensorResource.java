@@ -72,12 +72,18 @@ public class SensorResource {
     public SensorDTO createSensor(SensorDTO dto) {
         Sensor newSensor = new Sensor();
         Organization organization = null;
-
+        
         if (dto.getOrganization() != null) {
             organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
         }
+        sensorsManager.createSensor(toSensor(dto, newSensor, organization));
+        if (organization != null) {
+            List<Sensor> sensors = organization.getSensors();
+            sensors.add(newSensor);
+            organization.setSensors(sensors);
+        }
 
-        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor, organization, null)), true);
+        return toDTO(sensorsManager.createSensor(toSensor(dto, newSensor, organization)), true);
     }
 
     @Path("/{id}")
@@ -109,7 +115,7 @@ public class SensorResource {
         return sensor;
     }
 
-    protected static Sensor toSensor(SensorDTO dto, Sensor sensor, Organization organization, User user) {
+    protected static Sensor toSensor(SensorDTO dto, Sensor sensor, Organization organization) {
         sensor.setName(dto.getName());
         sensor.setDescription(dto.getDescription());
         sensor.setType(dto.getType());

@@ -52,9 +52,9 @@ public class UserResource {
 
     @GET
     @Produces("application/json")
-    public List<UserDTO> getAllUsers() {
+    public List<UserWithoutPassDTO> getAllUsers() {
         List<User> users = usersManager.findAllUsers();
-        List<UserDTO> result = new ArrayList<>();
+        List<UserWithoutPassDTO> result = new ArrayList<>();
         for (User user : users) {
             result.add(toDTO(user, true));
         }
@@ -64,18 +64,22 @@ public class UserResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public UserDTO createUser(UserDTO dto) {
+    public UserWithoutPassDTO createUser(UserDTO dto) {
         User newUser = new User();
         Organization organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
         usersManager.createUser(toUser(dto, newUser, organization));
-        organizationsManager.updateOrganization(organization);
+        if (organization != null){
+            List<User> users = organization.getUsers();
+            users.add(newUser);
+            organization.setUsers(users);
+        }
         return toDTO(newUser, true);
     }
 
     @Path("/{id}")
     @GET
     @Produces("application/json")
-    public UserDTO getUser(@PathParam("id") long id) {
+    public UserWithoutPassDTO getUser(@PathParam("id") long id) {
         return toDTO(usersManager.findUserById(id), true);
     }
 
@@ -83,7 +87,7 @@ public class UserResource {
     @PUT
     @Consumes("application/json")
     @Produces("application/json")
-    public UserDTO updateUser(@PathParam("id") long id, UserDTO dto) {
+    public UserWithoutPassDTO updateUser(@PathParam("id") long id, UserDTO dto) {
         User existing = usersManager.findUserById(id);
         Organization organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
         usersManager.updateUser(toUser(dto, existing, organization));
@@ -116,8 +120,8 @@ public class UserResource {
         return user;
     }
 
-    protected static UserDTO toDTO(User user, boolean doChild) {
-        UserDTO dto = new UserDTO();
+    protected static UserWithoutPassDTO toDTO(User user, boolean doChild) {
+        UserWithoutPassDTO dto = new UserWithoutPassDTO();
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setLogin(user.getLogin());

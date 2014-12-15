@@ -7,6 +7,7 @@ package ch.heigvd.amt.project1.dto.organizations;
 
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.users.UserDTO;
+import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
 import java.util.List;
 
 /**
@@ -17,9 +18,9 @@ public class OrganizationDTO {
 
     private Long id;
     private String name;
-    private UserDTO contact;
+    private UserWithoutPassDTO contact;
     private List<SensorDTO> sensors;
-    private List<UserDTO> users;
+    private List<UserWithoutPassDTO> users;
 
     public Long getId() {
         return id;
@@ -37,15 +38,15 @@ public class OrganizationDTO {
         this.name = name;
     }
 
-    public UserDTO getContact() {
+    public UserWithoutPassDTO getContact() {
         return contact;
     }
 
-    public void setContact(UserDTO contact) {
+    public void setContact(UserWithoutPassDTO contact) {
         this.contact = contact;
     }
 
-    public List getSensors() {
+    public List<SensorDTO> getSensors() {
         return this.sensors;
     }
 
@@ -53,11 +54,11 @@ public class OrganizationDTO {
         this.sensors = sensors;
     }
 
-    public List getUsers() {
+    public List<UserWithoutPassDTO> getUsers() {
         return this.users;
     }
 
-    public void setUsers(List<UserDTO> users) {
+    public void setUsers(List<UserWithoutPassDTO> users) {
         this.users = users;
     }
 }
