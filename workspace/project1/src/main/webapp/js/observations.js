@@ -1,9 +1,10 @@
 $(document).ready(function () {
     
-    var organizations = {
-        organizations:[{id: 1, name:"AMT"},{id:2, name:"STI"}]
-    };
-    draw_organization_list(organizations);
+   $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){	
+        var temp = {};
+        temp.organizations = data;
+        draw_organization_list(temp);
+    });
     
     var sensors = {
         sensors:[
