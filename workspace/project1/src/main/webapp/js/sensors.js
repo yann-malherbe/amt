@@ -9,10 +9,17 @@ $(document).ready(function () {
             var temp = {};
             temp.sensors = data.sensors;
             draw_sensor_table(temp);
+        });
+        
+        $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationId&id="+temp.organizations[0].id , function(data,status,xhr){
             
-            $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationID&id="+temp.organizations[0].id , function(data,status,xhr){
-                draw_graph();
+            var numbers = [];
+            
+            $.each(data, function(index){
+                numbers.push({"name":data[index].sensor.name, "count":data[index].count});
             });
+            console.log(numbers);
+            draw_graph(numbers);
         });
     }); 
 });
@@ -41,44 +48,32 @@ function select_organization() {
         var temp = {};
         temp.sensors = data.sensors;
         draw_sensor_table(temp);
-        draw_graph();
-    });     
+    });
+    
+    $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationId&id="+$("#objSelect") , function(data,status,xhr){
+        draw_graph(data);
+    });
 
 }
 
-function draw_graph() {
+function draw_graph(data) {
+    
+    console.log(data);
     
     $("#numbers").empty();
     
     var data_graph = {
         element: 'numbers',
-        data: [{
-            device: 'Sensor1',
-            geekbench: 500
-        }, {
-            device: 'Sensor2',
-            geekbench: 137
-        }, {
-            device: 'Sensor3',
-            geekbench: 275
-        }, {
-            device: 'Sensor4',
-            geekbench: 380
-        }, {
-            device: 'Sensor5',
-            geekbench: 655
-        }, {
-            device: 'Sensor6',
-            geekbench: 1571
-        }],
-        xkey: 'device',
-        ykeys: ['geekbench'],
-        labels: ['Geekbench'],
+        xkey: 'name',
+        ykeys: ['count'],
+        labels: ['Counts'],
         barRatio: 0.4,
         xLabelAngle: 35,
         hideHover: 'auto',
         resize: true
     }; 
     
-    var graph = Morris.Bar(data_graph);
+    data_graph.data = data;
+    
+    Morris.Bar(data_graph);
 }

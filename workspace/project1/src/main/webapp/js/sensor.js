@@ -32,9 +32,13 @@ $(document).ready(function () {
                 //Get observations
                 var temp = {};
                 temp.observations = data;                
-                
-                draw_area_graph();
+            
                 draw_line_graph(data);
+                
+            });
+            
+            $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + first, function(data,status,xhr){
+                draw_area_graph(data);
             });
         });
     });
@@ -104,10 +108,13 @@ function select_organization() {
                 //Get observations
                 var temp = {};
                 temp.observations = data;                
-                
-                draw_area_graph();
                 draw_line_graph(data);
+              
             });
+            
+            $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + first, function(data,status,xhr){
+                draw_area_graph(data);
+            });           
         });
 }
 
@@ -136,14 +143,20 @@ function select_sensor() {
         //Get observations
         var temp = {};
         temp.observations = data;                
-
-        draw_area_graph();
         draw_line_graph(data);
+       
     });
+    
+    $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + id_sensor, function(data,status,xhr){
+        draw_area_graph(data);
+    });
+
 }
 
 
-function draw_area_graph() {
+function draw_area_graph(data) {
+    
+    console.log(data);
     
     $("#allobservations").empty();
     

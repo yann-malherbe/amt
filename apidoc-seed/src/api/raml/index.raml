@@ -344,7 +344,7 @@ traits:
         body:
           application/json:
             example: |
-               [{ "id" : 1, "number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }]
+               [{ "id" : 1, "date":"2015-12-12", "number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }]
             
   # GET /facts/numbers/:id 
   # ====================================
@@ -356,7 +356,7 @@ traits:
           body:
             application/json:
               example: |
-                { "id" : 1, "number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }
+                { "id" : 1, "date":"2015-12-12" ,"number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }
         404:
           description: The resource was not found.
     

@@ -32,9 +32,11 @@ $(document).ready(function () {
                 //Get observations
                 var temp = {};
                 temp.observations = data;                
-   
-                draw_facts_table();
                 draw_observations_table(temp);
+            });
+            
+            $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + first, function(data,status,xhr){
+                draw_area_graph(data);
             });
         });
     }); 
@@ -56,6 +58,8 @@ function draw_sensor_list(data) {
 }
 
 function draw_facts_table(data) {
+    
+    console.log(data);
     var facts = {
         facts:[            
                 {date: "10.12.2014", min:"1", average:"12", max:"14"},
@@ -107,10 +111,13 @@ function select_organization() {
             //Get observations
             var temp = {};
             temp.observations = data;                
-
-            draw_facts_table();
             draw_observations_table(temp);
         });
+        
+        $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + first, function(data,status,xhr){
+            draw_area_graph(data);
+        });
+
     });
 }
 
@@ -137,10 +144,13 @@ function select_sensor() {
         //Get observations
         var temp = {};
         temp.observations = data;                
-
-        draw_facts_table();
         draw_observations_table(temp);
     });
+    
+    $.getJSON("http://localhost:8080/project1/api/facts/summaries?order=bySensorId&id=" + firid_sensorst, function(data,status,xhr){
+        draw_area_graph(data);
+    });
+
 }
 
 
