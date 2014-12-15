@@ -6,7 +6,6 @@
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +21,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
+    @NamedQuery(name = "findAllFactCounters", query = "SELECT f FROM FactCounter f"),
     @NamedQuery(name = "findFactCountersByOrganizationId", query = "SELECT f FROM FactCounter f WHERE (f.organization.id = :organizationId)"),
     @NamedQuery(name = "findFactCountersBySensorId", query = "SELECT f FROM FactCounter f WHERE (f.sensor.id = :sensorId)")
 })

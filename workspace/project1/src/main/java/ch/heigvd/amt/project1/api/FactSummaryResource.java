@@ -15,6 +15,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -42,21 +43,25 @@ public class FactSummaryResource {
 
     @GET
     @Produces("application/json")
-    public List<FactSummaryDTO> getFactCounters(@QueryParam("order") String order, 
-            @QueryParam("id") long id) {
+    public List<FactSummaryDTO> getFactCounters(@DefaultValue("none") @QueryParam("order") String order,
+            @DefaultValue("0") @QueryParam("id") long id) {
         List<FactSummary> result = null;
         List<FactSummaryDTO> resultDTO = new LinkedList<>();
 
-        switch (order){
+        switch (order) {
+            case "none":
+                result = factSummariesManager.findAllFactSummaries();
+                break;
+
             case "byOrganizationId":
                 result = factSummariesManager.findFactSummariesByOrganizationId(id);
                 break;
-                    
-            case "bySensorId":        
+
+            case "bySensorId":
                 result = factSummariesManager.findFactSummariesBySensorId(id);
                 break;
         }
-        for (FactSummary factSummary : result){
+        for (FactSummary factSummary : result) {
             resultDTO.add(toDTO(factSummary, true));
         }
         return resultDTO;

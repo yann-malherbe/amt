@@ -21,7 +21,8 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllObservations", query =  "SELECT o FROM Observation o")
+    @NamedQuery(name = "findAllObservations", query =  "SELECT o FROM Observation o"),
+    @NamedQuery(name = "findObservationsBySensorId", query =  "SELECT o FROM Observation o WHERE (o.sensor.id = :sensorId)")
 }) 
 
 public class Observation implements Serializable {

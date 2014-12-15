@@ -5,6 +5,8 @@
  */
 package ch.heigvd.amt.project1.api;
 
+import static ch.heigvd.amt.project1.api.FactCounterResource.toDTO;
+import ch.heigvd.amt.project1.dto.facts.counters.FactCounterDTO;
 import ch.heigvd.amt.project1.dto.observations.ObservationDTO;
 import ch.heigvd.amt.project1.model.FactCounter;
 import ch.heigvd.amt.project1.model.FactSummary;
@@ -17,14 +19,17 @@ import ch.heigvd.amt.project1.services.SensorsManagerLocal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -60,13 +65,24 @@ public class ObservationResource {
 
     @GET
     @Produces("application/json")
-    public List<ObservationDTO> getAllObservations() {
-        List<Observation> observations = observationsManager.findAllObservations();
-        List<ObservationDTO> result = new ArrayList<>();
-        for (Observation observation : observations) {
-            result.add(toDTO(observation, true));
+    public List<ObservationDTO> getObservationsBySensorId(@DefaultValue("none") @QueryParam("order") String order,
+            @DefaultValue("0") @QueryParam("id") long id) {
+        List<Observation> result = null;
+        List<ObservationDTO> resultDTO = new LinkedList<>();
+
+        switch (order) {
+            case "none":
+                result = observationsManager.findAllObservations();
+                break;
+            case "bySensorId":
+                result = observationsManager.findObservationsBySensorId(id);
+                break;
         }
-        return result;
+
+        for (Observation observation : result) {
+            resultDTO.add(toDTO(observation, true));
+        }
+        return resultDTO;
     }
 
     @POST
@@ -129,7 +145,10 @@ public class ObservationResource {
                     factCounterManager.updateFactCounter(factCounterDaily);
                 } // It's a new day
                 else {
-                    newFactCounter(newObservation, sensor, false);
+                    factCounterDaily.setCount(factCounterDaily.getCount() + 1);
+                    factCounterDaily.setfDay(newObservation.getfDate());
+                    factCounterManager.updateFactCounter(factCounterDaily);
+                    //newFactCounter(newObservation, sensor, false);
                 }
             }
 
