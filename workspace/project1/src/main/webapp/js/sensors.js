@@ -6,13 +6,9 @@ $(document).ready(function () {
         draw_organization_list(temp);
         
         $.getJSON("http://localhost:8080/project1/api/organizations/"+temp.organizations[0].id , function(data,status,xhr){
-            var sensors = {
-                sensors:[
-                    {name:"sensors#2334", description:"Sensor of temperature", type:"Kelvin", open:"true"},
-                    {name:"sensors#1125", description:"Photometric ", type:"Lux", open:"true"}]
-            };
-            
-            draw_sensor_table(sensors);
+            var temp = {};
+            temp.sensors = data.sensors;
+            draw_sensor_table(temp);
             draw_graph();         
         });
     }); 
@@ -38,14 +34,13 @@ function draw_sensor_table(data) {
 /* Onchange Event*/
 function select_organization() {
     
-    var data = {
-        sensors:[
-            {name:"sensors#2334", description:"Sensor of temperature", type:"Kelvin", open:"true"},
-            {name:"sensors#1125", description:"Photometric ", type:"Lux", open:"true"}]
-    };
-    
-    draw_sensor_table(data);
-    draw_graph();
+    $.getJSON("http://localhost:8080/project1/api/organizations/" + $("#objSelect").val(), function(data,status,xhr){	
+        var temp = {};
+        temp.sensors = data.sensors;
+        draw_sensor_table(temp);
+        draw_graph();
+    });     
+
 }
 
 function draw_graph() {

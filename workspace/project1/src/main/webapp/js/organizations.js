@@ -1,5 +1,6 @@
 $(document).ready(function () {
     
+    //Data fzrom project1
     $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){	
         var temp = {};
         temp.organizations = data;

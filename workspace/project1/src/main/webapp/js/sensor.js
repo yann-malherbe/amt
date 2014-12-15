@@ -4,16 +4,41 @@ $(document).ready(function () {
         var temp = {};
         temp.organizations = data;
         draw_organization_list(temp);
+        
+        $.getJSON("http://localhost:8080/project1/api/organizations/"+temp.organizations[0].id , function(data,status,xhr){
+            
+            //Get sensors
+            var temp = {};
+            temp.sensors = data.sensors;
+            draw_sensor_list(temp);
+            
+            var first = temp.sensors[0].id;
+            
+            //Get observations of the first organization
+            $.getJSON("http://localhost:8080/project1/api/observations","bySensorId=" + first,function(data,status,xhr){
+                
+                //Filter : only sensors of organization
+                data = $.grep(data, function(n){
+                    return n.sensor.id === first;
+                });
+                
+                //Filter : set the good date format to draw the charts.
+                $.each(data, function(index){
+                    var date = new Date();
+                    date.setSeconds(index);
+                    data[index].date = date.getYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                });
+                
+                //Get observations
+                var temp = {};
+                temp.observations = data;                
+                
+                draw_area_graph();
+                draw_line_graph(data);
+            });
+        });
     });
-     
-    var sensors = {
-        sensors:[
-            {id:"1", name:"sensors#2334", description:"Sensor of temperature"},
-            {id:"2", name:"sensors#1125", description:"Photometric"}]
-    };
-    draw_sensor_list(sensors);
-    draw_area_graph();
-    draw_line_graph();    
+    
 });
 
 function draw_organization_list(data) {
@@ -28,25 +53,93 @@ function draw_sensor_list(data) {
     var template = Handlebars.compile(source); 
     var result = template(data);
     $("#sensors-list").empty();
-    $("#sensors-list").append(result);
+    $("#sensors-list").append(result);  
 }
 
+function draw_line_graph(data) {
+    
+    $("#today").empty();
+    
+    var data_graph = {
+        element: 'today',
+        xkey: ['date'],
+        ykeys: ['value'],
+        labels: ['Value'],
+        smooth: false,
+        resize: true
+    };
+    
+    data_graph.data = data;
+    
+    Morris.Line(data_graph);
+}
 
 /* Onchange Event */
 function select_organization() {
     
-    var sensors = {
-        sensors:[
-            {id:"1", name:"sensors#2334", description:"Sensor of temperature"},
-            {id:"2", name:"sensors#1125", description:"Photometric"}]
-    };
-    draw_sensor_list(sensors);
+    $.getJSON("http://localhost:8080/project1/api/organizations/"+$("#objSelect").val() , function(data,status,xhr){
+            
+            //Get sensors
+            var temp = {};
+            temp.sensors = data.sensors;
+            draw_sensor_list(temp);
+            
+            var first = temp.sensors[0].id;
+            
+            //Get observations of the first organization
+            $.getJSON("http://localhost:8080/project1/api/observations","bySensorId=" + first,function(data,status,xhr){
+                
+                //Filter : only sensors of organization
+                data = $.grep(data, function(n){
+                    return n.sensor.id === first;
+                });
+                
+                //Filter : set the good date format to draw the charts.
+                $.each(data, function(index){
+                    var date = new Date();
+                    date.setSeconds(index);
+                    data[index].date = date.getYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                });
+                
+                //Get observations
+                var temp = {};
+                temp.observations = data;                
+                
+                draw_area_graph();
+                draw_line_graph(data);
+            });
+        });
 }
+
 
 /* Onchange Event */
 function select_sensor() {
-    draw_area_graph();
-    draw_line_graph();
+    
+    var id_sensor = $("#sensorSelect").val();
+
+    //Get observations of the first organization
+    $.getJSON("http://localhost:8080/project1/api/observations","bySensorId=" + id_sensor,function(data,status,xhr){
+
+        //Filter : only sensors of organization
+        data = $.grep(data, function(n){
+            console.log(n.sensor.id);
+            return n.sensor.id == id_sensor;
+        });
+       
+        //Filter : set the good date format to draw the charts.
+        $.each(data, function(index){
+            var date = new Date();
+            date.setSeconds(index);
+            data[index].date = date.getYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        });
+
+        //Get observations
+        var temp = {};
+        temp.observations = data;                
+
+        draw_area_graph();
+        draw_line_graph(data);
+    });
 }
 
 
@@ -81,31 +174,6 @@ function draw_area_graph() {
             iphone: 6810,
             ipad: 1914,
             itouch: 2293
-        }, {
-            period: '2011 Q2',
-            iphone: 5670,
-            ipad: 4293,
-            itouch: 1881
-        }, {
-            period: '2011 Q3',
-            iphone: 4820,
-            ipad: 3795,
-            itouch: 1588
-        }, {
-            period: '2011 Q4',
-            iphone: 15073,
-            ipad: 5967,
-            itouch: 5175
-        }, {
-            period: '2012 Q1',
-            iphone: 10687,
-            ipad: 4460,
-            itouch: 2028
-        }, {
-            period: '2012 Q2',
-            iphone: 8432,
-            ipad: 5713,
-            itouch: 1791
         }],
         xkey: 'period',
         ykeys: ['iphone', 'ipad', 'itouch'],
@@ -120,120 +188,3 @@ function draw_area_graph() {
 
 }
 
-function draw_line_graph() {
-    
-    $("#today").empty();
-    
-    var data_graph = {
-        // ID of the element in which to draw the chart.
-        element: 'today',
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
-        data: [{
-            d: '2012-10-01',
-            visits: 802
-        }, {
-            d: '2012-10-02',
-            visits: 783
-        }, {
-            d: '2012-10-03',
-            visits: 820
-        }, {
-            d: '2012-10-04',
-            visits: 839
-        }, {
-            d: '2012-10-05',
-            visits: 792
-        }, {
-            d: '2012-10-06',
-            visits: 859
-        }, {
-            d: '2012-10-07',
-            visits: 790
-        }, {
-            d: '2012-10-08',
-            visits: 1680
-        }, {
-            d: '2012-10-09',
-            visits: 1592
-        }, {
-            d: '2012-10-10',
-            visits: 1420
-        }, {
-            d: '2012-10-11',
-            visits: 882
-        }, {
-            d: '2012-10-12',
-            visits: 889
-        }, {
-            d: '2012-10-13',
-            visits: 819
-        }, {
-            d: '2012-10-14',
-            visits: 849
-        }, {
-            d: '2012-10-15',
-            visits: 870
-        }, {
-            d: '2012-10-16',
-            visits: 1063
-        }, {
-            d: '2012-10-17',
-            visits: 1192
-        }, {
-            d: '2012-10-18',
-            visits: 1224
-        }, {
-            d: '2012-10-19',
-            visits: 1329
-        }, {
-            d: '2012-10-20',
-            visits: 1329
-        }, {
-            d: '2012-10-21',
-            visits: 1239
-        }, {
-            d: '2012-10-22',
-            visits: 1190
-        }, {
-            d: '2012-10-23',
-            visits: 1312
-        }, {
-            d: '2012-10-24',
-            visits: 1293
-        }, {
-            d: '2012-10-25',
-            visits: 1283
-        }, {
-            d: '2012-10-26',
-            visits: 1248
-        }, {
-            d: '2012-10-27',
-            visits: 1323
-        }, {
-            d: '2012-10-28',
-            visits: 1390
-        }, {
-            d: '2012-10-29',
-            visits: 1420
-        }, {
-            d: '2012-10-30',
-            visits: 1529
-        }, {
-            d: '2012-10-31',
-            visits: 1892
-        }, ],
-        // The name of the data record attribute that contains x-visitss.
-        xkey: 'd',
-        // A list of names of data record attributes that contain y-visitss.
-        ykeys: ['visits'],
-        // Labels for the ykeys -- will be displayed when you hover over the
-        // chart.
-        labels: ['Visits'],
-        // Disables line smoothing
-        smooth: false,
-        resize: true
-    };
-    
-    var graph = Morris.Line(data_graph);
-}
