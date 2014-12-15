@@ -6,6 +6,7 @@
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,7 @@ public class FactCounter implements Serializable {
     @OneToOne
     private Sensor sensor;
     private int count;
+    private long fDay;
 
     public Long getId() {
         return this.id;
@@ -83,6 +85,14 @@ public class FactCounter implements Serializable {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public long getfDay() {
+        return fDay;
+    }
+
+    public void setfDay(long fDay) {
+        this.fDay = fDay;
     }
 
     @Override

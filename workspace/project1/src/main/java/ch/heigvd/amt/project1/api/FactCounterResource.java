@@ -81,6 +81,7 @@ public class FactCounterResource {
         factCounter.setfOpen(dto.isOpen());
         factCounter.setCount(dto.getCount());
         factCounter.setfGlobal(dto.getGlobal());
+        factCounter.setfDay(dto.getDate());
         if (organization != null) {
             factCounter.setOrganization(organization);
         }
@@ -95,6 +96,7 @@ public class FactCounterResource {
         dto.setId(factCounter.getId());
         dto.setOpen(factCounter.getfOpen());
         dto.setGlobal(factCounter.getfGlobal());
+        dto.setDate(factCounter.getfDay());
         dto.setCount(factCounter.getCount());
         if (factCounter.getOrganization() != null && doChild == true) {
             dto.setOrganization(OrganizationResource.toDTO(factCounter.getOrganization(), false));

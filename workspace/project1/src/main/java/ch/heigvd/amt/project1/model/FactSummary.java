@@ -34,7 +34,7 @@ public class FactSummary implements Serializable {
     private float fMin;
     private float fMax;
     private float fAverage;
-    private Timestamp fDay;
+    private long fDay;
 
     public Long getId() {
         return this.id;
@@ -92,11 +92,11 @@ public class FactSummary implements Serializable {
         this.fAverage = average;
     }
 
-    public Timestamp getfDay() {
+    public long getfDay() {
         return this.fDay;
     }
 
-    public void setfDay(Timestamp day) {
+    public void setfDay(long day) {
         this.fDay = day;
     }
 

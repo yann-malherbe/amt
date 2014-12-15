@@ -7,6 +7,7 @@ package ch.heigvd.amt.project1.dto.facts.counters;
 
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
+import java.sql.Timestamp;
 
 /**
  *
@@ -20,6 +21,7 @@ public class FactCounterDTO {
     private OrganizationDTO organization;
     private SensorDTO sensor;
     private int count;
+    private long date;
 
     public Long getId() {
         return id;
@@ -69,4 +71,11 @@ public class FactCounterDTO {
         this.count = count;
     }
 
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long day) {
+        this.date = day;
+    } 
 }

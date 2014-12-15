@@ -21,7 +21,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -82,7 +81,7 @@ public class FactSummaryResource {
         factSummary.setfMin(dto.getMin());
         factSummary.setfMax(dto.getMax());
         factSummary.setfAverage(dto.getAverage());
-        factSummary.setfDay(dto.getDay());
+        factSummary.setfDay(dto.getDate());
         if (organization != null) {
             factSummary.setOrganization(organization);
         }
@@ -99,7 +98,7 @@ public class FactSummaryResource {
         dto.setMin(factSummary.getfMin());
         dto.setMax(factSummary.getfMax());
         dto.setAverage(factSummary.getfAverage());
-        dto.setDay(factSummary.getfDay());
+        dto.setDate(factSummary.getfDay());
 
         if (factSummary.getOrganization() != null && doChild == true) {
             dto.setOrganization(OrganizationResource.toDTO(factSummary.getOrganization(), false));

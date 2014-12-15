@@ -29,7 +29,7 @@ public class Observation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp fDate;
+    private long fDate;
     private float fValue;
     @ManyToOne
     private Sensor sensor;
@@ -42,11 +42,11 @@ public class Observation implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getfDate() {
+    public long getfDate() {
         return fDate;
     }
 
-    public void setfDate(Timestamp date) {
+    public void setfDate(long date) {
         this.fDate = date;
     }
 
