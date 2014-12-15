@@ -105,7 +105,7 @@ public class SensorResource {
     }
 
     protected static Sensor toSensor(SensorSimpleDTO dto, Sensor sensor) {
-        sensor.setOpen(dto.isOpen());
+        sensor.setfOpen(dto.isOpen());
         return sensor;
     }
 
@@ -113,7 +113,7 @@ public class SensorResource {
         sensor.setName(dto.getName());
         sensor.setDescription(dto.getDescription());
         sensor.setType(dto.getType());
-        sensor.setOpen(dto.isOpen());
+        sensor.setfOpen(dto.isOpen());
         if (dto.getOrganization() != null) {
             sensor.setOrganization(organization);
         }
@@ -127,7 +127,7 @@ public class SensorResource {
         dto.setName(sensor.getName());
         dto.setDescription(sensor.getDescription());
         dto.setType(sensor.getType());
-        dto.setOpen(sensor.isOpen());
+        dto.setOpen(sensor.isfOpen());
         if (sensor.getOrganization() != null && doChild == true) {
             dto.setOrganization(OrganizationResource.toSimpleDTO(sensor.getOrganization(), false));
         }

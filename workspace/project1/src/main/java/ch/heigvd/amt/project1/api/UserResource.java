@@ -67,7 +67,9 @@ public class UserResource {
     public UserDTO createUser(UserDTO dto) {
         User newUser = new User();
         Organization organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
-        return toDTO(usersManager.createUser(toUser(dto, newUser, organization)), true);
+        usersManager.createUser(toUser(dto, newUser, organization));
+        organizationsManager.updateOrganization(organization);
+        return toDTO(newUser, true);
     }
 
     @Path("/{id}")

@@ -52,7 +52,7 @@ public class ObservationResource {
         List<Observation> observations = observationsManager.findAllObservations();
         List<ObservationDTO> result = new ArrayList<>();
         for (Observation observation : observations) {
-            result.add(toDTO(observation));
+            result.add(toDTO(observation, true));
         }
         return result;
     }
@@ -66,26 +66,25 @@ public class ObservationResource {
         if (dto.getSensor() != null){
             sensor = sensorsManager.findSensorById(dto.getSensor().getId());
         }
-        return toDTO(observationsManager.createObservation(toObservation(dto, newObservation, sensor)));
+        return toDTO(observationsManager.createObservation(toObservation(dto, newObservation, sensor)), true);
     }
 
     private Observation toObservation(ObservationDTO dto, Observation observation, Sensor sensor) {
-        observation.setId(dto.getId());
         observation.setfDate(dto.getDate());
-        observation.setfData(dto.getData());
-        if (observation.getSensor() != null){
+        observation.setfValue(dto.getValue());
+        if (dto.getSensor() != null){
             observation.setSensor(sensor);
         }
         return observation;
     }
 
-    protected static ObservationDTO toDTO(Observation observation) {
+    protected static ObservationDTO toDTO(Observation observation, boolean doChild) {
         ObservationDTO dto = new ObservationDTO();
         dto.setId(observation.getId());
         dto.setDate(observation.getfDate());
-        dto.setData(observation.getfData());
+        dto.setValue(observation.getfValue());
         
-        if (observation.getSensor() != null){
+        if (observation.getSensor() != null && doChild == true){
             dto.setSensor(SensorResource.toDTO(observation.getSensor(), false));
         }
         return dto;

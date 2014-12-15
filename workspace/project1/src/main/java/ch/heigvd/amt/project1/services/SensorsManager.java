@@ -19,15 +19,16 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class SensorsManager implements SensorsManagerLocal {
 
-@PersistenceContext
+    @PersistenceContext
     public EntityManager em;
 
     @Override
     public Sensor findSensorById(long id) {
         return em.find(Sensor.class, id);
     }
-    
-    public List<Sensor> findAllPublicSensors(){
+
+    @Override
+    public List<Sensor> findAllPublicSensors() {
         return em.createNamedQuery("findAllPublicSensors").getResultList();
     }
 
@@ -41,10 +42,12 @@ public class SensorsManager implements SensorsManagerLocal {
     @Override
     public void updateSensor(Sensor sensor) {
         em.merge(sensor);
+        em.flush();
     }
 
     @Override
     public void deleteSensor(Sensor sensor) {
         em.remove(sensor);
+        em.flush();
     }
 }

@@ -15,6 +15,7 @@ import ch.heigvd.amt.project1.model.User;
 import ch.heigvd.amt.project1.services.OrganizationsManagerLocal;
 import ch.heigvd.amt.project1.services.UsersManagerLocal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -140,16 +141,16 @@ public class OrganizationResource {
         }
 
         if (organization.getSensors() != null && doChild == true) {
-            List<SensorDTO> sensorsDTO = new ArrayList<>();
-            for (Sensor sensor : (List<Sensor>) organization.getSensors()) {
+            List<SensorDTO> sensorsDTO = new LinkedList<>();
+            for (Sensor sensor : organization.getSensors()) {
                 sensorsDTO.add(SensorResource.toDTO(sensor, false));
             }
             dto.setSensors(sensorsDTO);
         }
 
         if (organization.getUsers() != null && doChild == true) {
-            List<UserDTO> usersDTO = new ArrayList<>();
-            for (User user : (List<User>) organization.getUsers()) {
+            List<UserDTO> usersDTO = new LinkedList<>();
+            for (User user : organization.getUsers()) {
                 usersDTO.add(UserResource.toDTO(user, false));
             }
             dto.setUsers(usersDTO);

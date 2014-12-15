@@ -46,10 +46,12 @@ public class FactCountersManager implements FactCountersManagerLocal {
     @Override
     public void updateFactCounter(FactCounter factCounter) {
         em.merge(factCounter);
+        em.flush();
     }
 
     @Override
     public void deleteFactCounter(FactCounter factCounter) {
         em.remove(factCounter);
+        em.flush();
     }
 }

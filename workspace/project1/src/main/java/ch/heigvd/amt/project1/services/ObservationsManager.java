@@ -41,10 +41,12 @@ public class ObservationsManager implements ObservationsManagerLocal {
     @Override
     public void updateObservation(Observation observation) {
         em.merge(observation);
+        em.flush();
     }
 
     @Override
     public void deleteObservation(Observation observation) {
         em.remove(observation);
+        em.flush();
     }
 }
