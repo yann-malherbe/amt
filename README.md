@@ -84,10 +84,11 @@ We tested methods GET and POST on the url :
 * GET /sensors/:id
 * GET /observations
 * GET /observations/:id
-
 * POST /organizations 
 * POST /sensors
 * POST /observations
+
+For this time, we assume that the value send are correct and we assume that the BD is not empty !
  
 You can test POST methods with the sripts /Scripts/CreateObjects and /Scripts/SendValue.
 
