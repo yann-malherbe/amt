@@ -41,11 +41,13 @@ public class UsersManager implements UsersManagerLocal {
     @Override
     public void updateUser(User user) {
         em.merge(user);
+        em.flush();
     }
 
     @Override
     public void deleteUser(User user) {
         em.remove(user);
+        em.flush();
     }
 
 }

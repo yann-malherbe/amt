@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and fOpen the template in the editor.
  */
 package ch.heigvd.amt.project1.model;
 
@@ -20,7 +20,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllPublicSensors", query = "SELECT s FROM Sensor s WHERE s.open = true")
+    @NamedQuery(name = "findAllPublicSensors", query = "SELECT s FROM Sensor s WHERE s.fOpen = true")
 })
 
 public class Sensor implements Serializable {
@@ -32,7 +32,7 @@ public class Sensor implements Serializable {
     private String name;
     private String description;
     private String type;
-    private boolean open;
+    private boolean fOpen;
     @ManyToOne
     private Organization organization;
 
@@ -68,12 +68,12 @@ public class Sensor implements Serializable {
         this.type = type;
     }
 
-    public boolean isOpen() {
-        return this.open;
+    public boolean isfOpen() {
+        return this.fOpen;
     }
 
-    public void setOpen(boolean open) {
-        this.open = open;
+    public void setfOpen(boolean open) {
+        this.fOpen = open;
     }
 
     public Organization getOrganization() {

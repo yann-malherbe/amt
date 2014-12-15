@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class ObservationDTO {
     private Long id;
     private Timestamp date;
-    private float data;
+    private float value;
     private SensorDTO sensor;
 
     public Long getId() {
@@ -34,12 +34,12 @@ public class ObservationDTO {
         this.date = date;
     }
 
-    public float getData() {
-        return data;
+    public float getValue() {
+        return value;
     }
 
-    public void setData(float data) {
-        this.data = data;
+    public void setValue(float value) {
+        this.value = value;
     }
 
     public SensorDTO getSensor() {

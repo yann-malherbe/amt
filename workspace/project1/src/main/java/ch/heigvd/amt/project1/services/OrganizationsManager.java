@@ -41,10 +41,12 @@ public class OrganizationsManager implements OrganizationsManagerLocal {
     @Override
     public void updateOrganization(Organization organization) {
         em.merge(organization);
+        em.flush();
     }
 
     @Override
     public void deleteOrganization(Organization organization) {
         em.remove(organization);
+        em.flush();
     }
 }
