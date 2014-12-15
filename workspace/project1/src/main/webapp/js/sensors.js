@@ -9,7 +9,10 @@ $(document).ready(function () {
             var temp = {};
             temp.sensors = data.sensors;
             draw_sensor_table(temp);
-            draw_graph();         
+            
+            $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationID&id="+temp.organizations[0].id , function(data,status,xhr){
+                draw_graph();
+            });
         });
     }); 
 });
