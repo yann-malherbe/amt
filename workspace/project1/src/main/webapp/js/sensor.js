@@ -3,15 +3,15 @@ $(document).ready(function () {
     $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){
         draw_organization_list(data);
         
-        $.getJSON("http://localhost:8080/project1/api/organizations/"+data[0].id , function(data,status,xhr){
+        $.getJSON("http://localhost:8080/project1/api/organizations/" + data[0].id, function(data,status,xhr){
             draw_sensor_list(data);
             
             //Get observations of the first organization
-            $.getJSON("http://localhost:8080/project1/api/observations","order=bySensorId&id=" + data[0].id,function(data,status,xhr){            
+            $.getJSON("http://localhost:8080/project1/api/observations","order=bySensorId&id=" + data.sensors[0].id,function(data,status,xhr){            
                 draw_line_graph(data);
             });
-            
-            $.getJSON("http://localhost:8080/project1/api/facts/summaries", "order=bySensorId&id=" + data[0].id, function(data,status,xhr){
+
+            $.getJSON("http://localhost:8080/project1/api/facts/summaries", "order=bySensorId&id=" + data.sensors[0].id, function(data,status,xhr){
                 draw_area_graph(data);
             });
         });
@@ -42,8 +42,12 @@ function draw_sensor_list(data) {
 
 function draw_area_graph(data) {
     
-    console.log(data);
-    
+    //Filter : set the good date format to draw the charts.
+    $.each(data, function(index){
+        var date = new Date(data[index].date);
+        data[index].date = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    });
+   
     $("#allobservations").empty();
     
     var data_graph = {
@@ -65,22 +69,12 @@ function draw_area_graph(data) {
 
 function draw_line_graph(data) {
     
-    //Filter : only sensors of organization
-    data = $.grep(data, function(n){
-        return n.sensor.id === first;
-    });
-
     //Filter : set the good date format to draw the charts.
     $.each(data, function(index){
-        var date = new Date();
-        date.setSeconds(index);
-        data[index].date = date.getYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var date = new Date(data[index].date);
+        data[index].date = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     });
-
-    //Get observations
-    var temp = {};
-    temp.observations = data;                
-
+    
     $("#today").empty();
     
     var data_graph = {
@@ -92,7 +86,7 @@ function draw_line_graph(data) {
         resize: true
     };
     
-    data_graph.data = temp;
+    data_graph.data = data;
     Morris.Line(data_graph);
 }
 
@@ -101,8 +95,8 @@ function select_organization() {
     
     $.getJSON("http://localhost:8080/project1/api/organizations/"+$("#objSelect").val() , function(data,status,xhr){
         draw_sensor_list(data);
-            
-        var first = data[0].id;
+    
+        var first = data.sensors[0].id;
             
         //Get observations of the first organization
         $.getJSON("http://localhost:8080/project1/api/observations","order=bySensorId&id=" + first,function(data,status,xhr){
