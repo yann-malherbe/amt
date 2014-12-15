@@ -94,8 +94,6 @@ You can test POST methods with the sripts /Scripts/CreateObjects and /Scripts/Se
 
 You can test GET methods with the web app on the url : http://localhost:8080/project1/index.html.
 
-The url /users is not used but still present in api.
-
 **Not implemented :**
 
 /facts/summaries
