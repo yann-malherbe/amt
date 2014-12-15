@@ -87,10 +87,13 @@ traits:
   get:
      description: Get all users.
      queryParameters:
-       byOrganizationID:
+       order:
         description: Filter users of an organization.
-        example: 1
-        type: number
+        example: byOrganizationID
+       id:
+         description: Filter users by id.
+         example: 1
+         type: number
      responses :
        200:
          body:
@@ -165,8 +168,11 @@ traits:
   get:
     description: Get all public sensors.
     queryParameters:
-      byOrganizationId:
+      order:
        description: Filter users of an organization.
+       example: byOrganizationID
+      id:
+       description: Filter by id.
        example: 1
        type: number
       policy:
@@ -246,10 +252,14 @@ traits:
   get:
     description: Get all observations
     queryParameters:
-      bySensorId:
+      order:
         description: Get all observations of a sensor.
+        example: bySensorID
+      id:
+        description: Filter by the id of a sensor.
         example: 1
         type: number
+        
     responses:
       200:
         body:
@@ -278,12 +288,11 @@ traits:
   get:
     description: Get all summaries.
     queryParameters:
-      byOrganizationId:
-        description: Get all fact of an organization.
-        example: 1
-        type: number
-      bySensorId:
-        description: Get all fact of a sensor
+      order:
+        description: Filter fact by organization or by sensor.
+        example: byOrganizationId, bySensorId 
+      id:
+        description: Filter fact by organization or by sensor.
         example: 1
         type: number
     responses:
@@ -323,12 +332,11 @@ traits:
   get:
     description: Get all numbers.
     queryParameters:
-      byOrganizationId:
-        description: Get all fact of an organization.
-        example: 1
-        type: number
-      bySensorId:
-        description: Get all fact of a sensor
+      order:
+        description: Get all fact of an organization or a sensor.
+        example: bySensorId, byOrganizationId
+      id:
+        description: Filter by id of an organization or a sensor.
         example: 1
         type: number
     responses:
