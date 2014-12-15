@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -20,11 +21,10 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findFactCountersByOrganizationId", query = "SELECT f FROM FactCounter f WHERE f.organization = :id"),
-    @NamedQuery(name = "findFactCountersBySensorId", query = "SELECT f FROM FactCounter f WHERE f.organization = :id")
+    @NamedQuery(name = "findFactCountersByOrganizationId", query = "SELECT f FROM FactCounter f WHERE (f.organization.id = :organizationId)"),
+    @NamedQuery(name = "findFactCountersBySensorId", query = "SELECT f FROM FactCounter f WHERE (f.sensor.id = :sensorId)")
 })
 public class FactCounter implements Serializable {
-    //DOTO: ajouter sensor
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +32,8 @@ public class FactCounter implements Serializable {
     private Boolean fOpen;
     @ManyToOne
     private Organization organization;
+    @OneToOne
+    private Sensor sensor;
     private int count;
 
     public Long getId() {
@@ -42,11 +44,11 @@ public class FactCounter implements Serializable {
         this.id = id;
     }
 
-    public Boolean getOpen() {
+    public Boolean getfOpen() {
         return fOpen;
     }
 
-    public void setOpen(Boolean open) {
+    public void setfOpen(Boolean open) {
         this.fOpen = open;
     }
 
@@ -56,6 +58,14 @@ public class FactCounter implements Serializable {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 
     public int getCount() {

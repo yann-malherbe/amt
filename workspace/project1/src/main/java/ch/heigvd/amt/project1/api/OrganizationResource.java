@@ -8,7 +8,6 @@ package ch.heigvd.amt.project1.api;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
-import ch.heigvd.amt.project1.dto.users.UserDTO;
 import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
@@ -89,6 +88,8 @@ public class OrganizationResource {
     public OrganizationDTO updateOrganization(@PathParam("id") long id, OrganizationSimpleDTO dto) {
         Organization existing = organizationsManager.findOrganizationById(id);
         User user = usersManager.findUserById(dto.getContact().getId());
+        user.setOrganization(existing);
+        usersManager.updateUser(user);
         organizationsManager.updateOrganization(toOrganization(dto, existing, user));
         return toDTO(existing, true);
     }
