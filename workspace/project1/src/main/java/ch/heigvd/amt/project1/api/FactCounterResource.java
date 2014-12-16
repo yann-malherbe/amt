@@ -50,16 +50,14 @@ public class FactCounterResource {
         List<FactCounterDTO> resultDTO = new LinkedList<>();
 
         switch (order) {
-            case "none":
-                result = factCountersManager.findAllFactCounters();
-                break;
-                
             case "byOrganizationId":
                 result = factCountersManager.findFactCountersByOrganizationId(id);
                 break;
-
             case "bySensorId":
                 result = factCountersManager.findFactCounterBySensorId(id);
+                break;
+            default:
+                result = factCountersManager.findAllFactCounters();
                 break;
         }
         for (FactCounter factCounter : result) {

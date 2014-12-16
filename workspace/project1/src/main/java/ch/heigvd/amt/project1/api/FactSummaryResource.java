@@ -49,16 +49,14 @@ public class FactSummaryResource {
         List<FactSummaryDTO> resultDTO = new LinkedList<>();
 
         switch (order) {
-            case "none":
-                result = factSummariesManager.findAllFactSummaries();
-                break;
-
             case "byOrganizationId":
                 result = factSummariesManager.findFactSummariesByOrganizationId(id);
                 break;
-
             case "bySensorId":
                 result = factSummariesManager.findFactSummariesBySensorId(id);
+                break;
+            default:
+                result = factSummariesManager.findAllFactSummaries();
                 break;
         }
         for (FactSummary factSummary : result) {

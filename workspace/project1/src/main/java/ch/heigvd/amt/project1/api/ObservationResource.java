@@ -5,8 +5,6 @@
  */
 package ch.heigvd.amt.project1.api;
 
-import static ch.heigvd.amt.project1.api.FactCounterResource.toDTO;
-import ch.heigvd.amt.project1.dto.facts.counters.FactCounterDTO;
 import ch.heigvd.amt.project1.dto.observations.ObservationDTO;
 import ch.heigvd.amt.project1.model.FactCounter;
 import ch.heigvd.amt.project1.model.FactSummary;
@@ -17,7 +15,6 @@ import ch.heigvd.amt.project1.services.FactSummariesManagerLocal;
 import ch.heigvd.amt.project1.services.ObservationsManagerLocal;
 import ch.heigvd.amt.project1.services.SensorsManagerLocal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,11 +68,11 @@ public class ObservationResource {
         List<ObservationDTO> resultDTO = new LinkedList<>();
 
         switch (order) {
-            case "none":
-                result = observationsManager.findAllObservations();
-                break;
             case "bySensorId":
                 result = observationsManager.findObservationsBySensorId(id);
+                break;
+            default:
+                result = observationsManager.findAllObservations();
                 break;
         }
 
@@ -122,11 +119,11 @@ public class ObservationResource {
                 }
 
                 // We take the daily counter
-                FactCounter factCounterDaily = factCounters.get(0);
-                long dayMax = factCounters.get(0).getfDay();
+                FactCounter factCounterDaily = factCounters.get(1);
+                long dayMax = factCounters.get(1).getfDay();
 
                 for (FactCounter factCounter : factCounters) {
-                    if (dayMax < factCounter.getfDay()) {
+                    if (dayMax < factCounter.getfDay() && !factCounter.getfGlobal()) {
                         dayMax = factCounter.getfDay();
                         factCounterDaily = factCounter;
                     }
@@ -138,17 +135,13 @@ public class ObservationResource {
                 cal2.setTime(new Timestamp(factCounterDaily.getfDay()));
 
                 // It's the current day
-                if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
-                        && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
+                if (cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)) {
                     factCounterDaily.setCount(factCounterDaily.getCount() + 1);
                     factCounterDaily.setfDay(newObservation.getfDate());
                     factCounterManager.updateFactCounter(factCounterDaily);
                 } // It's a new day
                 else {
-                    factCounterDaily.setCount(factCounterDaily.getCount() + 1);
-                    factCounterDaily.setfDay(newObservation.getfDate());
-                    factCounterManager.updateFactCounter(factCounterDaily);
-                    //newFactCounter(newObservation, sensor, false);
+                    newFactCounter(newObservation, sensor, false);
                 }
             }
 
