@@ -21,6 +21,8 @@ public interface ObservationsManagerLocal {
     public List<Observation> findAllObservations();
     
     public List<Observation> findObservationsBySensorId(long id);
+    
+    public void deleteObservationsBySensorId(long id);
 
     public Observation createObservation(Observation observation);
 

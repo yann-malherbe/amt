@@ -81,6 +81,7 @@ public class FactSummaryResource {
 
     protected static FactSummary toFactSummary(FactSummaryDTO dto, FactSummary factSummary, Organization organization, Sensor sensor) {
         factSummary.setfOpen(dto.isOpen());
+        factSummary.setfGlobal(dto.getGlobal());
         factSummary.setfMin(dto.getMin());
         factSummary.setfMax(dto.getMax());
         factSummary.setfAverage(dto.getAverage());
@@ -98,6 +99,7 @@ public class FactSummaryResource {
         FactSummaryDTO dto = new FactSummaryDTO();
         dto.setId(factSummary.getId());
         dto.setOpen(factSummary.getfOpen());
+        dto.setGlobal(factSummary.getfGlobal());
         dto.setMin(factSummary.getfMin());
         dto.setMax(factSummary.getfMax());
         dto.setAverage(factSummary.getfAverage());

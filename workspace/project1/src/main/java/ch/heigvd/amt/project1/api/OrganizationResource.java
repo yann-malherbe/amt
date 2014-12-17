@@ -109,7 +109,7 @@ public class OrganizationResource {
         return organization;
     }
 
-    protected static Organization ltoOrganization(OrganizationDTO dto, Organization organization, User contact, List<Sensor> sensors, List<User> users) {
+    protected static Organization toOrganization(OrganizationDTO dto, Organization organization, User contact, List<Sensor> sensors, List<User> users) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
             organization.setContact(contact);

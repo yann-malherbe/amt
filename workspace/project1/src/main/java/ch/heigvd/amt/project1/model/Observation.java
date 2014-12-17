@@ -6,7 +6,6 @@
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +21,8 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "findAllObservations", query =  "SELECT o FROM Observation o"),
-    @NamedQuery(name = "findObservationsBySensorId", query =  "SELECT o FROM Observation o WHERE (o.sensor.id = :sensorId)")
+    @NamedQuery(name = "findObservationsBySensorId", query =  "SELECT o FROM Observation o WHERE (o.sensor.id = :sensorId)"),
+    @NamedQuery(name = "deleteAllObservations", query =  "DELETE FROM Observation")
 }) 
 
 public class Observation implements Serializable {

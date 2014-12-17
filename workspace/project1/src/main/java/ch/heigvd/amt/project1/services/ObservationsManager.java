@@ -37,6 +37,14 @@ public class ObservationsManager implements ObservationsManagerLocal {
     }
 
     @Override
+    public void deleteObservationsBySensorId(long id){
+       List<Observation> observations = findObservationsBySensorId(id);
+       for (Observation observation : observations){
+           deleteObservation(observation);
+       }
+    }
+    
+    @Override
     public Observation createObservation(Observation observation) {
         em.persist(observation);
         em.flush();
