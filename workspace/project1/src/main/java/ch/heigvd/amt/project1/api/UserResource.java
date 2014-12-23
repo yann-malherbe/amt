@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file UserResource.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.api;
 
@@ -26,10 +44,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-/**
- *
- * @author Yann
- */
 @Path("users")
 @Stateless
 public class UserResource {
@@ -43,10 +57,6 @@ public class UserResource {
     @Context
     private UriInfo context;
 
-    /**
-     *
-     * Creates a new instance of UserResource
-     */
     public UserResource() {
     }
 
@@ -68,7 +78,7 @@ public class UserResource {
         User newUser = new User();
         Organization organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
         usersManager.createUser(toUser(dto, newUser, organization));
-        if (organization != null){
+        if (organization != null) {
             List<User> users = organization.getUsers();
             users.add(newUser);
             organization.setUsers(users);

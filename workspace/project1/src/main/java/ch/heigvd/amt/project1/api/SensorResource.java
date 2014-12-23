@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file SensorResource.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.api;
 
@@ -9,7 +27,6 @@ import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorSimpleDTO;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
-import ch.heigvd.amt.project1.model.User;
 import ch.heigvd.amt.project1.services.OrganizationsManagerLocal;
 import ch.heigvd.amt.project1.services.SensorsManagerLocal;
 import ch.heigvd.amt.project1.services.UsersManagerLocal;
@@ -28,10 +45,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-/**
- *
- * @author Yann
- */
 @Path("sensors")
 @Stateless
 public class SensorResource {
@@ -48,10 +61,6 @@ public class SensorResource {
     @Context
     private UriInfo context;
 
-    /**
-     *
-     * Creates a new instance of SensorResource
-     */
     public SensorResource() {
     }
 
@@ -72,7 +81,7 @@ public class SensorResource {
     public SensorDTO createSensor(SensorDTO dto) {
         Sensor newSensor = new Sensor();
         Organization organization = null;
-        
+
         if (dto.getOrganization() != null) {
             organization = organizationsManager.findOrganizationById(dto.getOrganization().getId());
         }

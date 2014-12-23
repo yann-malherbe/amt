@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file FactSummaryResource.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.api;
 
@@ -24,10 +42,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-/**
- *
- * @author Yann
- */
 @Path("facts/summaries")
 @Stateless
 public class FactSummaryResource {

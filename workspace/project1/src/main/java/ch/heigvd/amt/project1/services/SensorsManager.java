@@ -1,21 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ *
+ * @project project1
+ * @file SensorsManager.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.services;
 
 import ch.heigvd.amt.project1.model.Sensor;
-import ch.heigvd.amt.project1.model.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Yann
- */
 @Stateless
 public class SensorsManager implements SensorsManagerLocal {
 

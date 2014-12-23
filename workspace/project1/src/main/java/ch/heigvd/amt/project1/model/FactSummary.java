@@ -1,3 +1,26 @@
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file FactSummary.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
+ */
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
@@ -10,15 +33,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
-/**
- *
- * @author Yann
- */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllFactSummaries", query = "SELECT f FROM FactSummary f"),
-    @NamedQuery(name = "findFactSummariesByOrganizationId", query = "SELECT f FROM FactSummary f WHERE f.organization.id = :id"),
-    @NamedQuery(name = "findFactSummariesBySensorId", query = "SELECT f FROM FactSummary f WHERE f.sensor.id = :id")
+    @NamedQuery(name = "findAllFactSummaries",
+            query = "SELECT f FROM FactSummary f"),
+    @NamedQuery(name = "findFactSummariesByOrganizationId",
+            query = "SELECT f FROM FactSummary f WHERE f.organization.id = :id"),
+    @NamedQuery(name = "findFactSummariesBySensorId",
+            query = "SELECT f FROM FactSummary f WHERE f.sensor.id = :id")
 })
 public class FactSummary implements Serializable {
 
@@ -133,5 +155,4 @@ public class FactSummary implements Serializable {
     public String toString() {
         return "ch.heigvd.amt.project1.model.ObservationSummary[ id=" + id + " ]";
     }
-
 }

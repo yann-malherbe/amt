@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file OrganizationResource.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.api;
 
@@ -30,17 +48,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-/**
- *
- * @author Yann
- */
 @Path("organizations")
 @Stateless
 public class OrganizationResource {
 
     @EJB
     OrganizationsManagerLocal organizationsManager;
-    
+
     @EJB
     UsersManagerLocal usersManager;
 
@@ -67,8 +81,8 @@ public class OrganizationResource {
     public OrganizationSimpleDTO createOrganization(OrganizationSimpleDTO dto) {
         Organization newOrganization = new Organization();
         User existing = null;
-        
-        if (dto.getContact() != null){
+
+        if (dto.getContact() != null) {
             existing = usersManager.findUserById(dto.getContact().getId());
         }
         return toSimpleDTO(organizationsManager.createOrganization(toOrganization(dto, newOrganization, existing)), true);
@@ -114,10 +128,10 @@ public class OrganizationResource {
         if (dto.getContact() != null) {
             organization.setContact(contact);
         }
-        if (dto.getSensors() != null){
+        if (dto.getSensors() != null) {
             organization.setSensors(sensors);
         }
-        if (dto.getUsers() != null){
+        if (dto.getUsers() != null) {
             organization.setUsers(users);
         }
         return organization;

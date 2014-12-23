@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and fOpen the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file Sensor.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.model;
 
@@ -14,13 +32,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-/**
- *
- * @author Yann
- */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllPublicSensors", query = "SELECT s FROM Sensor s WHERE s.fOpen = true")
+    @NamedQuery(name = "findAllPublicSensors", 
+            query = "SELECT s FROM Sensor s WHERE s.fOpen = true")
 })
 
 public class Sensor implements Serializable {
@@ -108,5 +123,4 @@ public class Sensor implements Serializable {
     public String toString() {
         return "ch.heigvd.amt.project1.model.Sensor[ id=" + id + " ]";
     }
-
 }
