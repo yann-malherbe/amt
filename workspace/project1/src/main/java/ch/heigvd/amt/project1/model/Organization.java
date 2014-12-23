@@ -5,7 +5,7 @@
  * of Business and Engineering Vaud
  *
  *******************************************************************************
- * 
+ *
  * @project project1
  * @file Organization.java
  *
@@ -36,8 +36,16 @@ import javax.persistence.OneToOne;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllOrganizations", 
-            query = "SELECT o FROM Organization o")
+    @NamedQuery(name = "findAllOrganizations",
+            query = "SELECT o FROM Organization o"),
+    @NamedQuery(name = "findOrganizationUsers",
+            query = "SELECT u FROM User u WHERE u.organization = :organisationId"),
+    @NamedQuery(name = "findOrganizationSensors",
+            query = "SELECT s FROM Sensor s WHERE s.organization = :organisationId"),
+    @NamedQuery(name = "findOrganizationFactCounters",
+            query = "SELECT f FROM FactCounter f WHERE f.organization = :organisationId"),
+    @NamedQuery(name = "findOrganizationFactSummaries",
+            query = "SELECT f FROM FactSummary f WHERE f.organization = :organisationId")
 })
 
 public class Organization implements Serializable {

@@ -5,7 +5,7 @@
  * of Business and Engineering Vaud
  *
  *******************************************************************************
- * 
+ *
  * @project project1
  * @file OrganizationResource.java
  *
@@ -23,10 +23,14 @@
  */
 package ch.heigvd.amt.project1.api;
 
+import ch.heigvd.amt.project1.dto.facts.counters.FactCounterDTO;
+import ch.heigvd.amt.project1.dto.facts.summaries.FactSummaryDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
+import ch.heigvd.amt.project1.model.FactCounter;
+import ch.heigvd.amt.project1.model.FactSummary;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.model.User;
@@ -113,6 +117,58 @@ public class OrganizationResource {
     public void deleteOrganization(@PathParam("id") long id) {
         Organization existing = organizationsManager.findOrganizationById(id);
         organizationsManager.deleteOrganization(existing);
+    }
+
+    @Path("/{id}/users")
+    @GET
+    @Produces("application/json")
+    public List<UserWithoutPassDTO> getOrganizationUsers(@PathParam("id") long id) {
+        List<UserWithoutPassDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<User> users = organizationsManager.findOrganizationUsers(existing);
+        for (User user : users) {
+            result.add(UserResource.toDTO(user, true));
+        }
+        return result;
+    }
+
+    @Path("/{id}/sensors")
+    @GET
+    @Produces("application/json")
+    public List<SensorDTO> getOrganizationSensors(@PathParam("id") long id) {
+        List<SensorDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<Sensor> sensors = organizationsManager.findOrganizationSensors(existing);
+        for (Sensor sensor : sensors) {
+            result.add(SensorResource.toDTO(sensor, true));
+        }
+        return result;
+    }
+
+    @Path("/{id}/facts/counters")
+    @GET
+    @Produces("application/json")
+    public List<FactCounterDTO> getOrganizationFactCounters(@PathParam("id") long id) {
+        List<FactCounterDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<FactCounter> factCounters = organizationsManager.findOrganizationFactCounters(existing);
+        for (FactCounter factCounter : factCounters) {
+            result.add(FactCounterResource.toDTO(factCounter, true));
+        }
+        return result;
+    }
+
+    @Path("/{id}/facts/summaries")
+    @GET
+    @Produces("application/json")
+    public List<FactSummaryDTO> getOrganizationFactSummaries(@PathParam("id") long id) {
+        List<FactSummaryDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<FactSummary> factSummaries = organizationsManager.findOrganizationFactSummaries(existing);
+        for (FactSummary factSummary : factSummaries) {
+            result.add(FactSummaryResource.toDTO(factSummary, true));
+        }
+        return result;
     }
 
     protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization, User contact) {
