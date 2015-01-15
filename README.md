@@ -52,7 +52,7 @@ Go to service tab and click to Add a Server.
 
 Give a name and click on next.
 
-Choose the directory glassfish-4.1 a click on next.
+Choose the installation directory C:/.../glassfish-4.1 click on next.
 
 Choose the domain AMT and click on finish.
 
