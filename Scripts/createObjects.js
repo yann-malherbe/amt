@@ -12,6 +12,21 @@ var pathPostOrganisation	= '/project1/api/organizations';
 var pathPostSensors			= '/project1/api/sensors';
 
 
+var sensorType[];
+
+sensorType.push({name:'Thermo sensors', description: 'Temperature sensor with C°', type:'Temperature in C°'});
+sensorType.push({name:'Thermo sensors', description: 'Temperature sensor with K', type:'Temperature in K'});
+sensorType.push({name:'Thermo sensors', description: 'Temperature sensor with F', type:'Temperature in F'});
+sensorType.push({name:'Pressus sensors', description: 'Pressus sensor with Bar', type:'Pressur in Bar'});
+sensorType.push({name:'Wind Speed sensors', description: 'Wind Speed sensor with km/h', type:'Speed in km/h'});
+sensorType.push({name:'Moisture sensors', description: 'Moisture sensor that give humidity in %', type:'Moisture in %'});
+sensorType.push({name:'Wind Speed sensors', description: 'Wind Speed sensor with m/s', type:'Speed in m/s'});
+sensorType.push({name:'Light sensors', description: 'Light sensor that give the amount of light with Lux', type:'Light in Lux'});
+
+var arrName[];
+
+arrName.push('James Smith', 'Michael Smith', 'Robert Smith', 'Maria Garcia', 'David Smith', 'Maria Rodriguez', 'James Johnson', 'Robert Johnson', 'John Smith');
+
 
 /**
  * getJSON:  REST get request returning JSON object(s)
@@ -53,7 +68,9 @@ var sendRequest = function(options, onResult, post_data)
 
 var createUsers = function(orgId, isContact, orgName)
 {
-	var post_data = '{"login" : "login-'+Math.random().toString(36).substr(2, 4)+'", "pass": "'+Math.random().toString(36).substr(10, 15)+'", "name" : "Name-'+Math.random().toString(36).substr(2, 4)+'", "organization" : {"id":'+orgId+'}}';
+	var name = arrName[Math.floor(Math.random() * arrName.length)];
+	var sensor = arrName[Math.floor(Math.random() * arrName.length)];
+	var post_data = '{"login" : "'+name+'", "pass": "'+Math.random().toString(36).substr(10, 15)+'", "name" : "'+name+'", "organization" : {"id":'+orgId+'}}';
 			console.log(post_data);
 			
 	var options = {
@@ -127,6 +144,8 @@ var createSensors = function(orgId, open)
 {
 	for(var i = 0; i < 4; i++)
 	{
+		var sensor = sensorType[Math.floor(Math.random() * sensorType.length)];
+		
 		var post_data = '{"name":"sensor-'+Math.random().toString(36).substr(2, 4)+'", "description": "Sensors in room '+Math.random().toString(36).substr(1, 3)+'", "type" : "Temperature", "open" : "'+open+'", "organization" : {"id":'+orgId+'}}';
 			console.log(post_data);
 			
