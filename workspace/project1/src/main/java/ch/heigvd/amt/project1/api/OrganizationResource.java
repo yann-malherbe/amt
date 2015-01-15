@@ -1,14 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ *
+ * @project project1
+ * @file OrganizationResource.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.api;
 
+import ch.heigvd.amt.project1.dto.facts.counters.FactCounterDTO;
+import ch.heigvd.amt.project1.dto.facts.summaries.FactSummaryDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.organizations.OrganizationSimpleDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
 import ch.heigvd.amt.project1.dto.users.UserWithoutPassDTO;
+import ch.heigvd.amt.project1.model.FactCounter;
+import ch.heigvd.amt.project1.model.FactSummary;
 import ch.heigvd.amt.project1.model.Organization;
 import ch.heigvd.amt.project1.model.Sensor;
 import ch.heigvd.amt.project1.model.User;
@@ -30,17 +52,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-/**
- *
- * @author Yann
- */
 @Path("organizations")
 @Stateless
 public class OrganizationResource {
 
     @EJB
     OrganizationsManagerLocal organizationsManager;
-    
+
     @EJB
     UsersManagerLocal usersManager;
 
@@ -67,8 +85,8 @@ public class OrganizationResource {
     public OrganizationSimpleDTO createOrganization(OrganizationSimpleDTO dto) {
         Organization newOrganization = new Organization();
         User existing = null;
-        
-        if (dto.getContact() != null){
+
+        if (dto.getContact() != null) {
             existing = usersManager.findUserById(dto.getContact().getId());
         }
         return toSimpleDTO(organizationsManager.createOrganization(toOrganization(dto, newOrganization, existing)), true);
@@ -101,6 +119,58 @@ public class OrganizationResource {
         organizationsManager.deleteOrganization(existing);
     }
 
+    @Path("/{id}/users")
+    @GET
+    @Produces("application/json")
+    public List<UserWithoutPassDTO> getOrganizationUsers(@PathParam("id") long id) {
+        List<UserWithoutPassDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<User> users = organizationsManager.findOrganizationUsers(existing);
+        for (User user : users) {
+            result.add(UserResource.toDTO(user, true));
+        }
+        return result;
+    }
+
+    @Path("/{id}/sensors")
+    @GET
+    @Produces("application/json")
+    public List<SensorDTO> getOrganizationSensors(@PathParam("id") long id) {
+        List<SensorDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<Sensor> sensors = organizationsManager.findOrganizationSensors(existing);
+        for (Sensor sensor : sensors) {
+            result.add(SensorResource.toDTO(sensor, true));
+        }
+        return result;
+    }
+
+    @Path("/{id}/facts/counters")
+    @GET
+    @Produces("application/json")
+    public List<FactCounterDTO> getOrganizationFactCounters(@PathParam("id") long id) {
+        List<FactCounterDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<FactCounter> factCounters = organizationsManager.findOrganizationFactCounters(existing);
+        for (FactCounter factCounter : factCounters) {
+            result.add(FactCounterResource.toDTO(factCounter, true));
+        }
+        return result;
+    }
+
+    @Path("/{id}/facts/summaries")
+    @GET
+    @Produces("application/json")
+    public List<FactSummaryDTO> getOrganizationFactSummaries(@PathParam("id") long id) {
+        List<FactSummaryDTO> result = new LinkedList<>();
+        Organization existing = organizationsManager.findOrganizationById(id);
+        List<FactSummary> factSummaries = organizationsManager.findOrganizationFactSummaries(existing);
+        for (FactSummary factSummary : factSummaries) {
+            result.add(FactSummaryResource.toDTO(factSummary, true));
+        }
+        return result;
+    }
+
     protected static Organization toOrganization(OrganizationSimpleDTO dto, Organization organization, User contact) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
@@ -109,15 +179,15 @@ public class OrganizationResource {
         return organization;
     }
 
-    protected static Organization ltoOrganization(OrganizationDTO dto, Organization organization, User contact, List<Sensor> sensors, List<User> users) {
+    protected static Organization toOrganization(OrganizationDTO dto, Organization organization, User contact, List<Sensor> sensors, List<User> users) {
         organization.setName(dto.getName());
         if (dto.getContact() != null) {
             organization.setContact(contact);
         }
-        if (dto.getSensors() != null){
+        if (dto.getSensors() != null) {
             organization.setSensors(sensors);
         }
-        if (dto.getUsers() != null){
+        if (dto.getUsers() != null) {
             organization.setUsers(users);
         }
         return organization;

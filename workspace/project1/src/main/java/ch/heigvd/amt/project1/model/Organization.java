@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ *
+ * @project project1
+ * @file Organization.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.model;
 
@@ -16,16 +34,22 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-/**
- *
- * @author Yann
- */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllOrganizations", query =  "SELECT o FROM Organization o")
-}) 
+    @NamedQuery(name = "findAllOrganizations",
+            query = "SELECT o FROM Organization o"),
+    @NamedQuery(name = "findOrganizationUsers",
+            query = "SELECT u FROM User u WHERE u.organization = :organisationId"),
+    @NamedQuery(name = "findOrganizationSensors",
+            query = "SELECT s FROM Sensor s WHERE s.organization = :organisationId"),
+    @NamedQuery(name = "findOrganizationFactCounters",
+            query = "SELECT f FROM FactCounter f WHERE f.organization = :organisationId"),
+    @NamedQuery(name = "findOrganizationFactSummaries",
+            query = "SELECT f FROM FactSummary f WHERE f.organization = :organisationId")
+})
 
 public class Organization implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,9 +57,9 @@ public class Organization implements Serializable {
     private String name;
     @OneToOne
     private User contact;
-    @OneToMany(mappedBy="organization")
+    @OneToMany(mappedBy = "organization")
     private List<Sensor> sensors;
-    @OneToMany(mappedBy="organization")
+    @OneToMany(mappedBy = "organization")
     private List<User> users;
 
     public Long getId() {
@@ -61,23 +85,23 @@ public class Organization implements Serializable {
     public void setContact(User contact) {
         this.contact = contact;
     }
-       
+
     public List<Sensor> getSensors() {
         return this.sensors;
     }
-    
+
     public void setSensors(List sensors) {
         this.sensors = sensors;
     }
-    
+
     public List<User> getUsers() {
         return this.users;
     }
-    
+
     public void setUsers(List users) {
         this.users = users;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -102,5 +126,4 @@ public class Organization implements Serializable {
     public String toString() {
         return "ch.heigvd.amt.project1.model.Organiization[ id=" + id + " ]";
     }
-    
 }

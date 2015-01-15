@@ -1,7 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ *
+ * @project project1
+ * @file FactCountersManager.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.services;
 
@@ -11,44 +29,45 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Yann
- */
 @Stateless
 public class FactCountersManager implements FactCountersManagerLocal {
-
+    
     @PersistenceContext
     public EntityManager em;
-
+    
     @Override
     public FactCounter findFactCounterById(long id) {
         return em.find(FactCounter.class, id);
     }
-
+    
+    @Override
+    public List<FactCounter> findAllFactCounters() {
+        return em.createNamedQuery("findAllFactCounters").getResultList();
+    }
+    
     @Override
     public List<FactCounter> findFactCountersByOrganizationId(long id) {
         return em.createNamedQuery("findFactCountersByOrganizationId").setParameter("organizationId", id).getResultList();
     }
-
+    
     @Override
     public List<FactCounter> findFactCounterBySensorId(long id) {
         return em.createNamedQuery("findFactCountersBySensorId").setParameter("sensorId", id).getResultList();
     }
-
+    
     @Override
     public FactCounter createFactCounter(FactCounter factCounter) {
         em.persist(factCounter);
         em.flush();
         return factCounter;
     }
-
+    
     @Override
     public void updateFactCounter(FactCounter factCounter) {
         em.merge(factCounter);
         em.flush();
     }
-
+    
     @Override
     public void deleteFactCounter(FactCounter factCounter) {
         em.remove(factCounter);

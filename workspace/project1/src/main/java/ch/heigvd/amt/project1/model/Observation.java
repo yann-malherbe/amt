@@ -1,12 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file Observation.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,25 +32,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-/**
- *
- * @author Yann
- */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findAllObservations", query =  "SELECT o FROM Observation o")
-}) 
+    @NamedQuery(name = "findAllObservations",
+            query = "SELECT o FROM Observation o"),
+    @NamedQuery(name = "findObservationsBySensorId",
+            query = "SELECT o FROM Observation o WHERE (o.sensor.id = :sensorId)"),
+    @NamedQuery(name = "deleteAllObservations",
+            query = "DELETE FROM Observation")
+})
 
 public class Observation implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp fDate;
+    private long fDate;
     private float fValue;
     @ManyToOne
     private Sensor sensor;
-    
+
     public Long getId() {
         return id;
     }
@@ -42,11 +61,11 @@ public class Observation implements Serializable {
         this.id = id;
     }
 
-    public Timestamp getfDate() {
+    public long getfDate() {
         return fDate;
     }
 
-    public void setfDate(Timestamp date) {
+    public void setfDate(long date) {
         this.fDate = date;
     }
 
@@ -65,7 +84,7 @@ public class Observation implements Serializable {
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -90,5 +109,4 @@ public class Observation implements Serializable {
     public String toString() {
         return "ch.heigvd.amt.project1.model.Observation[ id=" + id + " ]";
     }
-    
 }

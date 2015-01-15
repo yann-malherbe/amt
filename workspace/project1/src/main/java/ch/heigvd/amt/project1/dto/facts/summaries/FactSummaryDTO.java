@@ -1,13 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file FactSummaryDTO.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
  */
 package ch.heigvd.amt.project1.dto.facts.summaries;
 
 import ch.heigvd.amt.project1.dto.organizations.OrganizationDTO;
 import ch.heigvd.amt.project1.dto.sensors.SensorDTO;
-import java.sql.Timestamp;
 
 /**
  *
@@ -17,12 +34,13 @@ public class FactSummaryDTO {
 
     private Long id;
     private Boolean open;
+    private Boolean global;
     private OrganizationDTO organization;
     private SensorDTO sensor;
     private float min;
     private float max;
     private float average;
-    private Timestamp day;
+    private long date;
 
     public Long getId() {
         return this.id;
@@ -40,6 +58,14 @@ public class FactSummaryDTO {
         this.open = open;
     }
 
+    public Boolean getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(Boolean global) {
+        this.global = global;
+    }
+
     public OrganizationDTO getOrganization() {
         return organization;
     }
@@ -55,7 +81,7 @@ public class FactSummaryDTO {
     public void setSensor(SensorDTO sensor) {
         this.sensor = sensor;
     }
-    
+
     public float getMin() {
         return this.min;
     }
@@ -80,11 +106,11 @@ public class FactSummaryDTO {
         this.average = average;
     }
 
-    public Timestamp getDay() {
-        return this.day;
+    public long getDate() {
+        return this.date;
     }
 
-    public void setDay(Timestamp day) {
-        this.day = day;
+    public void setDate(long day) {
+        this.date = day;
     }
 }

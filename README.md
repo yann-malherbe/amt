@@ -87,14 +87,13 @@ We tested methods GET and POST on the url :
 * POST /organizations 
 * POST /sensors
 * POST /observations
+* GET /facts/summaries
+* GET /facts/numbers
+
+Be carefull, some urls works only with querystrings. 
 
 For this time, we assume that the value send are correct and we assume that the BD is not empty !
  
 You can test POST methods with the sripts /Scripts/CreateObjects and /Scripts/SendValue.
 
 You can test GET methods with the web app on the url : http://localhost:8080/project1/index.html.
-
-**Not implemented :**
-
-/facts/summaries
-/facts/numbers

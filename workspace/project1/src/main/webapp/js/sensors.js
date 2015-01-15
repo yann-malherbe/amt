@@ -1,34 +1,36 @@
 $(document).ready(function () {
 	
     $.getJSON("http://localhost:8080/project1/api/organizations", function(data,status,xhr){	
-        var temp = {};
-        temp.organizations = data;
-        draw_organization_list(temp);
+        draw_organization_list(data);
         
-        $.getJSON("http://localhost:8080/project1/api/organizations/"+temp.organizations[0].id , function(data,status,xhr){
-            var temp = {};
-            temp.sensors = data.sensors;
-            draw_sensor_table(temp);
-            
-            $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationID&id="+temp.organizations[0].id , function(data,status,xhr){
-                draw_graph();
-            });
+        var id = data[0].id;
+        
+        $.getJSON("http://localhost:8080/project1/api/organizations/"+id , function(data,status,xhr){
+            draw_sensor_table(data);
+        });
+ 
+        $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationId&id="+id , function(data,status,xhr){
+            draw_graph(data);
         });
     }); 
 });
 
 function draw_organization_list(data) {
+    var temp = {};
+    temp.organizations = data;
     var source = $("#organization-template").html(); 
     var template = Handlebars.compile(source); 
-    var result = template(data);    
+    var result = template(temp);    
     $("#organization-list").append(result);    
 }
 
 function draw_sensor_table(data) {
+    var temp = {};
+    temp.sensors = data.sensors;
+    
     var source = $("#sensor-template").html(); 
     var template = Handlebars.compile(source); 
-    var result = template(data);
-    
+    var result = template(temp);
     $("#sensors-table").empty();
     $("#sensors-table").append(result);
 }
@@ -38,47 +40,39 @@ function draw_sensor_table(data) {
 function select_organization() {
     
     $.getJSON("http://localhost:8080/project1/api/organizations/" + $("#objSelect").val(), function(data,status,xhr){	
-        var temp = {};
-        temp.sensors = data.sensors;
-        draw_sensor_table(temp);
-        draw_graph();
-    });     
+        draw_sensor_table(data);
+    });
+    
+    $.getJSON("http://localhost:8080/project1/api/facts/numbers?order=byOrganizationId&id="+$("#objSelect").val() , function(data,status,xhr){
+        draw_graph(data);
+    });
 
 }
 
-function draw_graph() {
+function draw_graph(data) {
     
+    //Process
+    var numbers = [];
+
+    $.each(data, function(index){
+        numbers.push({"name":data[index].sensor.name, "count":data[index].count});
+    });
+
+    //Graph
     $("#numbers").empty();
     
     var data_graph = {
         element: 'numbers',
-        data: [{
-            device: 'Sensor1',
-            geekbench: 500
-        }, {
-            device: 'Sensor2',
-            geekbench: 137
-        }, {
-            device: 'Sensor3',
-            geekbench: 275
-        }, {
-            device: 'Sensor4',
-            geekbench: 380
-        }, {
-            device: 'Sensor5',
-            geekbench: 655
-        }, {
-            device: 'Sensor6',
-            geekbench: 1571
-        }],
-        xkey: 'device',
-        ykeys: ['geekbench'],
-        labels: ['Geekbench'],
+        xkey: 'name',
+        ykeys: ['count'],
+        labels: ['Counts'],
         barRatio: 0.4,
         xLabelAngle: 35,
         hideHover: 'auto',
         resize: true
     }; 
     
-    var graph = Morris.Bar(data_graph);
+    data_graph.data = numbers;
+    
+    Morris.Bar(data_graph);
 }

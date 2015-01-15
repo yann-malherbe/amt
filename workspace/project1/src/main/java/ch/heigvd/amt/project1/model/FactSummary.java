@@ -1,7 +1,29 @@
+/**
+ *******************************************************************************
+ *
+ * HEIG-VD - Haute Ecole d'Ingénierie et de Gestion du Canton de Vaud - School
+ * of Business and Engineering Vaud
+ *
+ *******************************************************************************
+ * 
+ * @project project1
+ * @file FactSummary.java
+ *
+ * @author Magali Froehlich
+ * @author Yann Malherbe
+ * @author Cédric Rudareanu
+ *
+ * @date Dec 20, 2014
+ *
+ *******************************************************************************
+ *
+ * @version 1.0
+ *
+ *******************************************************************************
+ */
 package ch.heigvd.amt.project1.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,14 +33,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
-/**
- *
- * @author Yann
- */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findFactSummariesByOrganizationId", query = "SELECT f FROM FactSummary f WHERE f.organization.id = :id"),
-    @NamedQuery(name = "findFactSummariesBySensorId", query = "SELECT f FROM FactSummary f WHERE f.sensor.id = :id")
+    @NamedQuery(name = "findAllFactSummaries",
+            query = "SELECT f FROM FactSummary f"),
+    @NamedQuery(name = "findFactSummariesByOrganizationId",
+            query = "SELECT f FROM FactSummary f WHERE f.organization.id = :id"),
+    @NamedQuery(name = "findFactSummariesBySensorId",
+            query = "SELECT f FROM FactSummary f WHERE f.sensor.id = :id")
 })
 public class FactSummary implements Serializable {
 
@@ -26,6 +48,7 @@ public class FactSummary implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Boolean fGlobal;
     private Boolean fOpen;
     @ManyToOne
     private Organization organization;
@@ -34,7 +57,7 @@ public class FactSummary implements Serializable {
     private float fMin;
     private float fMax;
     private float fAverage;
-    private Timestamp fDay;
+    private long fDay;
 
     public Long getId() {
         return this.id;
@@ -50,6 +73,14 @@ public class FactSummary implements Serializable {
 
     public void setfOpen(Boolean open) {
         this.fOpen = open;
+    }
+
+    public Boolean getfGlobal() {
+        return fGlobal;
+    }
+
+    public void setfGlobal(Boolean fGlobal) {
+        this.fGlobal = fGlobal;
     }
 
     public Organization getOrganization() {
@@ -92,11 +123,11 @@ public class FactSummary implements Serializable {
         this.fAverage = average;
     }
 
-    public Timestamp getfDay() {
+    public long getfDay() {
         return this.fDay;
     }
 
-    public void setfDay(Timestamp day) {
+    public void setfDay(long day) {
         this.fDay = day;
     }
 
@@ -124,5 +155,4 @@ public class FactSummary implements Serializable {
     public String toString() {
         return "ch.heigvd.amt.project1.model.ObservationSummary[ id=" + id + " ]";
     }
-
 }
