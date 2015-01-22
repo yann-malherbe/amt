@@ -12,7 +12,7 @@ var pathPostOrganisation	= '/project1/api/organizations';
 var pathPostSensors			= '/project1/api/sensors';
 
 
-var sensorType[];
+var sensorType = [];
 
 sensorType.push({name:'Thermo sensors', description: 'Temperature sensor with C°', type:'Temperature in C°'});
 sensorType.push({name:'Thermo sensors', description: 'Temperature sensor with K', type:'Temperature in K'});
@@ -23,7 +23,7 @@ sensorType.push({name:'Moisture sensors', description: 'Moisture sensor that giv
 sensorType.push({name:'Wind Speed sensors', description: 'Wind Speed sensor with m/s', type:'Speed in m/s'});
 sensorType.push({name:'Light sensors', description: 'Light sensor that give the amount of light with Lux', type:'Light in Lux'});
 
-var arrName[];
+var arrName = [];
 
 arrName.push('James Smith', 'Michael Smith', 'Robert Smith', 'Maria Garcia', 'David Smith', 'Maria Rodriguez', 'James Johnson', 'Robert Johnson', 'John Smith');
 

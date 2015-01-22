@@ -96,8 +96,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>[{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]
-</pre>
+                              <pre>[{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>}</span>}]</pre>
                             </div>
                           </div>
                         </div>
@@ -120,21 +119,22 @@
                           </ul>
                           <!-- Tab panes-->
                           <div class="tab-content">
-                            <div id="organizations_post_description" class="tab-pane active"><span><p>Create an organization.</p>
+                            <div id="organizations_post_description" class="tab-pane active"><span><p>Create an organization. You can add a contact with the method http PUT.</p>
 </span>
                             </div>
                             <div id="organizations_post_request" class="tab-pane">
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>}</pre>
                             </div>
                             <div id="organizations_post_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/201" target="_blank">201</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span> </span>}
-</pre>
+                              <pre>{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"AMT"</span>
+</span>}</pre>
                             </div>
                           </div>
                         </div>
@@ -188,8 +188,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre><span class="hljs-collection">{ <span class="hljs-string">"id"</span> : <span class="hljs-number">1</span>, <span class="hljs-string">"name"</span> : <span class="hljs-string">"AMT"</span>, <span class="hljs-string">"contact"</span> <span class="hljs-collection">{<span class="hljs-string">"id"</span> : <span class="hljs-number">1</span>}</span>}</span>
-</pre>
+                              <pre>{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>The id was not found.</p>
 
                             </div>
@@ -214,7 +213,7 @@
                           </ul>
                           <!-- Tab panes-->
                           <div class="tab-content">
-                            <div id="organizations_id_put_description" class="tab-pane active"><span><p>Update an organization. You can update the name or the person of contact. If you change the person of contact, the user always belong to the organization.</p>
+                            <div id="organizations_id_put_description" class="tab-pane active"><span><p>Update an organization. You can update the name or the person of contact. If you change the person of contact, the old person oft contact always belong to the organization.</p>
 </span>
                             </div>
                             <div id="organizations_id_put_request" class="tab-pane">
@@ -224,15 +223,13 @@
                               </ul>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{ "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>} </span>}
-</pre>
+                              <pre>{ "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">2</span> </span>}</span></pre>
                             </div>
                             <div id="organizations_id_put_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-string">"1"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-string">"1"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"AMT"</span></span>, "<span class="hljs-attribute">contact</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">2</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>The contact_id do not exist.</p>
 
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>The id was not found.</p>
@@ -345,8 +342,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>[{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" :<span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]
-</pre>
+                              <pre>[{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" :<span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]</pre>
                             </div>
                           </div>
                         </div>
@@ -369,21 +365,19 @@
                           </ul>
                           <!-- Tab panes-->
                           <div class="tab-content">
-                            <div id="users_post_description" class="tab-pane active"><span><p>Create an user. The user is added to the organization.</p>
+                            <div id="users_post_description" class="tab-pane active"><span><p>Create an user. You must create an organization first ! The user need an organization.</p>
 </span>
                             </div>
                             <div id="users_post_request" class="tab-pane">
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">pass</span>" : <span class="hljs-value"><span class="hljs-string">"8234seh348129jbjhiefbiasd"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">pass</span>" : <span class="hljs-value"><span class="hljs-string">"1234"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                             </div>
                             <div id="users_post_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/201" target="_blank">201</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">2</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{ "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>The organization_id was not found.</p>
 
                             </div>
@@ -439,8 +433,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>The id was not found.</p>
 
                             </div>
@@ -475,15 +468,13 @@
                               </ul>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                             </div>
                             <div id="users_id_put_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/201" target="_blank">201</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">pass</span>" : <span class="hljs-value"><span class="hljs-string">"8234seh348129jbjhiefbiasd"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">login</span>" : <span class="hljs-value"><span class="hljs-string">"doe"</span></span>, "<span class="hljs-attribute">pass</span>" : <span class="hljs-value"><span class="hljs-string">"8234seh348129jbjhiefbiasd"</span></span>, "<span class="hljs-attribute">name</span>" : <span class="hljs-value"><span class="hljs-string">"John Doe"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>You can’t change the organization_id if the user is an person of contact.</p>
 
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>The id was not found.</p>
@@ -600,8 +591,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>[{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]
-</pre>
+                              <pre>[{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]</pre>
                             </div>
                           </div>
                         </div>
@@ -630,15 +620,13 @@
                             <div id="sensors_post_request" class="tab-pane">
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                             </div>
                             <div id="sensors_post_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/201" target="_blank">201</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>The organization_id was not found.</p>
 
                             </div>
@@ -694,8 +682,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre><span class="hljs-collection">{<span class="hljs-string">"id"</span> : <span class="hljs-number">1</span>, <span class="hljs-string">"create_date"</span>: <span class="hljs-string">"2014-08-11"</span>, open : <span class="hljs-string">"true/false"</span>, <span class="hljs-string">"organization"</span> : <span class="hljs-collection">{<span class="hljs-string">"id"</span> : <span class="hljs-number">1</span>}</span>}</span>
-</pre>
+                              <pre>[{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"sensors123"</span></span>, "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Sensors in room 123"</span></span>, "<span class="hljs-attribute">type</span>" : <span class="hljs-value"><span class="hljs-string">"Temperature"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>The id was not found.</p>
 
                             </div>
@@ -730,15 +717,13 @@
                               </ul>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre><span class="hljs-rules">{<span class="hljs-rule"><span class="hljs-attribute">open </span>:<span class="hljs-value"> <span class="hljs-string">"true/false"</span></span></span></span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>}</pre>
                             </div>
                             <div id="sensors_id_put_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre><span class="hljs-collection">{<span class="hljs-string">"id"</span> : <span class="hljs-number">1</span>, <span class="hljs-string">"create_date"</span>: <span class="hljs-string">"2014-08-11"</span>, open : <span class="hljs-string">"true/false"</span>, <span class="hljs-string">"organization"</span> : <span class="hljs-collection">{<span class="hljs-string">"id"</span> : <span class="hljs-number">1</span>}</span>}</span>
-</pre>
+                              <pre>{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">create_date</span>": <span class="hljs-value"><span class="hljs-string">"2014-08-11"</span></span>, "<span class="hljs-attribute">open</span>" : <span class="hljs-value"><span class="hljs-string">"true/false"</span></span>, "<span class="hljs-attribute">organization</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>The organization_id was not found.</p>
 
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/404" target="_blank">404</a></h2><p>The id was not found.</p>
@@ -851,8 +836,7 @@
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/200" target="_blank">200</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>[{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"2014-15-14 00:02:52"</span></span>, "<span class="hljs-attribute">value</span>" : <span class="hljs-value"><span class="hljs-number">54</span></span>, "<span class="hljs-attribute">sensor</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]
-</pre>
+                              <pre>[{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"2014-15-14 00:02:52"</span></span>, "<span class="hljs-attribute">value</span>" : <span class="hljs-value"><span class="hljs-number">54</span></span>, "<span class="hljs-attribute">sensor</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}]</pre>
                             </div>
                           </div>
                         </div>
@@ -881,15 +865,13 @@
                             <div id="observations_post_request" class="tab-pane">
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"2014-15-14 00:02:52"</span></span>, "<span class="hljs-attribute">value</span>" : <span class="hljs-value"><span class="hljs-number">54</span></span>, "<span class="hljs-attribute">sensor</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-number">1421934452367</span></span>, "<span class="hljs-attribute">value</span>" : <span class="hljs-value"><span class="hljs-number">54</span></span>, "<span class="hljs-attribute">sensor</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                             </div>
                             <div id="observations_post_response" class="tab-pane">
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/201" target="_blank">201</a></h2>
                               <h3>Body</h3>
                               <p><strong>Type: application/json</strong></p><strong>Example:</strong>
-                              <pre>{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"2014-15-14 00:02:52"</span></span>, "<span class="hljs-attribute">value</span>" : <span class="hljs-value"><span class="hljs-number">54</span></span>, "<span class="hljs-attribute">sensor</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}
-</pre>
+                              <pre>{"<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>, "<span class="hljs-attribute">date</span>": <span class="hljs-value"><span class="hljs-string">"2014-15-14 00:02:52"</span></span>, "<span class="hljs-attribute">value</span>" : <span class="hljs-value"><span class="hljs-number">54</span></span>, "<span class="hljs-attribute">sensor</span>" : <span class="hljs-value">{"<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-number">1</span></span>}</span>}</pre>
                               <h2>HTTP status code&nbsp;<a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>The sensor_id was not found.</p>
 
                             </div>
@@ -1239,7 +1221,7 @@
     <div class="footer">
       <div class="container">
         <p><a href="https://github.com/lotaris/apidoc-seed">apidoc-seed</a>&nbsp;- An API documentation project using Grunt, Metalsmith and RAML.</p>
-        <p>Version: 0.0.1  |  Built December 15, 2014 11:42 PM</p>
+        <p>Version: 0.0.1  |  Built January 22, 2015 3:10 PM</p>
       </div>
     </div>
     <script type="text/javascript" src="/js/jquery.min.js"></script>

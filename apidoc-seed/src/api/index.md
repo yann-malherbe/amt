@@ -32,9 +32,7 @@ Find below a quick summary of how HTTP verbs are used in the API:
 
 ### Authentication
 
-To interact with the API, your client will need to be authenticated. This is done by using the **Authorization** header with the username and password of the client and gives something that looks like:
-
-	Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+There no authentication at the moment. Next Soon!
 
 
 ### Errors
@@ -60,5 +58,4 @@ HTTP/1.1 400 Bad Request
 
 ### Dates
 
-All dates returned by the API are in UTC and use the `ISO-8601` format (ex: 
-`2015-02-15T05:21:07Z`).
+All dates returned by the API are in UTC and use the `ISO-8601` format (ex:`2015-02-15T05:21:07Z`).

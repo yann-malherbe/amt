@@ -1,0 +1,1 @@
+{"name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization" : {"id" : 1}}

@@ -4,7 +4,7 @@ DB_NAME=AMTDatabase
 DB_TECHNICAL_USER=AMTUser
 DB_TECHNICAL_USER_PASSWORD=dUke!1400$
 DOMAIN_NAME=domainAMT
-MYSQL_PATH=C:/wamp/bin/mysql/mysql5.6.12/bin
+MYSQL_PATH=C:/wamp/bin/mysql/mysql5.6.17/bin
 JDBC_CONNECTION_POOL_NAME=AMTDatabase_pool
 JDBC_JNDI_NAME=jdbc/AMTDatabase
 
