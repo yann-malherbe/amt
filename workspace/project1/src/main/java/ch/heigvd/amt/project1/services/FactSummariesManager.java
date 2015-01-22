@@ -27,6 +27,7 @@ import ch.heigvd.amt.project1.model.FactSummary;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 
 @Stateless
@@ -37,22 +38,22 @@ public class FactSummariesManager implements FactSummariesManagerLocal {
     
     @Override
     public FactSummary findFactSummaryById(long id) {
-        return em.find(FactSummary.class, id);
+        return em.find(FactSummary.class, id, LockModeType.PESSIMISTIC_WRITE);
     }
     
     @Override
     public List<FactSummary> findAllFactSummaries() {
-        return em.createNamedQuery("findAllFactSummaries").getResultList();
+        return em.createNamedQuery("findAllFactSummaries").setLockMode(LockModeType.PESSIMISTIC_WRITE).getResultList();
     }
     
     @Override
     public List<FactSummary> findFactSummariesByOrganizationId(long id) {
-        return em.createNamedQuery("findFactSummariesByOrganizationId").setParameter("id", id).getResultList();
+        return em.createNamedQuery("findFactSummariesByOrganizationId").setLockMode(LockModeType.PESSIMISTIC_WRITE).setParameter("id", id).getResultList();
     }
     
     @Override
     public List<FactSummary> findFactSummariesBySensorId(long id) {
-        return em.createNamedQuery("findFactSummariesBySensorId").setParameter("id", id).getResultList();
+        return em.createNamedQuery("findFactSummariesBySensorId").setLockMode(LockModeType.PESSIMISTIC_WRITE).setParameter("id", id).getResultList();
     }
     
     @Override

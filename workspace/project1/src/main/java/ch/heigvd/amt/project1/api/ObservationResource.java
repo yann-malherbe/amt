@@ -100,27 +100,18 @@ public class ObservationResource {
         
         Observation newObservation = new Observation();
         Sensor sensor = null;
-        int counter = 200;
-        
-        while (counter > 0){
-            try{    
-                if (dto.getSensor() != null) {
-                    sensor = sensorsManager.findSensorById(dto.getSensor().getId());
-                }
-                newObservation = observationsManager.createObservation(toObservation(dto, newObservation, sensor));
-
-                if (sensor != null) {
-                    List<FactCounter> factCounters = factCounterManager.findFactCounterBySensorId(newObservation.getSensor().getId());
-                    factCounterManager(factCounters, newObservation, sensor);
-                    factSummaryManager(factSummaryManager.findFactSummariesBySensorId(newObservation.getSensor().getId()), factCounters, newObservation, sensor);
-                }
-                return toDTO(newObservation, true);
-            }
-            catch(OptimisticLockException ole){
-                counter --;
-            }
+   
+        if (dto.getSensor() != null) {
+            sensor = sensorsManager.findSensorById(dto.getSensor().getId());
         }
-        return null;
+        newObservation = observationsManager.createObservation(toObservation(dto, newObservation, sensor));
+
+        if (sensor != null) {
+            List<FactCounter> factCounters = factCounterManager.findFactCounterBySensorId(newObservation.getSensor().getId());
+            factCounterManager(factCounters, newObservation, sensor);
+            factSummaryManager(factSummaryManager.findFactSummariesBySensorId(newObservation.getSensor().getId()), factCounters, newObservation, sensor);
+        }
+        return toDTO(newObservation, true);
     }
 
     private void factCounterManager(List<FactCounter> factCounters, Observation observation, Sensor sensor) {

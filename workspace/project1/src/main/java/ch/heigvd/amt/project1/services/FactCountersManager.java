@@ -38,22 +38,22 @@ public class FactCountersManager implements FactCountersManagerLocal {
     
     @Override
     public FactCounter findFactCounterById(long id) {
-        return em.find(FactCounter.class, id);
+        return em.find(FactCounter.class, id, LockModeType.PESSIMISTIC_WRITE);
     }
     
     @Override
     public List<FactCounter> findAllFactCounters() {
-        return em.createNamedQuery("findAllFactCounters").getResultList(); // For pesimist : .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+        return em.createNamedQuery("findAllFactCounters").setLockMode(LockModeType.PESSIMISTIC_WRITE).getResultList(); // For pesimist : .setLockMode(LockModeType.PESSIMISTIC_WRITE)
     }
     
     @Override
     public List<FactCounter> findFactCountersByOrganizationId(long id) {
-        return em.createNamedQuery("findFactCountersByOrganizationId").setParameter("organizationId", id).getResultList();
+        return em.createNamedQuery("findFactCountersByOrganizationId").setParameter("organizationId", id).setLockMode(LockModeType.PESSIMISTIC_WRITE).getResultList();
     }
     
     @Override
     public List<FactCounter> findFactCounterBySensorId(long id) {
-        return em.createNamedQuery("findFactCountersBySensorId").setParameter("sensorId", id).getResultList();
+        return em.createNamedQuery("findFactCountersBySensorId").setParameter("sensorId", id).setLockMode(LockModeType.PESSIMISTIC_WRITE).getResultList();
     }
     
     @Override
