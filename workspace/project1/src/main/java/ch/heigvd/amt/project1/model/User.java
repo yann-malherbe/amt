@@ -31,6 +31,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 @Entity
 @NamedQueries({
@@ -44,6 +45,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Version
+    long version;
     private String login;
     private String name;
     private String pass;

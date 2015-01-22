@@ -32,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 @Entity
 @NamedQueries({
@@ -48,6 +49,8 @@ public class FactSummary implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Version
+    long version;
     private Boolean fGlobal;
     private Boolean fOpen;
     @ManyToOne

@@ -27,6 +27,7 @@ import ch.heigvd.amt.project1.model.FactCounter;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 
 @Stateless
@@ -42,7 +43,7 @@ public class FactCountersManager implements FactCountersManagerLocal {
     
     @Override
     public List<FactCounter> findAllFactCounters() {
-        return em.createNamedQuery("findAllFactCounters").getResultList();
+        return em.createNamedQuery("findAllFactCounters").getResultList(); // For pesimist : .setLockMode(LockModeType.PESSIMISTIC_WRITE)
     }
     
     @Override

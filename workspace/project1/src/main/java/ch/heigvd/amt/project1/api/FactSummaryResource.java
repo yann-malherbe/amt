@@ -57,17 +57,17 @@ public class FactSummaryResource {
 
     @GET
     @Produces("application/json")
-    public List<FactSummaryDTO> getFactCounters(@DefaultValue("none") @QueryParam("order") String order,
-            @DefaultValue("0") @QueryParam("id") long id) {
+    public List<FactSummaryDTO> getFactCounters(@DefaultValue("none") @QueryParam("filterBy") String filterBy,
+            @DefaultValue("0") @QueryParam("filterId") long filterId) {
         List<FactSummary> result = null;
         List<FactSummaryDTO> resultDTO = new LinkedList<>();
 
-        switch (order) {
+        switch (filterBy) {
             case "byOrganizationId":
-                result = factSummariesManager.findFactSummariesByOrganizationId(id);
+                result = factSummariesManager.findFactSummariesByOrganizationId(filterId);
                 break;
             case "bySensorId":
-                result = factSummariesManager.findFactSummariesBySensorId(id);
+                result = factSummariesManager.findFactSummariesBySensorId(filterId);
                 break;
             default:
                 result = factSummariesManager.findAllFactSummaries();

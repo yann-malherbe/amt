@@ -57,17 +57,17 @@ public class FactCounterResource {
 
     @GET
     @Produces("application/json")
-    public List<FactCounterDTO> getFactCounters(@DefaultValue("none") @QueryParam("order") String order,
-            @DefaultValue("0") @QueryParam("id") long id) {
+    public List<FactCounterDTO> getFactCounters(@DefaultValue("none") @QueryParam("filterBy") String filterBy,
+            @DefaultValue("0") @QueryParam("filterId") long filterId) {
         List<FactCounter> result;
         List<FactCounterDTO> resultDTO = new LinkedList<>();
 
-        switch (order) {
+        switch (filterBy) {
             case "byOrganizationId":
-                result = factCountersManager.findFactCountersByOrganizationId(id);
+                result = factCountersManager.findFactCountersByOrganizationId(filterId);
                 break;
             case "bySensorId":
-                result = factCountersManager.findFactCounterBySensorId(id);
+                result = factCountersManager.findFactCounterBySensorId(filterId);
                 break;
             default:
                 result = factCountersManager.findAllFactCounters();
