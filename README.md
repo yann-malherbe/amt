@@ -3,7 +3,13 @@ HEIG-VD project1
 
 This project design an api to manage sensors on web platofrom.
 
-More informations : http://amt.eof.li/
+Visit our site web : http://amt.eof.li/
+
+A great IMH to report the observations of sensors with plot ! 
+
+![FrontEnd](https://github.com/yann-malherbe/amt/blob/master/documentation/front.png)
+
+![Plots](https://github.com/yann-malherbe/amt/blob/master/documentation/Plot.jpg)
 
 Installation procedure
 -------------
