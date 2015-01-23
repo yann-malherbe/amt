@@ -1,0 +1,24 @@
+[
+    {
+        "count": 3,
+        "date": 0,
+        "global": true,
+        "id": 1,
+        "open": false,
+        "sensor": {
+            "id": 1,
+            "open": false
+        }
+    },
+    {
+        "count": 1,
+        "date": 0,
+        "global": false,
+        "id": 2,
+        "open": false,
+        "sensor": {
+            "id": 1,
+            "open": false
+        }
+    }
+]

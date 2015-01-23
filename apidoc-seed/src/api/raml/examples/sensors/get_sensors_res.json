@@ -1,1 +1,13 @@
-[{"id":1, "name": "sensors123", "description": "Sensors in room 123", "type" : "Temperature", "open" : "true/false", "organization" : {"id" : 1}}]
+[
+    {
+        "description": "Sensors in room 123",
+        "id": 2,
+        "name": "sensors123",
+        "open": true,
+        "organization": {
+            "id": 1,
+            "name": "AMT"
+        },
+        "type": "Temperature"
+    }
+]
