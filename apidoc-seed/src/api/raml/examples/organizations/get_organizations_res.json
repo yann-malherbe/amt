@@ -1,1 +1,15 @@
-[{ "id" : 1, "name" : "AMT", "contact" : {"id": 2}}]
+[
+    {
+        "contact": {
+            "id": 1,
+            "login": "doe",
+            "name": "John Doe"
+        },
+        "id": 1,
+        "name": "AMT"
+    },
+    {
+        "id": 2,
+        "name": "WWF"
+    }
+]

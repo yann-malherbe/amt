@@ -1,1 +1,1 @@
-{"login" : "doe", "name" : "John Doe", "pass" : "1234", "organization" : {"id" : 1}}
+{"login" : "doe", "name" : "John Doe", "pass" : "1234", "organization" : {"id" : "1"}}

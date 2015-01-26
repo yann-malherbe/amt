@@ -1,0 +1,28 @@
+[
+    {
+        "average": 54.1,
+        "date": 0,
+        "global": true,
+        "id": 1,
+        "max": 54.1,
+        "min": 54.1,
+        "open": false,
+        "sensor": {
+            "id": 1,
+            "open": false
+        }
+    },
+    {
+        "average": 54.1,
+        "date": 0,
+        "global": false,
+        "id": 2,
+        "max": 54.1,
+        "min": 54.1,
+        "open": false,
+        "sensor": {
+            "id": 1,
+            "open": false
+        }
+    }
+]

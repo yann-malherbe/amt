@@ -76,6 +76,18 @@ traits:
       responses:
         404:
           description: The id was not found.
+  # GET /organizations/:id
+  # ====================================
+  /{id}/users:
+    get:
+      description: Retrieve the users of an organization.
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/organizations/get_organizations_id_users_res.json
+        404:
+          description: The id was not found !
 
 # GET /users
 # ====================================
@@ -283,8 +295,7 @@ traits:
       200:
         body:
           application/json:
-            example: |
-               [{ "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor": {"id" : 1}, "organization": {"id" : 1} }]
+            example: !include examples/facts/get_facts_summaries_res.json
             
   # GET /facts/summaries/:id 
   # ====================================
@@ -295,8 +306,7 @@ traits:
         200:
           body:
             application/json:
-              example: |
-                { "id" : 1, "date" : "2014-11-09", "max": 15, "average": 10, "min": 5, "sensor": {"id" : 1}, "organization": {"id" : 1} }
+              example: !include examples/facts/get_facts_summaries_id_res.json
         404:
           description: The resource was not found.
     
@@ -327,8 +337,7 @@ traits:
       200:
         body:
           application/json:
-            example: |
-               [{ "id" : 1, "date":"2015-12-12", "number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }]
+            example: !include examples/facts/get_facts_numbers_res.json
             
   # GET /facts/numbers/:id 
   # ====================================
@@ -339,8 +348,7 @@ traits:
         200:
           body:
             application/json:
-              example: |
-                { "id" : 1, "date":"2015-12-12" ,"number": 3, "sensor": {"id" : 1}, "organization": {"id" : 1} }
+              example: !include examples/facts/get_facts_numbers_id_res.json
         404:
           description: The resource was not found.
     

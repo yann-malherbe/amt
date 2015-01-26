@@ -1,1 +1,20 @@
-[{"id":1, "date": "2014-15-14 00:02:52", "value" : 54, "sensor" : {"id" : 1}}]
+[
+    {
+        "date": 1242354224,
+        "id": 2,
+        "sensor": {
+            "id": 1,
+            "open": false
+        },
+        "value": 54.1
+    },
+    {
+        "date": 1242354254,
+        "id": 3,
+        "sensor": {
+            "id": 1,
+            "open": false
+        },
+        "value": 54.1
+    }
+]

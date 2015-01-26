@@ -3,7 +3,13 @@ HEIG-VD project1
 
 This project design an api to manage sensors on web platofrom.
 
-More informations : http://amt.eof.li/
+Visit our site web : http://amt.eof.li/
+
+A great IMH to report the observations of sensors with plot ! 
+
+![FrontEnd](https://github.com/yann-malherbe/amt/blob/master/documentation/front.png)
+
+![Plots](https://github.com/yann-malherbe/amt/blob/master/documentation/Plot.jpg)
 
 Installation procedure
 -------------
@@ -76,19 +82,21 @@ Following the implementation
 -------------------
 **Done :** 
 
-We tested methods GET and POST on the url :
+We tested methods GET, PUT and POST on the url :
 
 * GET /organizations 
 * GET /organizations/:id 
+* GET /organizations/:id/users 
 * GET /sensors
 * GET /sensors/:id
 * GET /observations
-* GET /observations/:id
 * POST /organizations 
-* POST /sensors
+* POST /sensor
 * POST /observations
 * GET /facts/summaries
 * GET /facts/numbers
+* GET /facts/summaries/:id
+* GET /facts/numbers/:id
 
 Be carefull, some urls works only with querystrings. 
 
@@ -97,3 +105,13 @@ For this time, we assume that the value send are correct and we assume that the 
 You can test POST methods with the sripts /Scripts/CreateObjects and /Scripts/SendValue.
 
 You can test GET methods with the web app on the url : http://localhost:8080/project1/index.html.
+
+Now, we also tested the problem of concurrency. We secure the problem when we update facts. It is possible to test this part
+with the script amt/Scripts/generateAndTestValues.js.
+
+We don't secure the problem when we create many facts at the same time.
+
+Others points of evaluation :
+
+- We revised the documentation on api-doc seed.
+- We din't revised the struct of payload => {"name" : "AMT", "contact" : {"id" : 1}}. It involves too many changes, like the comments of id => use "id" : "/users/1" instead "id" : 1. We don't change this point.
