@@ -96,10 +96,10 @@ traits:
   get:
      description: Get all users.
      queryParameters:
-       order:
+       filterBy:
         description: Filter users of an organization.
         example: byOrganizationID
-       id:
+       filterId:
          description: Filter users by id.
          example: 1
          type: number
@@ -174,10 +174,10 @@ traits:
   get:
     description: Get all public sensors.
     queryParameters:
-      order:
+      filterBy:
        description: Filter users of an organization.
        example: byOrganizationID
-      id:
+      filterId:
        description: Filter by id.
        example: 1
        type: number
@@ -251,10 +251,10 @@ traits:
   get:
     description: Get all observations
     queryParameters:
-      order:
+      filterBy:
         description: Get all observations of a sensor.
         example: bySensorID
-      id:
+      filterId:
         description: Filter by the id of a sensor.
         example: 1
         type: number
@@ -284,10 +284,10 @@ traits:
   get:
     description: Get all summaries.
     queryParameters:
-      order:
+      fiterBy:
         description: Filter fact by organization or by sensor.
         example: byOrganizationId, bySensorId 
-      id:
+      filterId:
         description: Filter fact by organization or by sensor.
         example: 1
         type: number
@@ -326,10 +326,10 @@ traits:
   get:
     description: Get all numbers.
     queryParameters:
-      order:
+      filterBy:
         description: Get all fact of an organization or a sensor.
         example: bySensorId, byOrganizationId
-      id:
+      filterId:
         description: Filter by id of an organization or a sensor.
         example: 1
         type: number
